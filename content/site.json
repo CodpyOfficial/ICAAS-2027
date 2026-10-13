@@ -69,9 +69,9 @@
   "importantDates": [
     {
       "label": "Call for Papers announced",
-      "date": "",
+      "date": "October 13, 2026",
       "original": "",
-      "iso": "",
+      "iso": "2026-10-13",
       "note": "",
       "highlight": false
     },
@@ -92,6 +92,14 @@
       "highlight": false
     },
     {
+      "label": "Early-bird registration deadline",
+      "date": "March 15, 2027",
+      "original": "",
+      "iso": "2027-03-15",
+      "note": "",
+      "highlight": false
+    },
+    {
       "label": "Camera-ready paper due",
       "date": "March 31, 2027",
       "original": "",
@@ -100,18 +108,10 @@
       "highlight": false
     },
     {
-      "label": "Early-bird registration deadline",
-      "date": "",
+      "label": "Registration deadline",
+      "date": "April 17, 2027",
       "original": "",
-      "iso": "",
-      "note": "",
-      "highlight": false
-    },
-    {
-      "label": "Author registration deadline",
-      "date": "",
-      "original": "",
-      "iso": "",
+      "iso": "2027-04-17",
       "note": "",
       "highlight": false
     },
@@ -126,31 +126,31 @@
   ],
   "news": [
     {
-      "date": "Oct 2, 2026",
+      "date": "Oct 13, 2026",
       "text": "The Call for Papers is out: 5 presentation slots for papers with workshop and 8 for papers without workshop.",
       "link": "/call-for-papers",
       "linkText": "Read the call"
     },
     {
-      "date": "Oct 2, 2026",
+      "date": "Oct 13, 2026",
       "text": "Authors of papers with workshop receive 40% of their workshop's registration fees as feedback.",
       "link": "/call-for-papers/with-workshop",
       "linkText": "Papers with workshop"
     },
     {
-      "date": "Oct 2, 2026",
+      "date": "Oct 13, 2026",
       "text": "The online proposal submission form is open.",
       "link": "/submission",
       "linkText": "Submit a proposal"
     },
     {
-      "date": "Oct 2, 2026",
+      "date": "Oct 13, 2026",
       "text": "Sponsorship and exhibition opportunities are available.",
       "link": "/sponsors",
       "linkText": "Sponsorship packages"
     },
     {
-      "date": "Oct 2, 2026",
+      "date": "Oct 13, 2026",
       "text": "The ICASW 2027 website is open.",
       "link": "",
       "linkText": ""
@@ -749,7 +749,7 @@
   "registration": {
     "intro": "Registration will open after the notification of acceptance. Fees, deadlines and the link to the registration system will be published on this page.",
     "currency": "",
-    "earlyDeadline": "",
+    "earlyDeadline": "March 15, 2027",
     "fees": [
       {
         "category": "Full registration — Academia",
@@ -795,7 +795,7 @@
         "title": "Author registration",
         "icon": "mic",
         "paragraphs": [
-          "At least one author of each accepted proposal is expected to register for the conference by the author registration deadline. The deadline will be communicated with the notification of acceptance."
+          "At least one author of each accepted proposal is expected to register for the conference by the registration deadline."
         ],
         "items": [],
         "links": []

@@ -908,10 +908,17 @@ func TestConferenceFacts(t *testing.T) {
 		}
 	}
 	dates := get(t, s, "/important-dates").Body.String()
-	for _, want := range []string{"January 31, 2027", "March 1, 2027", "Camera-ready paper due", "March 31, 2027", "April 17, 2027"} {
+	for _, want := range []string{"October 13, 2026", "January 31, 2027", "March 1, 2027", "Camera-ready paper due", "March 31, 2027",
+		"Early-bird registration deadline", "March 15, 2027", "Registration deadline", "April 17, 2027"} {
 		if !strings.Contains(dates, want) {
 			t.Errorf("important dates lack %s", want)
 		}
+	}
+	if strings.Contains(dates, ">TBA<") {
+		t.Error("an important date is still TBA")
+	}
+	if reg := get(t, s, "/registration").Body.String(); !strings.Contains(reg, "on/before March 15, 2027") || !strings.Contains(reg, "after March 15, 2027") {
+		t.Error("the fee table does not show the early-bird deadline")
 	}
 	reqs := get(t, s, "/call-for-papers/requirements").Body.String()
 	for _, want := range []string{"IEEE conference template", "no page limit", `class="req-highlight"`, `class="row-highlight"`} {

@@ -2,7 +2,8 @@
 <div class="page-body">
   <div class="container page-grid">
     <article class="prose">
-      <p class="lead">Key deadlines for {{.Site.Conference.FullTitle}}. Dates marked <span class="badge badge-tba">TBA</span> will be announced soon.</p>
+      {{- $tba := false}}{{range .Site.ImportantDates}}{{if not .Date}}{{$tba = true}}{{end}}{{end}}
+      <p class="lead">Key deadlines for {{.Site.Conference.FullTitle}}.{{if $tba}} Dates marked <span class="badge badge-tba">TBA</span> will be announced soon.{{end}}</p>
       <div class="table-wrap">
         <table class="table">
           <thead><tr><th scope="col">Milestone</th><th scope="col">Date</th></tr></thead>

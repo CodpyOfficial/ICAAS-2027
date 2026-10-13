@@ -12,6 +12,22 @@ func TestSiteJSONIsValid(t *testing.T) {
 	}
 }
 
+func TestImportantDatesInOrder(t *testing.T) {
+	site, err := LoadFile(filepath.Join("..", "..", "content", "site.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	last := ""
+	for _, d := range site.ImportantDates {
+		if d.ISO != "" && d.ISO < last {
+			t.Errorf("%s (%s) is listed after a later date (%s)", d.Label, d.ISO, last)
+		}
+		if d.ISO > last {
+			last = d.ISO
+		}
+	}
+}
+
 func TestValidateRejectsDuplicates(t *testing.T) {
 	site := `{
 		"conference": {"acronym": "ICASW", "name": "Test"},
