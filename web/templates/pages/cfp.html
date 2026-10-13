@@ -8,14 +8,14 @@
           <p class="lead">{{$c.FullTitle}}, the {{$c.Name}}, invites proposals from researchers and practitioners working on systems that perceive, decide and act on their own.</p>
           <p>{{$c.FullTitle}} will be held {{if $c.Location}}in {{$c.Location}}{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, {{$c.Dates}}{{end}}. Its technical program features <strong>papers with workshop</strong>, <strong>papers without workshop</strong> and two keynotes, with a particular emphasis on implementation.</p>
         </div>
-        <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="The ICAS bear mascot holding a paper" width="260" height="260">
+        <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="The ICASW bear mascot holding a paper" width="260" height="260">
       </div>
-      {{template "speaker-kit" .}}
+      {{template "author-kit" .}}
 
       <h2 id="looking-for">What we are looking for</h2>
       <ul class="track-points">
-        <li>{{icon "laptop"}}<span><strong>Papers with Workshop ({{$ho.Slots}} speaking slots available):</strong> papers capable of engaging the audience interactively.</span></li>
-        <li>{{icon "book"}}<span><strong>Papers without Workshop ({{$th.Slots}} speaking slots available):</strong> academic papers relevant to the conference theme.</span></li>
+        <li>{{icon "laptop"}}<span><strong>Papers with Workshop ({{$ho.Slots}} presentation slots available):</strong> papers capable of engaging the audience interactively.</span></li>
+        <li>{{icon "book"}}<span><strong>Papers without Workshop ({{$th.Slots}} presentation slots available):</strong> academic papers relevant to the conference theme.</span></li>
       </ul>
       {{template "tracks" .}}
 
@@ -28,10 +28,10 @@
       <p>All submissions must be submitted in <strong>English</strong> and include the following details:</p>
       <ul>
         {{- range .Site.Requirements}}
-        <li><strong>{{.Title}}:</strong> {{.Text}}{{if .Items}}<ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>{{end}}</li>
+        <li{{if .Highlight}} class="req-highlight"{{end}}><strong>{{.Title}}:</strong> {{.Text}}{{if .Highlight}} <span class="badge badge-accent">Required</span>{{end}}{{if .Items}}<ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>{{end}}</li>
         {{- end}}
       </ul>
-      <p><a href="/call-for-papers/requirements">Detailed requirements by track</a></p>
+      <p>Papers use the <a href="https://www.ieee.org/conferences/publishing/templates" target="_blank" rel="noopener">IEEE conference template</a> (Word or LaTeX); there is no page limit. <a href="/call-for-papers/requirements">Detailed requirements by track</a></p>
 
       <h2 id="review">Review criteria</h2>
       <p>Submissions will undergo <strong>double-blind peer review</strong> evaluated against the following standards:</p>
@@ -48,7 +48,7 @@
       <p>Information about proceedings and journal opportunities for accepted contributions will be published on the <a href="/authors/publication">Publication Opportunities</a> page.</p>
 
       <h2 id="template">Presentation template</h2>
-      <p>Accepted speakers, with or without workshop, must prepare their presentations with the <a href="/authors/presentation-guidelines#template">official ICAS slide template</a>.</p>
+      <p>Accepted authors, with or without workshop, must prepare their presentations with the <a href="/authors/presentation-guidelines#template">official ICASW slide template</a>.</p>
 
       {{template "cfp-cta" .}}
 

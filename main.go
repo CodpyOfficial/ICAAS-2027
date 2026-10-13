@@ -1,5 +1,5 @@
-// Command icas serves the ICAS (International Conference on Autonomous
-// System) website.
+// Command icas serves the ICASW (International Conference on Autonomous
+// Systems and Workshop) website.
 //
 // Templates, static assets and content/site.json are embedded in the
 // binary, so a single executable is all that has to be deployed. During

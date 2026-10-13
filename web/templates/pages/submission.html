@@ -32,15 +32,16 @@
           <ul>
             <li>Write everything in <strong>English</strong>.</li>
             <li>Keep the title, abstract and outline <strong>anonymous</strong> — the review is double-blind.</li>
-            <li>Upload your paper as <strong>one PDF file</strong> (max {{maxPaperMB}} MB), without author names.</li>
-            <li>Abstract: max <strong>300 words</strong>. Speaker bio: max <strong>150 words</strong>.</li>
-            <li>Accepted speakers must present with the <strong>official ICAS slide template</strong>.</li>
-            <li>Papers with workshop also need the prerequisites &amp; toolchain, the <strong>workshop size</strong> (25 or 50 participants), the <strong>laptop hardware requirements</strong> for participants, at least one <strong>teaching assistant</strong>, and a <strong>2–5 minute demo video</strong> (public or unlisted link).</li>
+            <li>Upload your paper as <strong>one PDF file</strong> (max {{maxPaperMB}} MB) in the <a href="https://www.ieee.org/conferences/publishing/templates" target="_blank" rel="noopener">IEEE conference format</a>, without author names. There is no page limit.</li>
+            <li>Abstract: max <strong>300 words</strong>. Author bio: max <strong>150 words</strong>.</li>
+            <li>Accepted authors must present with the <strong>official ICASW slide template</strong>.</li>
+            <li>Papers with workshop also need the prerequisites &amp; toolchain, the <strong>workshop size</strong> (25 or 50 participants), the <strong>laptop hardware requirements</strong> for participants and at least one <strong>teaching assistant</strong>.</li>
+            <li class="li-highlight">{{icon "video"}} Papers with workshop must include a <strong>2–5 minute demo video</strong> (public or unlisted link).</li>
           </ul>
           <p><a href="/call-for-papers/requirements">Full submission requirements</a></p>
         </div>
       </div>
-      {{template "speaker-kit" .}}
+      {{template "author-kit" .}}
 
       {{- if not $c.SubmissionOpen}}
       <div class="alert alert-err" role="status">{{icon "alert"}}<div><p><strong>The submission system is currently closed.</strong> Please check the <a href="/important-dates">important dates</a>.</p></div></div>
@@ -59,7 +60,7 @@
             <div class="choice-cards" role="radiogroup" aria-labelledby="track-label">
               <label class="choice-card">
                 <input type="radio" name="track" value="with-workshop" required{{if checked $f "track" "with-workshop"}} checked{{end}}>
-                <span class="choice-body"><strong>{{icon "laptop"}} Paper with Workshop</strong><small>25-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as speaker feedback</small></span>
+                <span class="choice-body"><strong>{{icon "laptop"}} Paper with Workshop</strong><small>25-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as author feedback</small></span>
               </label>
               <label class="choice-card">
                 <input type="radio" name="track" value="without-workshop" required{{if checked $f "track" "without-workshop"}} checked{{end}}>
@@ -72,13 +73,13 @@
 
         <fieldset class="fieldset">
           <legend>2. Proposal <span class="badge badge-soon">Seen by reviewers</span></legend>
-          <p class="fieldset-note">Do not include speaker names, affiliations or self-identifying links in this section.</p>
+          <p class="fieldset-note">Do not include author names, affiliations or self-identifying links in this section.</p>
           {{template "fld" (dict "F" $f "Name" "title" "Label" "Title" "Req" true "Max" 200 "Hint" "A concise title.")}}
           {{template "fld" (dict "F" $f "Name" "abstract" "Label" "Abstract" "Kind" "textarea" "Req" true "Words" 300 "Rows" 9)}}
           {{$perr := fieldErr $f "paper"}}
           <div class="field{{if $perr}} has-error{{end}}">
             <label for="f-paper">{{icon "upload"}} Paper (PDF) <span class="req" aria-hidden="true">*</span></label>
-            <span class="hint" id="f-paper-hint">One PDF file, at most {{maxPaperMB}} MB. Remove author names, affiliations and acknowledgements, including from the PDF properties, for the double-blind review.</span>
+            <span class="hint" id="f-paper-hint">One PDF file in the <a href="https://www.ieee.org/conferences/publishing/templates" target="_blank" rel="noopener">IEEE conference format</a>, at most {{maxPaperMB}} MB; there is no page limit. Remove author names, affiliations and acknowledgements, including from the PDF properties, for the double-blind review.</span>
             <input class="input file-input" type="file" id="f-paper" name="paper" accept="application/pdf,.pdf" required data-max-bytes="{{maxPaperBytes}}" aria-describedby="f-paper-hint f-paper-info{{if $perr}} f-paper-err{{end}}"{{if $perr}} aria-invalid="true"{{end}}>
             <span class="file-info" id="f-paper-info" aria-live="polite"></span>
             {{- with $perr}}<span class="field-error" id="f-paper-err">{{.}}</span>{{end}}
@@ -145,7 +146,7 @@
               {{- with $serr}}<span class="field-error">{{.}}</span>{{end}}
             </div>
           </div>
-          {{template "fld" (dict "F" $f "Name" "hardware" "Label" "Equipment provided by the speakers" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 2000 "Rows" 3 "Hint" "Robots, boards, sensors or kits you will bring for participants, and how many sets — or “none (laptop only)”.")}}
+          {{template "fld" (dict "F" $f "Name" "hardware" "Label" "Equipment provided by the authors" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 2000 "Rows" 3 "Hint" "Robots, boards, sensors or kits you will bring for participants, and how many sets — or “none (laptop only)”.")}}
           {{template "fld" (dict "F" $f "Name" "laptop_requirements" "Label" "Laptop hardware requirements for participants" "Kind" "textarea" "Req" true "TrackOnly" true "Max" 2000 "Rows" 4 "Hint" "Minimum CPU, memory (RAM), GPU, free disk space, operating system and ports. These requirements are published to participants.")}}
         </fieldset>
 
@@ -166,32 +167,32 @@
           {{template "fld" (dict "F" $f "Name" "ta_names" "Label" "Teaching assistants (optional)" "Kind" "textarea" "Max" 1000 "Rows" 2 "Hint" "Names and affiliations, if already known. Not shown to reviewers.")}}
         </fieldset>
 
-        <fieldset class="fieldset track-only" data-track="with-workshop">
-          <legend>5. Interactive demo video <span class="badge badge-accent">With workshop</span></legend>
+        <fieldset class="fieldset fieldset-highlight track-only" data-track="with-workshop">
+          <legend>5. Interactive demo video <span class="badge badge-accent">With workshop</span> <span class="badge badge-open">Required</span></legend>
           <p class="fieldset-note">A short demonstration video (2–5 minutes) showcasing the functioning prototype, project workflow, or target outcomes participants will build during the workshop. It is crucial for the program committee to evaluate technical feasibility and participant engagement.</p>
           {{template "fld" (dict "F" $f "Name" "demo_video" "Label" "Video link" "Type" "url" "Req" true "TrackOnly" true "Max" 500 "Place" "https://" "Hint" "A publicly viewable or unlisted link (e.g. YouTube, Vimeo, Loom or Google Drive).")}}
         </fieldset>
 
         <fieldset class="fieldset">
-          <legend><span data-track-text data-with-workshop="6." data-without-workshop="3." data-none="3.">3.</span> Speaker information <span class="badge badge-closed">Not shown to reviewers</span></legend>
+          <legend><span data-track-text data-with-workshop="6." data-without-workshop="3." data-none="3.">3.</span> Author information <span class="badge badge-closed">Not shown to reviewers</span></legend>
           <div class="field-row">
-            {{template "fld" (dict "F" $f "Name" "speaker_name" "Label" "Speaker name" "Req" true "Max" 200 "Auto" "name")}}
+            {{template "fld" (dict "F" $f "Name" "speaker_name" "Label" "Author name" "Req" true "Max" 200 "Auto" "name")}}
             {{template "fld" (dict "F" $f "Name" "speaker_email" "Label" "Email" "Type" "email" "Req" true "Max" 200 "Auto" "email")}}
           </div>
           <div class="field-row">
             {{template "fld" (dict "F" $f "Name" "affiliation" "Label" "Affiliation" "Req" true "Max" 200 "Auto" "organization")}}
             {{template "fld" (dict "F" $f "Name" "country" "Label" "Country" "Max" 100 "Auto" "country-name")}}
           </div>
-          {{template "fld" (dict "F" $f "Name" "co_speakers" "Label" "Co-speakers (optional)" "Kind" "textarea" "Max" 2000 "Rows" 2 "Hint" "Name, affiliation and email of each co-speaker, one per line.")}}
-          {{template "fld" (dict "F" $f "Name" "bio" "Label" "Speaker bio — professional background" "Kind" "textarea" "Req" true "Words" 150 "Rows" 5)}}
-          {{template "fld" (dict "F" $f "Name" "experience" "Label" "Previous speaking experience" "Kind" "textarea" "Req" true "Max" 3000 "Rows" 3 "Hint" "Talks, tutorials or workshops you have given — or “none yet”.")}}
+          {{template "fld" (dict "F" $f "Name" "co_speakers" "Label" "Co-authors (optional)" "Kind" "textarea" "Max" 2000 "Rows" 2 "Hint" "Name, affiliation and email of each co-author, one per line.")}}
+          {{template "fld" (dict "F" $f "Name" "bio" "Label" "Author bio — professional background" "Kind" "textarea" "Req" true "Words" 150 "Rows" 5)}}
+          {{template "fld" (dict "F" $f "Name" "experience" "Label" "Previous presentation experience" "Kind" "textarea" "Req" true "Max" 3000 "Rows" 3 "Hint" "Talks, tutorials or workshops you have given — or “none yet”.")}}
           {{template "fld" (dict "F" $f "Name" "links" "Label" "Relevant project links" "Kind" "textarea" "Max" 2000 "Rows" 3 "Hint" "e.g. GitHub, Google Scholar, LinkedIn — one per line.")}}
         </fieldset>
 
         <fieldset class="fieldset">
           <legend>Confirmation</legend>
           {{template "check" (dict "F" $f "Name" "confirm_english" "Label" "My proposal is written in English and the proposal section contains no identifying information." "Req" true)}}
-          {{template "check" (dict "F" $f "Name" "confirm_template" "Label" "If my proposal is accepted, I will prepare my presentation with the official ICAS slide template." "Req" true)}}
+          {{template "check" (dict "F" $f "Name" "confirm_template" "Label" "If my proposal is accepted, I will prepare my presentation with the official ICASW slide template." "Req" true)}}
           {{template "check" (dict "F" $f "Name" "confirm_privacy" "Label" "I agree that the organizers store and process this information to review the proposal and build the program." "Req" true)}}
         </fieldset>
 

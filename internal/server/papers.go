@@ -139,7 +139,7 @@ func cleanFileName(name string) string {
 }
 
 // nextID returns the next free submission ID of a track, e.g.
-// ICAS2027-W004 for base "ICAS2027-W". Numbers whose PDF is still on disk
+// ICASW2027-W004 for base "ICASW2027-W". Numbers whose PDF is still on disk
 // are skipped, so a record removed by hand never loses its file to a new
 // submission.
 func (s *Server) nextID(subs []Submission, track, base string) string {
@@ -217,7 +217,7 @@ func (s *Server) handleAdminPapersZip(w http.ResponseWriter, r *http.Request) {
 
 	h := w.Header()
 	h.Set("Content-Type", "application/zip")
-	h.Set("Content-Disposition", fmt.Sprintf(`attachment; filename="icas-papers-%s.zip"`, s.now().Format("20060102")))
+	h.Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s-papers-%s.zip"`, strings.ToLower(s.site().Conference.Acronym), s.now().Format("20060102")))
 	h.Set("Cache-Control", "no-store")
 	zw := zip.NewWriter(w)
 	for _, sub := range subs {

@@ -5,8 +5,8 @@
       <p class="lead">All submissions must be submitted in <strong>English</strong> and include the following details.</p>
       <ol class="steps">
         {{- range .Site.Requirements}}
-        <li>
-          <strong>{{.Title}}</strong>{{if eq .Applies "with-workshop"}} <span class="badge badge-accent">With workshop</span>{{end}}
+        <li{{if .Highlight}} class="req-highlight"{{end}}>
+          <strong>{{.Title}}</strong>{{if eq .Applies "with-workshop"}} <span class="badge badge-accent">With workshop</span>{{end}}{{if .Highlight}} <span class="badge badge-open">Required</span>{{end}}
           <p class="mb-0">{{.Text}}</p>
           {{- if .Items}}
           <ul>{{range .Items}}<li>{{.}}</li>{{end}}</ul>
@@ -21,24 +21,32 @@
           <thead><tr><th scope="col">Item</th><th scope="col">Paper with Workshop</th><th scope="col">Paper without Workshop</th></tr></thead>
           <tbody>
             <tr><th scope="row">Title &amp; abstract (max 300 words)</th><td><span class="tick">&#10003;</span></td><td><span class="tick">&#10003;</span></td></tr>
-            <tr><th scope="row">Paper (one PDF, max {{maxPaperMB}} MB, anonymized)</th><td><span class="tick">&#10003;</span></td><td><span class="tick">&#10003;</span></td></tr>
+            <tr><th scope="row">Paper (IEEE format, one PDF, max {{maxPaperMB}} MB, anonymized, no page limit)</th><td><span class="tick">&#10003;</span></td><td><span class="tick">&#10003;</span></td></tr>
             <tr><th scope="row">Session track</th><td><span class="tick">&#10003;</span></td><td><span class="tick">&#10003;</span></td></tr>
             <tr><th scope="row">Outline &amp; schedule</th><td>25-min session breakdown + 90-min workshop milestones</td><td>15-min presentation structure</td></tr>
             <tr><th scope="row">Prerequisites &amp; toolchain</th><td>Software, target OS, hardware, skill level</td><td><span class="dash">&ndash;</span></td></tr>
             <tr><th scope="row">Workshop size</th><td>25 or 50 participants; 10 or 20 equipment sets (if needed)</td><td><span class="dash">&ndash;</span></td></tr>
             <tr><th scope="row">Laptop hardware requirements</th><td>CPU, memory, GPU, disk space, OS for participants</td><td><span class="dash">&ndash;</span></td></tr>
             <tr><th scope="row">Teaching assistant</th><td>At least one TA</td><td><span class="dash">&ndash;</span></td></tr>
-            <tr><th scope="row">Interactive demo video (2–5 min)</th><td>Public or unlisted link</td><td><span class="dash">&ndash;</span></td></tr>
-            <tr><th scope="row">Speaker bio (max 150 words)</th><td>+ speaking experience, project links</td><td>+ speaking experience, project links</td></tr>
+            <tr class="row-highlight"><th scope="row">Interactive demo video (2–5 min)</th><td><strong>Required:</strong> public or unlisted link</td><td><span class="dash">&ndash;</span></td></tr>
+            <tr><th scope="row">Author bio (max 150 words)</th><td>+ presentation experience, project links</td><td>+ presentation experience, project links</td></tr>
           </tbody>
         </table>
       </div>
 
+      <h2 id="paper-format">Paper format</h2>
+      <ul>
+        <li>Prepare the paper with the <a href="https://www.ieee.org/conferences/publishing/templates" target="_blank" rel="noopener">IEEE conference template</a>: Microsoft Word (US letter or A4) or LaTeX, also available on Overleaf. Remove the template's guidance text.</li>
+        <li>There is <strong>no page limit</strong>.</li>
+        <li>Submit one PDF of at most {{maxPaperMB}} MB, anonymized for the double-blind review.</li>
+        <li>Accepted papers are submitted again as camera-ready papers in the same format; see the <a href="/important-dates">important dates</a>.</li>
+      </ul>
+
       <h2>Keeping the review double-blind</h2>
       <ul>
-        <li>Do not put speaker names, affiliations or self-identifying links in the title, abstract or outline.</li>
+        <li>Do not put author names, affiliations or self-identifying links in the title, abstract or outline.</li>
         <li>Refer to your own prior work in the third person.</li>
-        <li>Speaker details, bio and project links are entered in a separate section of the submission form.</li>
+        <li>Author details, bio and project links are entered in a separate section of the submission form.</li>
       </ul>
 
       <h2>Demo video tips (papers with workshop)</h2>

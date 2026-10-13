@@ -1,4 +1,4 @@
-/* ICAS conference site
+/* ICASW conference site
    Layout and component styles. Colours and type are tokens on :root;
    everything below refers to them. */
 
@@ -908,3 +908,25 @@ a.logo-slot { text-decoration: none; }
 .jump-links li { margin: 0; }
 .jump-links a { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: .85rem; font-weight: 600; text-decoration: none; }
 .jump-links a:hover { border-color: var(--coral-500); }
+
+/* requirements that are easy to miss (the demo video) */
+.track-highlight { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 14px; padding: 10px 12px; border-radius: var(--radius); background: var(--coral-100); color: var(--coral-700); font-weight: 700; font-size: .92rem; }
+.track-highlight .icon { flex: none; margin-top: 2px; }
+.prose li.req-highlight { padding: 6px 10px; border-radius: var(--radius); background: var(--coral-100); }
+.steps > li.req-highlight { border-color: var(--coral-500); background: var(--coral-100); box-shadow: inset 4px 0 0 var(--coral-500); }
+.row-highlight th, .row-highlight td { background: var(--coral-100); }
+.li-highlight { color: var(--coral-700); font-weight: 600; }
+.li-highlight .icon { color: var(--coral-600); }
+.fieldset-highlight { border-color: var(--coral-500); box-shadow: inset 4px 0 0 var(--coral-500); background: var(--rose-50); }
+.callout-highlight { border-left: 4px solid var(--coral-500); }
+
+/* home page: the call for papers flyer */
+.flyer-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 40px; align-items: center; }
+.flyer-thumb { display: block; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; box-shadow: var(--shadow); transition: transform .15s; }
+.flyer-thumb:hover { transform: translateY(-3px); }
+.flyer-thumb img { display: block; width: 100%; height: auto; }
+.flyer-feature h2 { margin-top: 6px; }
+@media (max-width: 760px) {
+  .flyer-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .flyer-thumb { width: 100%; max-width: 220px; margin: 0 auto; }
+}

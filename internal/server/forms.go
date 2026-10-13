@@ -181,7 +181,7 @@ type Submission struct {
 	WorkshopPlan string    `json:"workshopPlan,omitempty"`
 	Software     string    `json:"software,omitempty"`
 	TargetOS     string    `json:"targetOS,omitempty"`
-	Hardware     string    `json:"hardware,omitempty"` // equipment the speakers provide
+	Hardware     string    `json:"hardware,omitempty"` // equipment the authors provide
 	SkillLevel   string    `json:"skillLevel,omitempty"`
 	WorkshopSize string    `json:"workshopSize,omitempty"` // 25 or 50 participants
 	Laptop       string    `json:"laptopRequirements,omitempty"`
@@ -341,8 +341,8 @@ func validateSubmission(f *formState, site *content.Site) Submission {
 		f.maxLen("software", "Required software", 2000)
 		f.required("target_os", "Target OS compatibility")
 		f.maxLen("target_os", "Target OS compatibility", maxShortField)
-		f.required("hardware", "Equipment provided by the speakers")
-		f.maxLen("hardware", "Equipment provided by the speakers", 2000)
+		f.required("hardware", "Equipment provided by the authors")
+		f.maxLen("hardware", "Equipment provided by the authors", 2000)
 		if f.required("skill_level", "Recommended skill level") && !oneOf(v["skill_level"], skillLevels) {
 			f.fail("skill_level", "Please choose a skill level from the list.")
 		}
@@ -361,8 +361,8 @@ func validateSubmission(f *formState, site *content.Site) Submission {
 		f.maxLen("demo_video", "Demo video link", 500)
 	}
 
-	f.required("speaker_name", "Speaker name")
-	f.maxLen("speaker_name", "Speaker name", maxShortField)
+	f.required("speaker_name", "Author name")
+	f.maxLen("speaker_name", "Author name", maxShortField)
 	if f.required("speaker_email", "Email") {
 		f.email("speaker_email")
 	}
@@ -370,18 +370,18 @@ func validateSubmission(f *formState, site *content.Site) Submission {
 	f.required("affiliation", "Affiliation")
 	f.maxLen("affiliation", "Affiliation", maxShortField)
 	f.maxLen("country", "Country", 100)
-	f.maxLen("co_speakers", "Co-speakers", 2000)
-	f.required("bio", "Speaker bio")
-	f.maxWords("bio", "Speaker bio")
-	f.maxLen("bio", "Speaker bio", 3000)
-	f.required("experience", "Previous speaking experience")
-	f.maxLen("experience", "Previous speaking experience", 3000)
+	f.maxLen("co_speakers", "Co-authors", 2000)
+	f.required("bio", "Author bio")
+	f.maxWords("bio", "Author bio")
+	f.maxLen("bio", "Author bio", 3000)
+	f.required("experience", "Previous presentation experience")
+	f.maxLen("experience", "Previous presentation experience", 3000)
 	f.maxLen("links", "Project links", 2000)
 	if v["confirm_english"] == "" {
 		f.fail("confirm_english", "Please confirm that your proposal is written in English.")
 	}
 	if v["confirm_template"] == "" {
-		f.fail("confirm_template", "Please confirm that you will use the official ICAS slide template.")
+		f.fail("confirm_template", "Please confirm that you will use the official ICASW slide template.")
 	}
 	if v["confirm_privacy"] == "" {
 		f.fail("confirm_privacy", "Please agree to the processing of your data for the review.")

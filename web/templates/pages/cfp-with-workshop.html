@@ -2,16 +2,20 @@
 <div class="page-body">
   <div class="container page-grid">
     <article class="prose">
-      <p class="lead">Papers with workshop are papers capable of engaging the audience interactively. <strong>{{$t.Slots}} speaking slots are available.</strong></p>
+      <p class="lead">Papers with workshop are papers capable of engaging the audience interactively. <strong>{{$t.Slots}} presentation slots are available.</strong></p>
 
       <div class="key-figures">
-        <div class="key-figure"><strong>{{$t.Slots}}</strong><span>speaking slots</span></div>
+        <div class="key-figure"><strong>{{$t.Slots}}</strong><span>presentation slots</span></div>
         <div class="key-figure"><strong>25 min</strong><span>morning presentation</span></div>
         <div class="key-figure"><strong>90 min</strong><span>afternoon workshop</span></div>
         <div class="key-figure"><strong>25/50</strong><span>participants per workshop</span></div>
-        <div class="key-figure"><strong>40%</strong><span>of workshop fees as speaker feedback</span></div>
+        <div class="key-figure"><strong>40%</strong><span>of workshop fees as author feedback</span></div>
       </div>
-      {{template "speaker-kit" .}}
+      {{template "author-kit" .}}
+      <div class="callout callout-accent callout-highlight">
+        {{icon "video"}}
+        <div><p><strong>A demo video is required.</strong> Every paper with workshop must include a <strong>2–5 minute demo video</strong> (public or unlisted link) showing the working prototype, the workflow or what participants will build. The submission form does not accept a paper with workshop without it.</p></div>
+      </div>
 
       <h2>Format</h2>
       <p>Deliver a <strong>25-minute presentation in the morning</strong>, followed by a <strong>90-minute (1.5-hour) workshop in the afternoon</strong>. The morning presentation introduces your work and what participants will build; the workshop lets them build it.</p>
@@ -19,7 +23,7 @@
       <h2>Workshop size and equipment</h2>
       <div class="media-split">
         <div>
-          <p>Speakers choose the size of their workshop. If the workshop needs equipment, such as robots, boards, sensors or kits, prepare the corresponding number of sets for participants to share:</p>
+          <p>Authors choose the size of their workshop. If the workshop needs equipment, such as robots, boards, sensors or kits, prepare the corresponding number of sets for participants to share:</p>
           <div class="table-wrap">
             <table class="table">
               <thead><tr><th scope="col">Workshop size</th><th scope="col">Equipment sets (if needed)</th></tr></thead>
@@ -29,27 +33,27 @@
               </tbody>
             </table>
           </div>
-          <p>Speakers are responsible for preparing all necessary equipment and environment set-ups for the workshop, while attendees are asked to <strong>bring their own laptops</strong>.</p>
+          <p>Authors are responsible for preparing all necessary equipment and environment set-ups for the workshop, while attendees are asked to <strong>bring their own laptops</strong>.</p>
         </div>
-        <img class="mascot" src="{{asset "img/mascot-pile.webp"}}" alt="Illustration: the ICAS bear mascot on a pile of papers" width="260" height="260">
+        <img class="mascot" src="{{asset "img/mascot-pile.webp"}}" alt="Illustration: the ICASW bear mascot on a pile of papers" width="260" height="260">
       </div>
 
       <h2>Laptop hardware requirements</h2>
       <div class="callout">
         {{icon "laptop"}}
-        <div><p>Speakers provide the <strong>hardware requirements for participants' laptops</strong>, such as CPU, memory (RAM), GPU, free disk space and operating system. The requirements are published on the workshop pages, so that participants can check their laptops before registering for a workshop.</p></div>
+        <div><p>Authors provide the <strong>hardware requirements for participants' laptops</strong>, such as CPU, memory (RAM), GPU, free disk space and operating system. The requirements are published on the workshop pages, so that participants can check their laptops before registering for a workshop.</p></div>
       </div>
 
       <h2>Teaching assistants</h2>
       <p>Each workshop should be supported by <strong>at least one teaching assistant (TA)</strong>, who helps participants with set-up issues and with the practical exercises, so that everyone can keep pace with the milestones.</p>
 
-      <h2>Speaker feedback</h2>
-      <p>Speakers receive feedback based on attendance: <strong>40% of the workshop registration fees</strong> are given to the speakers of the workshop. Choose an engaging topic and draw in as many participants as possible!</p>
+      <h2>Author feedback</h2>
+      <p>Authors receive feedback based on attendance: <strong>40% of the workshop registration fees</strong> are given to the authors of the workshop. Choose an engaging topic and draw in as many participants as possible!</p>
 
       <h2>What your proposal must include</h2>
       <ul>
         {{- range .Site.Requirements}}{{if applies . "with-workshop"}}
-        <li><strong>{{.Title}}:</strong> {{.Text}}{{range .Items}} {{.}}{{end}}</li>
+        <li{{if .Highlight}} class="req-highlight"{{end}}><strong>{{.Title}}:</strong> {{.Text}}{{range .Items}} {{.}}{{end}}{{if .Highlight}} <span class="badge badge-accent">Required</span>{{end}}</li>
         {{- end}}{{end}}
       </ul>
       <p>The outline must give a <strong>detailed breakdown of the 25-minute morning session</strong> and a <strong>milestone-based progression for the 90-minute workshop</strong>. The <strong>2–5 minute demo video</strong> is crucial for the program committee to evaluate technical feasibility and participant engagement.</p>

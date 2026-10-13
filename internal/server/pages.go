@@ -31,35 +31,35 @@ func sitePages() []*Page {
 		{Path: "/", Template: "home", Home: true},
 
 		// About
-		{Path: "/about", Template: "about", Title: "About ICAS", Lead: "A forum for the science and engineering of systems that sense, decide and act on their own.", Parent: "/", Sidebar: "about"},
+		{Path: "/about", Template: "about", Title: "About ICASW", Lead: "A forum for the science and engineering of systems that sense, decide and act on their own.", Parent: "/", Sidebar: "about"},
 		{Path: "/about/welcome", Template: "welcome", Title: "Welcome Message", Lead: "A word from the organizing committee.", Parent: "/about", Sidebar: "about"},
 		{Path: "/news", Template: "news", Title: "News Highlights", Lead: "Announcements, deadline changes and program updates.", Parent: "/about", Sidebar: "about"},
 		{Path: "/committee", Template: "committee", Title: "Organizing Committee", Lead: "The people organizing the conference.", Parent: "/about", Sidebar: "about"},
 		{Path: "/committee/technical-program", Template: "tpc", Title: "Technical Program Committee", Lead: "Track chairs and reviewers responsible for the double-blind review.", Parent: "/committee", Sidebar: "about"},
-		{Path: "/about/history", Template: "history", Title: "Conference History", Lead: "Past and upcoming editions of ICAS.", Parent: "/about", Sidebar: "about"},
+		{Path: "/about/history", Template: "history", Title: "Conference History", Lead: "Past and upcoming editions of ICASW.", Parent: "/about", Sidebar: "about"},
 		{Path: "/faq", Template: "faq", Title: "Frequently Asked Questions", Lead: "Quick answers about submissions, workshops and registration.", Parent: "/about", Sidebar: "about"},
 		{Path: "/policies", Template: "policies", Title: "Conference Policies", Lead: "Code of conduct, privacy, non-discrimination, accessibility, ethics and terms of use.", Parent: "/about", Sidebar: "about"},
 
 		// Call for papers
-		{Path: "/call-for-papers", Template: "cfp", Title: "Call for Papers", Lead: "Papers with and without workshop on autonomous systems — 13 speaking slots.", Parent: "/", Sidebar: "cfp"},
+		{Path: "/call-for-papers", Template: "cfp", Title: "Call for Papers", Lead: "Papers with and without workshop on autonomous systems — 13 presentation slots.", Parent: "/", Sidebar: "cfp"},
 		{Path: "/call-for-papers/with-workshop", Template: "cfp-with-workshop", Title: "Papers with Workshop", Lead: "A 25-minute morning presentation and a 90-minute afternoon workshop for 25 or 50 participants.", Parent: "/call-for-papers", Sidebar: "cfp"},
 		{Path: "/call-for-papers/without-workshop", Template: "cfp-without-workshop", Title: "Papers without Workshop", Lead: "Presentations of about 15 minutes on academic work relevant to autonomous systems.", Parent: "/call-for-papers", Sidebar: "cfp"},
-		{Path: "/call-for-papers/topics", Template: "cfp-topics", Title: "Conference Theme & Topics", Lead: "The topic areas of ICAS, led by the implementation topics at the heart of the conference.", Parent: "/call-for-papers", Sidebar: "cfp"},
+		{Path: "/call-for-papers/topics", Template: "cfp-topics", Title: "Conference Theme & Topics", Lead: "The topic areas of ICASW, led by the implementation topics at the heart of the conference.", Parent: "/call-for-papers", Sidebar: "cfp"},
 		{Path: "/call-for-papers/requirements", Template: "cfp-requirements", Title: "Proposal Submission Requirements", Lead: "What every proposal must contain, by track.", Parent: "/call-for-papers", Sidebar: "cfp"},
 		{Path: "/call-for-papers/review", Template: "cfp-review", Title: "Review Criteria", Lead: "How proposals are evaluated in double-blind peer review.", Parent: "/call-for-papers", Sidebar: "cfp"},
 
 		// Authors
 		{Path: "/submission", Template: "submission", Title: "Proposal Submission", Lead: "Submit a paper with workshop or a paper without workshop online.", Parent: "/", Sidebar: "authors"},
-		{Path: "/submission/received", Template: "submission-received", Title: "Proposal Received", Lead: "Thank you for submitting to ICAS.", Parent: "/submission", NoIndex: true},
+		{Path: "/submission/received", Template: "submission-received", Title: "Proposal Received", Lead: "Thank you for submitting to ICASW.", Parent: "/submission", NoIndex: true},
 		{Path: "/important-dates", Template: "dates", Title: "Important Dates", Lead: "Deadlines for proposals, notifications, registration and the conference itself.", Parent: "/", Sidebar: "authors"},
-		{Path: "/authors", Template: "authors", Title: "Author Information", Lead: "Everything authors and speakers need to know, from submission to presentation day.", Parent: "/", Sidebar: "authors"},
+		{Path: "/authors", Template: "authors", Title: "Author Information", Lead: "Everything authors need to know, from submission to presentation day.", Parent: "/", Sidebar: "authors"},
 		{Path: "/authors/presentation-guidelines", Template: "presentation", Title: "Presentation Guidelines", Lead: "Timing, equipment, preparation and the mandatory slide template for papers with and without workshop.", Parent: "/authors", Sidebar: "authors"},
 		{Path: "/authors/publication", Template: "publication", Title: "Publication Opportunities", Lead: "Proceedings and journal special issue for accepted work.", Parent: "/authors", Sidebar: "authors"},
 
 		// Program
 		{Path: "/program", Template: "program", Title: "Program at a Glance", Lead: "Morning presentations of papers with workshop; in the afternoon, workshops run in parallel with the paper sessions, and two keynotes close the day.", Parent: "/", Sidebar: "program"},
 		{Path: "/program/keynotes", Template: "keynotes", Title: "Keynote Speakers", Lead: "Two plenary talks by leaders in autonomous systems, at the end of the afternoon.", Parent: "/program", Sidebar: "program"},
-		{Path: "/program/workshops", Template: "workshops", Title: "Workshops", Lead: "Five 90-minute, laptop-based workshops for 25 or 50 participants, led by the speakers of papers with workshop.", Parent: "/program", Sidebar: "program"},
+		{Path: "/program/workshops", Template: "workshops", Title: "Workshops", Lead: "Five 90-minute, laptop-based workshops for 25 or 50 participants, led by the authors of papers with workshop.", Parent: "/program", Sidebar: "program"},
 		{Path: "/program/sessions", Template: "sessions", Title: "Paper Sessions", Lead: "Eight papers without workshop, about 15 minutes each, presented in parallel with the afternoon workshops.", Parent: "/program", Sidebar: "program"},
 
 		// Registration
@@ -76,7 +76,7 @@ func sitePages() []*Page {
 		// Contact & utilities
 		{Path: "/contact", Template: "contact", Title: "Contact Us", Lead: "Questions about submissions, registration or sponsorship? We are happy to help.", Parent: "/"},
 		{Path: "/subscribe", Template: "subscribe", Title: "Keep Me Updated", Lead: "Deadline reminders and announcements, straight to your inbox.", Parent: "/"},
-		{Path: "/sitemap", Template: "sitemap", Title: "Site Map", Lead: "Every page of the ICAS website.", Parent: "/"},
+		{Path: "/sitemap", Template: "sitemap", Title: "Site Map", Lead: "Every page of the ICASW website.", Parent: "/"},
 		{Path: "/admin", Template: "admin", Title: "Admin", Lead: "Submissions, contact messages and subscribers.", Parent: "/", NoIndex: true, Private: true},
 	}
 }
@@ -103,7 +103,7 @@ func siteNav() []navItem {
 		{Label: "Home", Path: "/"},
 		{Label: "About", Path: "/about", Children: []navItem{
 			{Label: "Welcome Message", Path: "/about/welcome"},
-			{Label: "About ICAS", Path: "/about"},
+			{Label: "About ICASW", Path: "/about"},
 			{Label: "News Highlights", Path: "/news"},
 			{Label: "Organizing Committee", Path: "/committee"},
 			{Label: "Technical Program Committee", Path: "/committee/technical-program"},

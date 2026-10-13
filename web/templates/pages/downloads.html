@@ -2,7 +2,7 @@
 <div class="page-body">
   <div class="container page-grid">
     <article class="prose">
-      <p class="lead">Every file for {{$c.FullTitle}} in one place: the call for papers and the official slide template for speakers, the program and proceedings, and material to help spread the word.</p>
+      <p class="lead">Every file for {{$c.FullTitle}} in one place: the call for papers and the official slide template for authors, the program and proceedings, and material to help spread the word.</p>
       <ul class="jump-links" aria-label="Sections on this page">
         {{- range .Site.Downloads}}
         <li><a href="#{{.Key}}">{{icon .Icon}} {{.Title}}</a></li>
@@ -38,7 +38,7 @@
             <li><strong>Android (Chrome):</strong> open the browser menu, then “Install app” or “Add to Home screen”.</li>
           </ul>
         </div>
-        <img class="mascot" src="{{asset "img/icon-192.png"}}" alt="ICAS app icon" width="140" height="140">
+        <img class="mascot" src="{{asset "img/icon-192.png"}}" alt="ICASW app icon" width="140" height="140">
       </div>
 
       <h2 id="after">After the conference</h2>

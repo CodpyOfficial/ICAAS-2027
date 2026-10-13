@@ -3,13 +3,13 @@
   <div class="container page-grid">
     <article class="prose">
       <p class="lead">The {{$c.Name}} ({{$c.Acronym}}) is a forum for researchers, engineers and practitioners working on the theory, design and deployment of systems that perceive, decide and act on their own — from robots and vehicles to self-adaptive software.</p>
-      <p>{{$c.FullTitle}} will be held {{if $c.Location}}in <strong>{{$c.Location}}</strong>{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, <strong>{{$c.Dates}}</strong>{{end}}. Its program pairs research talks with practice: alongside the sessions for papers without workshop, the speakers of papers with workshop run interactive workshops in which participants build and experiment on their own laptops.</p>
+      <p>{{$c.FullTitle}} will be held {{if $c.Location}}in <strong>{{$c.Location}}</strong>{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, <strong>{{$c.Dates}}</strong>{{end}}. Its program pairs research talks with practice: alongside the sessions for papers without workshop, the authors of papers with workshop run interactive workshops in which participants build and experiment on their own laptops.</p>
 
       <div class="key-figures">
-        <div class="key-figure"><strong>{{.Site.TotalSlots}}</strong><span>speaking slots</span></div>
+        <div class="key-figure"><strong>{{.Site.TotalSlots}}</strong><span>presentation slots</span></div>
         <div class="key-figure"><strong>{{$ho.Slots}}</strong><span>papers with workshop</span></div>
         <div class="key-figure"><strong>{{$th.Slots}}</strong><span>papers without workshop</span></div>
-        <div class="key-figure"><strong>40%</strong><span>of workshop fees as speaker feedback</span></div>
+        <div class="key-figure"><strong>40%</strong><span>of workshop fees as author feedback</span></div>
         <div class="key-figure"><strong>{{len .Site.Topics}}</strong><span>topic areas</span></div>
       </div>
 
@@ -25,11 +25,11 @@
       <p>The theme spans the full autonomy stack and puts implementation first: robotics, vehicles, drones, embedded computing, perception, simulation and applications lead the list. Submissions aligned with these areas are warmly welcomed, though not strictly limited to them.</p>
       <div class="topic-compact">{{template "topics" .}}</div>
 
-      <h2>Why ICAS?</h2>
+      <h2>Why ICASW?</h2>
       <div class="grid-2">
         <div class="card">
-          <h3>For speakers</h3>
-          <p>Speakers of papers with workshop turn their work into an experience participants can reproduce, and receive 40% of the workshop registration fees as feedback. Speakers of papers without workshop present to an audience that builds real systems.</p>
+          <h3>For authors</h3>
+          <p>Authors of papers with workshop turn their work into an experience participants can reproduce, and receive 40% of the workshop registration fees as feedback. Authors of papers without workshop present to an audience that builds real systems.</p>
         </div>
         <div class="card">
           <h3>For participants</h3>

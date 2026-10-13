@@ -29,8 +29,9 @@
     <div class="side-card-body">
       <ul class="side-links">
         <li><a href="/submission">{{icon "send"}} Submit a proposal</a></li>
-        <li><a href="{{asset "files/ICAS-Call-for-Papers.pptx"}}" download>{{icon "download"}} Call for Papers (PPTX)</a></li>
-        <li><a href="{{asset "files/ICAS-slide-template.pptx"}}" download>{{icon "monitor"}} Official slide template (PPTX)</a></li>
+        <li><a href="{{asset "files/ICASW-CFP-flyer.pdf"}}" download>{{icon "printer"}} Call for Papers flyer (PDF)</a></li>
+        <li><a href="{{asset "files/ICASW-slide-template.pptx"}}" download>{{icon "monitor"}} Official slide template (PPTX)</a></li>
+        <li><a href="https://www.ieee.org/conferences/publishing/templates" target="_blank" rel="noopener">{{icon "file-text"}} Paper template (IEEE)</a></li>
         <li><a href="/downloads">{{icon "download"}} All downloads</a></li>
         <li><a href="/registration">{{icon "id-card"}} Registration</a></li>
         <li><a href="/faq">{{icon "help"}} FAQs</a></li>
@@ -79,10 +80,13 @@
       <span class="track-icon">{{icon .Icon}}</span>
       <div>
         <h3>{{.Name}}</h3>
-        <span class="track-slots">{{.Slots}} speaking slots available</span>
+        <span class="track-slots">{{.Slots}} presentation slots available</span>
       </div>
     </div>
     <p>{{.Summary}}</p>
+    {{- with .Highlight}}
+    <p class="track-highlight">{{icon "video"}}<span>{{.}}</span></p>
+    {{- end}}
     <ul class="track-points">
       {{- range .Points}}
       <li>{{icon "check"}}<span>{{.}}</span></li>
@@ -187,20 +191,20 @@
     <p><strong>Ready to submit?</strong> Proposals for both tracks are submitted through the online form. Submissions must be in English.</p>
     <div class="btn-row">
       <a class="btn btn-accent btn-sm" href="/submission">Submit a proposal</a>
-      <a class="btn btn-outline btn-sm" href="{{asset "files/ICAS-Call-for-Papers.pptx"}}" download>{{icon "download"}} Download the Call for Papers</a>
+      <a class="btn btn-outline btn-sm" href="{{asset "files/ICASW-CFP-flyer.pdf"}}" download>{{icon "download"}} Download the flyer (PDF)</a>
     </div>
   </div>
 </div>
 {{end}}
 
-{{define "speaker-kit"}}
-{{- with downloadGroup "speaker-kit"}}
+{{define "author-kit"}}
+{{- with downloadGroup "author-kit"}}
 <aside class="kit" aria-label="{{.Title}}">
   <p class="kit-title">{{icon .Icon}} {{.Title}}</p>
   {{- with .Description}}<p class="kit-note">{{.}}</p>{{end}}
   <ul class="kit-list">
     {{- range .Items}}
-    <li><a class="kit-item" href="{{.URL}}" download><span class="kit-icon">{{icon (orText .Icon "download")}}</span><span><strong>{{.Title}}</strong><small>{{.Format}}</small></span></a></li>
+    <li><a class="kit-item" href="{{.URL}}"{{if isExternal .URL}} target="_blank" rel="noopener"{{else}} download{{end}}><span class="kit-icon">{{icon (orText .Icon "download")}}</span><span><strong>{{.Title}}</strong><small>{{.Format}}{{if isExternal .URL}} {{icon "external"}}{{end}}</small></span></a></li>
     {{- end}}
   </ul>
   <a class="kit-more" href="/downloads">All downloads {{icon "arrow-right"}}</a>
@@ -209,7 +213,7 @@
 {{end}}
 
 {{define "download-item"}}
-{{- if .URL}}<a class="download" href="{{.URL}}" download>{{else}}<div class="download is-disabled">{{end}}
+{{- if .URL}}<a class="download" href="{{.URL}}"{{if isExternal .URL}} target="_blank" rel="noopener"{{else}} download{{end}}>{{else}}<div class="download is-disabled">{{end}}
   <span class="download-icon">{{icon (orText .Icon "download")}}</span>
   <span><strong>{{.Title}}</strong><small>{{.Description}}</small></span>
   {{if .URL}}<span class="badge badge-soon">{{.Format}}</span>{{else}}<span class="badge badge-tba">Coming soon</span>{{end}}

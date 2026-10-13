@@ -1,4 +1,4 @@
-// Package server implements the ICAS conference website: page rendering,
+// Package server implements the ICASW conference website: page rendering,
 // static assets, the proposal submission / contact / newsletter forms and a
 // small password-protected admin view of what was submitted.
 package server

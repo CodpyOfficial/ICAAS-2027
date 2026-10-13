@@ -35,7 +35,7 @@ func (s *Server) adminOK(w http.ResponseWriter, r *http.Request) bool {
 		http.Error(w, "Too many failed attempts; try again later.", http.StatusTooManyRequests)
 		return false
 	}
-	w.Header().Set("WWW-Authenticate", `Basic realm="ICAS admin", charset="UTF-8"`)
+	w.Header().Set("WWW-Authenticate", fmt.Sprintf(`Basic realm="%s admin", charset="UTF-8"`, s.site().Conference.Acronym))
 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
 	return false
 }
@@ -114,7 +114,7 @@ func (s *Server) handleAdminExport(w http.ResponseWriter, r *http.Request) {
 			"Presentation outline", "Workshop plan", "Software", "Target OS", "Equipment provided", "Skill level",
 			"Workshop size", "Participant laptop requirements", "TAs", "TA names", "Demo video",
 			"Paper file", "Paper original name", "Paper size (bytes)", "Paper SHA-256",
-			"Speaker", "Email", "Affiliation", "Country", "Co-speakers", "Bio", "Speaking experience", "Links"}
+			"Author", "Email", "Affiliation", "Country", "Co-authors", "Bio", "Presentation experience", "Links"}
 		for _, x := range d.Submissions {
 			rows = append(rows, []string{x.ID, x.Received.Format(time.RFC3339), trackName(x.Track), x.Title, x.Abstract,
 				strings.Join(x.Topics, "; "), x.OtherTopic, x.TalkOutline, x.WorkshopPlan, x.Software, x.TargetOS,
@@ -123,7 +123,7 @@ func (s *Server) handleAdminExport(w http.ResponseWriter, r *http.Request) {
 				x.SpeakerName, x.SpeakerEmail, x.Affiliation, x.Country, x.CoSpeakers, x.Bio, x.Experience, x.Links})
 		}
 	case "review":
-		// Anonymized for double-blind review: everything about the speakers
+		// Anonymized for double-blind review: everything about the authors
 		// (name, contact, affiliation, bio, links) is left out.
 		header = []string{"ID", "Track", "Title", "Abstract", "Topics", "Other topic", "Presentation outline",
 			"Workshop plan", "Software", "Target OS", "Equipment provided", "Skill level", "Workshop size",
@@ -150,7 +150,7 @@ func (s *Server) handleAdminExport(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "text/csv; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-store")
-	w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="icas-%s-%s.csv"`, kind, s.now().Format("20060102")))
+	w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s-%s-%s.csv"`, strings.ToLower(s.site().Conference.Acronym), kind, s.now().Format("20060102")))
 	w.Write([]byte("\xEF\xBB\xBF")) // UTF-8 BOM so Excel detects the encoding
 	cw := csv.NewWriter(w)
 	cw.Write(header)

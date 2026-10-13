@@ -221,7 +221,7 @@ func TestStaticAssets(t *testing.T) {
 			t.Errorf("GET %s = 200, want an error", p)
 		}
 	}
-	rec = get(t, s, "/static/files/ICAS-Call-for-Papers.pptx")
+	rec = get(t, s, "/static/files/ICASW-slide-template.pptx")
 	if rec.Code != http.StatusOK || !strings.Contains(rec.Header().Get("Content-Disposition"), "attachment") {
 		t.Errorf("pptx download: %d %q", rec.Code, rec.Header().Get("Content-Disposition"))
 	}
@@ -367,7 +367,7 @@ func TestSubmissionFlow(t *testing.T) {
 	if rec.Code != http.StatusSeeOther {
 		t.Fatalf("POST /submission = %d; body: %s", rec.Code, rec.Body.String())
 	}
-	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICAS2027-W001" {
+	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICASW2027-W001" {
 		t.Fatalf("Location = %q", loc)
 	}
 
@@ -378,7 +378,7 @@ func TestSubmissionFlow(t *testing.T) {
 	}
 	theory.Set(csrfFieldName, token)
 	rec = postSubmission(t, s, theory, `C:\fakepath\Theory Paper.PDF`, samplePDF, cookie)
-	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICAS2027-P001" {
+	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICASW2027-P001" {
 		t.Fatalf("paper without workshop: Location = %q (code %d)", loc, rec.Code)
 	}
 
@@ -399,8 +399,8 @@ func TestSubmissionFlow(t *testing.T) {
 
 	sum := sha256.Sum256(samplePDF)
 	for i, want := range []struct{ file, name string }{
-		{"ICAS2027-W001.pdf", "drones.pdf"},
-		{"ICAS2027-P001.pdf", "Theory Paper.PDF"},
+		{"ICASW2027-W001.pdf", "drones.pdf"},
+		{"ICASW2027-P001.pdf", "Theory Paper.PDF"},
 	} {
 		got := subs[i]
 		if got.PaperFile != want.file || got.PaperName != want.name ||
@@ -416,8 +416,8 @@ func TestSubmissionFlow(t *testing.T) {
 		t.Errorf("papers directory holds %v, want exactly the two PDFs", got)
 	}
 
-	rec = get(t, s, "/submission/received?id=ICAS2027-W001")
-	if !strings.Contains(rec.Body.String(), "ICAS2027-W001") {
+	rec = get(t, s, "/submission/received?id=ICASW2027-W001")
+	if !strings.Contains(rec.Body.String(), "ICASW2027-W001") {
 		t.Error("receipt page does not show the submission ID")
 	}
 	rec = get(t, s, "/submission/received?id=<script>")
@@ -449,14 +449,14 @@ func TestSubmissionValidation(t *testing.T) {
 	for _, want := range []string{
 		"then select your PDF again",
 		"Abstract must be at most 300 words (currently 301).",
-		"Speaker bio must be at most 150 words (currently 151).",
+		"Author bio must be at most 150 words (currently 151).",
 		"Please enter a full link starting with https://",
 		"Required software is required.",
 		"Please choose a workshop for 25 or 50 participants.",
 		"Laptop hardware requirements for participants is required.",
 		"Please choose the number of teaching assistants (at least one).",
 		"Please confirm that your proposal is written in English.",
-		"Please confirm that you will use the official ICAS slide template.",
+		"Please confirm that you will use the official ICASW slide template.",
 	} {
 		if !strings.Contains(body, template_escape(want)) {
 			t.Errorf("missing error %q", want)
@@ -598,7 +598,7 @@ func TestSubmissionIDSkipsOrphanedPDF(t *testing.T) {
 	if err := os.MkdirAll(s.papersDir(), 0o700); err != nil {
 		t.Fatal(err)
 	}
-	orphan := filepath.Join(s.papersDir(), "ICAS2027-W001.pdf")
+	orphan := filepath.Join(s.papersDir(), "ICASW2027-W001.pdf")
 	if err := os.WriteFile(orphan, []byte("%PDF-1.4 orphan"), 0o600); err != nil {
 		t.Fatal(err)
 	}
@@ -606,7 +606,7 @@ func TestSubmissionIDSkipsOrphanedPDF(t *testing.T) {
 	form := validWithWorkshop()
 	form.Set(csrfFieldName, token)
 	rec := postSubmission(t, s, form, "drones.pdf", samplePDF, cookie)
-	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICAS2027-W002" {
+	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICASW2027-W002" {
 		t.Fatalf("Location = %q (code %d)", loc, rec.Code)
 	}
 	if data, _ := os.ReadFile(orphan); string(data) != "%PDF-1.4 orphan" {
@@ -729,18 +729,21 @@ func TestAdmin(t *testing.T) {
 		return rec
 	}
 	rec := auth("/admin")
-	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "ICAS2027-W001") {
+	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "ICASW2027-W001") {
 		t.Fatalf("admin page: %d", rec.Code)
 	}
 	if rec.Header().Get("Cache-Control") != "no-store" {
 		t.Errorf("admin Cache-Control = %q", rec.Header().Get("Cache-Control"))
 	}
-	if !strings.Contains(rec.Body.String(), `href="/admin/paper?id=ICAS2027-W001"`) {
+	if !strings.Contains(rec.Body.String(), `href="/admin/paper?id=ICASW2027-W001"`) {
 		t.Error("admin page does not link the paper")
 	}
 	rec = auth("/admin/export?kind=submissions")
 	if !strings.HasPrefix(rec.Header().Get("Content-Type"), "text/csv") || !strings.Contains(rec.Body.String(), "ada@example.org") {
 		t.Fatalf("submissions export: %s", rec.Header().Get("Content-Type"))
+	}
+	if cd := rec.Header().Get("Content-Disposition"); !strings.Contains(cd, `filename="icasw-submissions-`) {
+		t.Errorf("submissions export Content-Disposition = %q", cd)
 	}
 	if !strings.Contains(rec.Body.String(), `'=HYPERLINK`) {
 		t.Error("formula injection not neutralised in CSV export")
@@ -753,7 +756,7 @@ func TestAdmin(t *testing.T) {
 		strings.Contains(rec.Body.String(), "Grace Hopper") || strings.Contains(rec.Body.String(), "lovelace") {
 		t.Error("reviewer export leaks speaker or TA identity")
 	}
-	if !strings.Contains(rec.Body.String(), "ICAS2027-W001.pdf") {
+	if !strings.Contains(rec.Body.String(), "ICASW2027-W001.pdf") {
 		t.Error("reviewer export does not name the paper file")
 	}
 	if !strings.Contains(rec.Body.String(), "Paper with Workshop") {
@@ -763,19 +766,19 @@ func TestAdmin(t *testing.T) {
 		t.Errorf("unknown export kind = %d", rec.Code)
 	}
 
-	rec = auth("/admin/paper?id=ICAS2027-W001")
+	rec = auth("/admin/paper?id=ICASW2027-W001")
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/pdf" || !bytes.Equal(rec.Body.Bytes(), samplePDF) {
 		t.Fatalf("paper download: %d %q", rec.Code, rec.Header().Get("Content-Type"))
 	}
-	if cd := rec.Header().Get("Content-Disposition"); cd != `attachment; filename="ICAS2027-W001.pdf"` {
+	if cd := rec.Header().Get("Content-Disposition"); cd != `attachment; filename="ICASW2027-W001.pdf"` {
 		t.Errorf("paper Content-Disposition = %q", cd)
 	}
-	for _, id := range []string{"ICAS2027-W002", "../ICAS2027-W001", "../submissions", ""} {
+	for _, id := range []string{"ICASW2027-W002", "../ICASW2027-W001", "../submissions", ""} {
 		if rec := auth("/admin/paper?id=" + url.QueryEscape(id)); rec.Code != http.StatusNotFound {
 			t.Errorf("paper %q = %d, want 404", id, rec.Code)
 		}
 	}
-	if rec := get(t, s, "/admin/paper?id=ICAS2027-W001"); rec.Code != http.StatusUnauthorized {
+	if rec := get(t, s, "/admin/paper?id=ICASW2027-W001"); rec.Code != http.StatusUnauthorized {
 		t.Errorf("paper without auth = %d, want 401", rec.Code)
 	}
 
@@ -783,8 +786,11 @@ func TestAdmin(t *testing.T) {
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/zip" {
 		t.Fatalf("papers zip: %d %q", rec.Code, rec.Header().Get("Content-Type"))
 	}
+	if cd := rec.Header().Get("Content-Disposition"); !strings.Contains(cd, `filename="icasw-papers-`) {
+		t.Errorf("papers zip Content-Disposition = %q", cd)
+	}
 	zr, err := zip.NewReader(bytes.NewReader(rec.Body.Bytes()), int64(rec.Body.Len()))
-	if err != nil || len(zr.File) != 1 || zr.File[0].Name != "ICAS2027-W001.pdf" {
+	if err != nil || len(zr.File) != 1 || zr.File[0].Name != "ICASW2027-W001.pdf" {
 		t.Fatalf("papers zip content: %v", err)
 	}
 	zf, err := zr.File[0].Open()
@@ -835,14 +841,31 @@ func TestRemovedAndMovedPages(t *testing.T) {
 	}
 }
 
-func TestSpeakerKitAndDownloads(t *testing.T) {
+func TestAuthorKitAndDownloads(t *testing.T) {
 	s := newTestServer(t, nil)
+	const flyer, template, ieee = "/static/files/ICASW-CFP-flyer.pdf", "/static/files/ICASW-slide-template.pptx", "https://www.ieee.org/conferences/publishing/templates"
 	for _, p := range []string{"/", "/call-for-papers", "/call-for-papers/with-workshop", "/call-for-papers/without-workshop", "/submission", "/authors"} {
 		body := get(t, s, p).Body.String()
-		for _, file := range []string{"/static/files/ICAS-Call-for-Papers.pptx", "/static/files/ICAS-slide-template.pptx"} {
-			if !strings.Contains(body, `class="kit-item" href="`+file+`"`) {
-				t.Errorf("%s: speaker kit lacks %s", p, file)
+		first := strings.Index(body, `class="kit-item"`)
+		if first < 0 || !strings.HasPrefix(body[first:], `class="kit-item" href="`+flyer+`"`) {
+			t.Errorf("%s: the author kit does not start with the flyer", p)
+		}
+		for _, link := range []string{`class="kit-item" href="` + template + `" download`, `class="kit-item" href="` + ieee + `" target="_blank" rel="noopener"`} {
+			if !strings.Contains(body, link) {
+				t.Errorf("%s: author kit lacks %s", p, link)
 			}
+		}
+		if strings.Contains(body, "Call-for-Papers.pptx") {
+			t.Errorf("%s still links the Call for Papers slides", p)
+		}
+	}
+	if rec := get(t, s, "/static/files/ICAS-Call-for-Papers.pptx"); rec.Code != http.StatusNotFound {
+		t.Errorf("Call for Papers slides = %d, want 404", rec.Code)
+	}
+	home := get(t, s, "/").Body.String()
+	for _, want := range []string{`class="btn btn-ghost-light" href="` + flyer, `class="flyer-thumb" href="` + flyer, "img/cfp-flyer.webp"} {
+		if !strings.Contains(home, want) {
+			t.Errorf("home page lacks the flyer: %s", want)
 		}
 	}
 	body := get(t, s, "/downloads").Body.String()
@@ -872,6 +895,43 @@ func TestSponsorPackages(t *testing.T) {
 	booth := s.site().Sponsorship.Benefits[len(s.site().Sponsorship.Benefits)-1]
 	if booth.Label != "Exhibition booth" || strings.Join(booth.Values, ",") != "no,no,no,yes" {
 		t.Errorf("exhibition booth row = %s %v, want it in the last package only", booth.Label, booth.Values)
+	}
+}
+
+func TestConferenceFacts(t *testing.T) {
+	s := newTestServer(t, nil)
+	home := get(t, s, "/").Body.String()
+	for _, want := range []string{"<title>ICASW 2027 | International Conference on Autonomous Systems and Workshop</title>",
+		`data-countdown="2027-04-17"`, "April 17, 2027"} {
+		if !strings.Contains(home, want) {
+			t.Errorf("home page lacks %s", want)
+		}
+	}
+	dates := get(t, s, "/important-dates").Body.String()
+	for _, want := range []string{"January 31, 2027", "March 1, 2027", "Camera-ready paper due", "March 31, 2027", "April 17, 2027"} {
+		if !strings.Contains(dates, want) {
+			t.Errorf("important dates lack %s", want)
+		}
+	}
+	reqs := get(t, s, "/call-for-papers/requirements").Body.String()
+	for _, want := range []string{"IEEE conference template", "no page limit", `class="req-highlight"`, `class="row-highlight"`} {
+		if !strings.Contains(reqs, want) {
+			t.Errorf("requirements page lacks %s", want)
+		}
+	}
+	if cfp := get(t, s, "/call-for-papers").Body.String(); !strings.Contains(cfp, `class="track-highlight"`) {
+		t.Error("the paper with workshop card does not highlight the demo video")
+	}
+	form := get(t, s, "/submission").Body.String()
+	for _, want := range []string{"fieldset-highlight", `class="li-highlight"`, "Author information", "Author name", "Co-authors (optional)", "Author bio"} {
+		if !strings.Contains(form, want) {
+			t.Errorf("submission form lacks %s", want)
+		}
+	}
+	for _, old := range []string{"Speaker information", "Speaker name", "Co-speakers", "speaking slots"} {
+		if strings.Contains(form, old) {
+			t.Errorf("submission form still says %q", old)
+		}
 	}
 }
 
@@ -919,7 +979,7 @@ func TestMenuHighlightsOneSection(t *testing.T) {
 func TestBreadcrumbs(t *testing.T) {
 	s := newTestServer(t, nil)
 	got := s.crumbsFor(s.byPath["/committee/technical-program"])
-	want := []string{"Home", "About ICAS", "Organizing Committee", "Technical Program Committee"}
+	want := []string{"Home", "About ICASW", "Organizing Committee", "Technical Program Committee"}
 	if len(got) != len(want) {
 		t.Fatalf("crumbs = %+v", got)
 	}

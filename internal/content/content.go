@@ -66,7 +66,7 @@ type Conference struct {
 	Copyright        string `json:"copyright"`
 }
 
-// FullTitle is e.g. "ICAS 2027".
+// FullTitle is e.g. "ICASW 2027".
 func (c Conference) FullTitle() string {
 	return strings.TrimSpace(c.Acronym + " " + c.Year)
 }
@@ -157,6 +157,9 @@ type Track struct {
 	Duration string   `json:"duration"`
 	Points   []string `json:"points"`
 	Path     string   `json:"path"`
+	// Highlight is a note shown prominently on the track card, e.g. a
+	// requirement that is easy to miss.
+	Highlight string `json:"highlight"`
 }
 
 type Topic struct {
@@ -175,6 +178,9 @@ type Requirement struct {
 	Applies string   `json:"applies"` // "all", "with-workshop" or "without-workshop"
 	Items   []string `json:"items"`
 	Icon    string   `json:"icon"`
+	// Highlight marks a requirement that is easy to miss (the demo video):
+	// it is shown emphasized wherever requirements are listed.
+	Highlight bool `json:"highlight"`
 }
 
 type Criterion struct {
@@ -255,7 +261,7 @@ type Session struct {
 	Time          string      `json:"time"`
 	Room          string      `json:"room"`
 	Level         string      `json:"level"`
-	Capacity      string      `json:"capacity"` // 25 or 50 participants, chosen by the speaker
+	Capacity      string      `json:"capacity"` // 25 or 50 participants, chosen by the authors
 	Prerequisites string      `json:"prerequisites"`
 	Laptop        string      `json:"laptop"` // hardware requirements for participants' laptops
 	Abstract      string      `json:"abstract"`
@@ -387,7 +393,7 @@ type Download struct {
 }
 
 // DownloadGroup is one section of the Downloads page. Key is its anchor on
-// that page and lets other pages show the group (e.g. the speaker kit).
+// that page and lets other pages show the group (e.g. the author kit).
 type DownloadGroup struct {
 	Key         string     `json:"key"`
 	Title       string     `json:"title"`
@@ -416,7 +422,7 @@ func (s *Site) Track(key string) (Track, bool) {
 	return Track{}, false
 }
 
-// TotalSlots sums the speaking slots of all tracks.
+// TotalSlots sums the presentation slots of all tracks.
 func (s *Site) TotalSlots() int {
 	n := 0
 	for _, t := range s.Tracks {

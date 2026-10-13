@@ -1,19 +1,21 @@
-"""Generate the downloadable promotional files of the ICAS website.
+"""Generate the downloadable promotional files of the conference website.
 
-Outputs (all under web/static/files/):
-  promo/icas-emblem.svg                  vector emblem (copy)
-  promo/icas-logo-with-year.png          emblem + wordmark with the edition year, 1600x560, transparent
-  promo/icas-logo.png                    emblem + wordmark without year, 1600x560, transparent
-  promo/icas-logo-pack.zip               the three files above
-  promo/icas-x-header-1500x500.png       X (Twitter) header
-  promo/icas-x-post-1600x900.png         X post, large
-  promo/icas-x-post-1200x675.png         X post
-  promo/icas-linkedin-cover-1128x191.png LinkedIn cover
-  promo/icas-linkedin-post-1200x627.png  LinkedIn post
-  promo/icas-square-post-1080x1080.png   square post
-  ICAS-CFP-flyer.pdf                     one-page A4 call-for-papers flyer
-  ICAS-slide-template.pptx               official 16:9 presentation template (mandatory)
-and web/static/img/og-image.png, the 1200x630 social preview of the site.
+Outputs (all under web/static/files/; <acr> is the conference acronym from
+content/site.json, e.g. ICASW, and <slug> the same in lower case):
+  promo/<slug>-emblem.svg                  vector emblem (copy)
+  promo/<slug>-logo-with-year.png          emblem + wordmark with the edition year, 1600x560, transparent
+  promo/<slug>-logo.png                    emblem + wordmark without year, 1600x560, transparent
+  promo/<slug>-logo-pack.zip               the three files above
+  promo/<slug>-x-header-1500x500.png       X (Twitter) header
+  promo/<slug>-x-post-1600x900.png         X post, large
+  promo/<slug>-x-post-1200x675.png         X post
+  promo/<slug>-linkedin-cover-1128x191.png LinkedIn cover
+  promo/<slug>-linkedin-post-1200x627.png  LinkedIn post
+  promo/<slug>-square-post-1080x1080.png   square post
+  <acr>-CFP-flyer.pdf                      one-page A4 call-for-papers flyer
+  <acr>-slide-template.pptx                official 16:9 presentation template (mandatory)
+and, under web/static/img/, og-image.png (the 1200x630 social preview of the
+site) and cfp-flyer.webp (a preview of the flyer for the home page).
 
 Everything is rendered from HTML with headless Microsoft Edge or Google
 Chrome, so the images use the same fonts and emblem as the website. Text
@@ -158,9 +160,12 @@ def facts(site):
     tracks = {t["key"]: t for t in site["tracks"]}
     loc = ", ".join(x for x in (c.get("city"), c.get("country")) if x)
     when = c.get("dates") or ""
-    where_when = " · ".join(x for x in (loc, when) if x) or "Venue and dates to be announced"
+    if loc or when:
+        where_when = f"{when or 'Dates to be announced'} · {loc or 'Venue to be announced'}"
+    else:
+        where_when = "Venue and dates to be announced"
     return {
-        "acr": c["acronym"], "year": c["year"], "name": c["name"],
+        "acr": c["acronym"], "slug": c["acronym"].lower(), "year": c["year"], "name": c["name"],
         "ho": tracks["with-workshop"]["slots"], "th": tracks["without-workshop"]["slots"],
         "where_when": where_when,
         "url": (c.get("baseURL") or "").replace("https://", "").replace("http://", "").rstrip("/"),
@@ -176,7 +181,7 @@ def logos(r, f, emblem_uri):
     .acr.with-year { font-size: 148px; }
     .name { margin-top: 26px; font-size: 44px; font-weight: 600; color: var(--muted); line-height: 1.25; }
     """
-    for name, year in (("icas-logo-with-year", f" <span>{esc(f['year'])}</span>"), ("icas-logo", "")):
+    for name, year in ((f"{f['slug']}-logo-with-year", f" <span>{esc(f['year'])}</span>"), (f"{f['slug']}-logo", "")):
         cls = "acr with-year" if year else "acr"
         body = (f"<div class='logo'><img src='{emblem_uri}' alt=''><div><div class='{cls}'>{esc(f['acr'])}{year}</div>"
                 f"<div class='name'>{esc(f['name']).replace(' on ', '<br>on ', 1)}</div></div></div>")
@@ -189,7 +194,7 @@ def social_card(f, emblem_uri, mascot_uri, w, h, layout):
               f"<div class='pill t'><b>{f['th']}</b><span>Papers without workshop</span><small>talks of about 15 minutes</small></div></div>")
     brand = (f"<div class='brand'><img src='{emblem_uri}' alt=''><div><div class='acr'>{esc(f['acr'])} <span>{esc(f['year'])}</span></div>"
              f"<div class='name'>{esc(f['name'])}</div></div></div>")
-    share = "<div class='share'>Workshop speakers receive <b class='coral'>40%</b> of the workshop registration fees as feedback</div>"
+    share = "<div class='share'>Workshop authors receive <b class='coral'>40%</b> of the workshop registration fees as feedback</div>"
     meta = f"<div class='meta'>{esc(f['where_when'])}{(' · ' + esc(f['url'])) if f['url'] else ''}</div>"
     s = w / 1200  # scale factor relative to a 1200px-wide design
     if layout == "square":
@@ -197,14 +202,14 @@ def social_card(f, emblem_uri, mascot_uri, w, h, layout):
         css = f"""
         .card {{ width:{w}px; height:{h}px; padding:{70*s}px; display:flex; flex-direction:column; align-items:center; text-align:center; position:relative; }}
         .brand {{ display:flex; flex-direction:column; align-items:center; gap:{18*s}px; }}
-        .brand img {{ width:{260*s}px; height:{260*s}px; }}
+        .brand img {{ width:{220*s}px; height:{220*s}px; }}
         .acr {{ font-size:{96*s}px; }}
-        .name {{ font-size:{30*s}px; font-weight:600; color:#cfd9ea; margin-top:{10*s}px; }}
-        .cfp {{ font-size:{84*s}px; font-weight:800; color:var(--coral); margin-top:{44*s}px; }}
+        .name {{ font-size:{30*s}px; font-weight:600; color:#cfd9ea; margin-top:{10*s}px; max-width:{760*s}px; text-wrap:balance; }}
+        .cfp {{ font-size:{84*s}px; font-weight:800; color:var(--coral); margin-top:{32*s}px; }}
         .tracks {{ display:flex; gap:{24*s}px; margin-top:{30*s}px; }}
         .t {{ padding:{20*s}px {28*s}px; display:flex; flex-direction:column; min-width:{330*s}px; }}
         .t b {{ font-size:{64*s}px; line-height:1; }} .t span {{ font-size:{28*s}px; font-weight:700; margin-top:{6*s}px; }} .t small {{ font-size:{20*s}px; color:#b9c6dc; margin-top:{4*s}px; font-family:'Open Sans',sans-serif; }}
-        .share {{ margin-top:{34*s}px; font-size:{30*s}px; font-weight:600; max-width:{600*s}px; }}
+        .share {{ margin-top:{30*s}px; font-size:{30*s}px; font-weight:600; max-width:{820*s}px; }}
         .meta {{ position:absolute; left:{70*s}px; bottom:{60*s}px; font-size:{22*s}px; color:#b9c6dc; text-align:left; font-weight:600; }}
         .mascot {{ position:absolute; right:{24*s}px; bottom:{12*s}px; width:{200*s}px; }}
         """
@@ -248,14 +253,15 @@ def social_card(f, emblem_uri, mascot_uri, w, h, layout):
 
 def social(r, f, emblem_uri, mascot_uri):
     specs = [
-        ("icas-x-header-1500x500", 1500, 500, "header"),
-        ("icas-x-post-1600x900", 1600, 900, "post"),
-        ("icas-x-post-1200x675", 1200, 675, "post"),
-        ("icas-linkedin-cover-1128x191", 1128, 191, "banner"),
-        ("icas-linkedin-post-1200x627", 1200, 627, "post"),
-        ("icas-square-post-1080x1080", 1080, 1080, "square"),
+        ("x-header-1500x500", 1500, 500, "header"),
+        ("x-post-1600x900", 1600, 900, "post"),
+        ("x-post-1200x675", 1200, 675, "post"),
+        ("linkedin-cover-1128x191", 1128, 191, "banner"),
+        ("linkedin-post-1200x627", 1200, 627, "post"),
+        ("square-post-1080x1080", 1080, 1080, "square"),
     ]
     for name, w, h, layout in specs:
+        name = f"{f['slug']}-{name}"
         body, css = social_card(f, emblem_uri, mascot_uri, w, h, layout)
         r.png(r.page(name, body, css, w, h), PROMO / f"{name}.png", w, h)
 
@@ -271,7 +277,9 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
         title = q["title"].split(" (")[0]
         star = "*" if q.get("applies") == "with-workshop" else ""
         items = "" if star else "".join(f" {esc(i)}" for i in q.get("items") or [])
-        return f"<li><b>{esc(title)}{star}:</b> {esc(q['text'])}{items}</li>"
+        # Easy-to-miss requirements (the demo video) are highlighted, as on the website.
+        cls = " class='hl'" if q.get("highlight") else ""
+        return f"<li{cls}><b>{esc(title)}{star}:</b> {esc(q['text'])}{items}</li>"
 
     reqs = "".join(req_item(q) for q in site["submissionRequirements"])
     crit = "".join(f"<li><b>{esc(c['title'])}:</b> {esc(c['text'])}</li>" for c in site["reviewCriteria"])
@@ -287,7 +295,7 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     .top { height: 46mm; padding: 4mm 12mm 0; display: flex; gap: 6mm; align-items: center; position: relative; }
     .top img.emblem { width: 38mm; height: 38mm; }
     .top .acr { font-family: 'Montserrat'; font-size: 36pt; }
-    .top .name { font-family: 'Montserrat'; font-weight: 600; font-size: 11.5pt; color: #cfd9ea; margin-top: 1.5mm; }
+    .top .name { font-family: 'Montserrat'; font-weight: 600; font-size: 11.5pt; color: #cfd9ea; margin-top: 1.5mm; max-width: 104mm; text-wrap: balance; }
     .top .cfp { font-family: 'Montserrat'; font-weight: 800; font-size: 22pt; color: var(--coral); margin-top: 2.5mm; letter-spacing: .02em; }
     .top .when { font-family: 'Montserrat'; font-weight: 600; font-size: 9pt; margin-top: 1.5mm; }
     .top img.mascot { position: absolute; right: 10mm; bottom: 2mm; width: 34mm; }
@@ -300,7 +308,10 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     .box .slots { font-family: 'Montserrat'; font-weight: 700; color: var(--coral); font-size: 8.5pt; }
     .incentive { margin-top: 2.5mm; padding: 2mm 3.5mm; border-radius: 3mm; background: #fde8e1; font-weight: 600; color: #7a2e1d; }
     .wrap { display: grid; grid-template-columns: 1.18fr 1fr; gap: 7mm; padding: 1mm 12mm 0; }
-    ul { padding-left: 4mm; } li { margin: .5mm 0; }
+    ul { padding-left: 4mm; } li { margin: .35mm 0; }
+    .wrap > div:first-child { font-size: 7.8pt; }  /* the long requirement list must end above the footer */
+    li.hl { margin-left: -1.5mm; padding: .6mm 1.5mm; border-radius: 1.5mm; background: #fde8e1; color: #7a2e1d; }
+    li.hl b { color: #b8442b; }
     ol.topics { padding-left: 5mm; } ol.topics li { margin: .3mm 0; }
     ol.topics li.practice b { color: var(--coral); }
     .note { font-size: 7.4pt; color: #5b6878; margin: .5mm 0 1mm; }
@@ -323,17 +334,17 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     <div class="looking">
       <h2>What we are looking for</h2>
       <div class="boxes">
-        <div class="box ho"><h3>Papers with Workshop</h3><div class="slots">{ho['slots']} speaking slots</div>
+        <div class="box ho"><h3>Papers with Workshop</h3><div class="slots">{ho['slots']} presentation slots</div>
           <ul><li>Papers capable of engaging the audience interactively.</li>
           <li>A <b>25-minute presentation</b> in the morning, then a <b>90-minute workshop</b> in the afternoon.</li>
           <li>A workshop for <b>25 or 50 participants</b>, with 10 or 20 equipment sets (if needed) and at least one <b>teaching assistant</b>.</li>
-          <li>Speakers prepare the equipment and provide the <b>laptop hardware requirements</b>; attendees bring their own laptops.</li></ul></div>
-        <div class="box th"><h3>Papers without Workshop</h3><div class="slots">{th['slots']} speaking slots</div>
+          <li>Authors prepare the equipment and provide the <b>laptop hardware requirements</b>; attendees bring their own laptops.</li></ul></div>
+        <div class="box th"><h3>Papers without Workshop</h3><div class="slots">{th['slots']} presentation slots</div>
           <ul><li>Academic papers relevant to the conference theme.</li>
-          <li>About <b>15 minutes</b> per speaker, in sessions running concurrently with the afternoon workshops.</li>
+          <li>About <b>15 minutes</b> per paper, in sessions running concurrently with the afternoon workshops.</li>
           <li>Not strictly limited to the theme: any compelling, relevant research is welcome.</li></ul></div>
       </div>
-      <div class="incentive">Speaker feedback: 40% of the workshop registration fees are given to the speakers of each workshop, based on attendance. Choose an engaging topic and draw in as many participants as possible!</div>
+      <div class="incentive">Author feedback: 40% of the workshop registration fees are given to the authors of each workshop, based on attendance. Choose an engaging topic and draw in as many participants as possible!</div>
     </div>
     <div class="wrap">
       <div>
@@ -356,7 +367,13 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     <div class="foot"><span>{esc(f['acr'])} {esc(f['year'])} · {esc(f['name'])}</span><b>Submit your proposal online at {esc(url)}</b></div>
     """
     page = r.page("flyer", body, css, 794, 1123, title=f"{f['acr']} {f['year']} Call for Papers")
-    r.pdf(page, FILES / "ICAS-CFP-flyer.pdf")
+    r.pdf(page, FILES / f"{f['acr']}-CFP-flyer.pdf")
+    # A small preview of the flyer for the home page.
+    full = Path(r.workdir) / "flyer-preview.png"
+    r.png(page, full, 794, 1123)
+    with Image.open(full) as im:
+        im.convert("RGB").resize((420, 594), Image.LANCZOS).save(STATIC / "img" / "cfp-flyer.webp", "WEBP", quality=82, method=6)
+    print("  web/static/img/cfp-flyer.webp  420x594")
 
 
 def slide_template(f, emblem_png):
@@ -414,11 +431,11 @@ def slide_template(f, emblem_png):
     bg(s, navy9)
     s.shapes.add_picture(str(emblem_png), Inches(0.9), Inches(1.6), Inches(4.2), Inches(4.2))
     text(s, 5.6, 1.9, 7.2, 1.8, "Presentation title", 40, white, bold=True, name="Title")
-    text(s, 5.6, 3.8, 7.2, 0.6, "Speaker name · Affiliation", 20, RGBColor(0xCF, 0xD9, 0xEA), name="Speaker")
+    text(s, 5.6, 3.8, 7.2, 0.6, "Author name · Affiliation", 20, RGBColor(0xCF, 0xD9, 0xEA), name="Author")
     text(s, 5.6, 4.5, 7.2, 0.6, "Paper with workshop · Paper without workshop", 16, coral, bold=True, name="Track")
     text(s, 5.6, 6.6, 7.2, 0.5, footer, 12, RGBColor(0xB9, 0xC6, 0xDC))
-    s.notes_slide.notes_text_frame.text = ("Official ICAS template: its use is mandatory for all presentations. "
-                                          "Replace the title, speaker and track; keep the layout, colours, emblem and footer.")
+    s.notes_slide.notes_text_frame.text = (f"Official {f['acr']} template: its use is mandatory for all presentations. "
+                                          "Replace the title, author and track; keep the layout, colours, emblem and footer.")
 
     # 2. Content slide
     s = prs.slides.add_slide(blank)
@@ -458,12 +475,12 @@ def slide_template(f, emblem_png):
     text(s, 0.9, 6.6, 11.5, 0.5, footer, 12, RGBColor(0xB9, 0xC6, 0xDC), align=PP_ALIGN.CENTER)
 
     prs.core_properties.title = f"{f['acr']} {f['year']} official presentation template"
-    prs.core_properties.subject = "Mandatory slide template for all ICAS presentations"
+    prs.core_properties.subject = f"Mandatory slide template for all {f['acr']} presentations"
     # Replace python-pptx's default package metadata with the conference's own.
     prs.core_properties.author = f"{f['acr']} Organizing Committee"
     prs.core_properties.last_modified_by = f"{f['acr']} Organizing Committee"
     prs.core_properties.comments = ""
-    out = FILES / "ICAS-slide-template.pptx"
+    out = FILES / f"{f['acr']}-slide-template.pptx"
     prs.save(out)
     print(f"  {out.relative_to(ROOT)}")
 
@@ -484,7 +501,7 @@ def main():
     # the system temp directory are harmless.
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         r = Renderer(browser, tmp)
-        shutil.copyfile(EMBLEM, PROMO / "icas-emblem.svg")
+        shutil.copyfile(EMBLEM, PROMO / f"{f['slug']}-emblem.svg")
         logos(r, f, emblem_uri)
         social(r, f, emblem_uri, mascot_uri)
         flyer(r, site, f, emblem_uri, mascot_uri)
@@ -496,10 +513,11 @@ def main():
         r.png(page, emblem_png, 800, 800, transparent=True)
         slide_template(f, emblem_png)
 
-    with zipfile.ZipFile(PROMO / "icas-logo-pack.zip", "w", zipfile.ZIP_DEFLATED) as z:
-        for name in ("icas-emblem.svg", "icas-logo-with-year.png", "icas-logo.png"):
+    pack = PROMO / f"{f['slug']}-logo-pack.zip"
+    with zipfile.ZipFile(pack, "w", zipfile.ZIP_DEFLATED) as z:
+        for name in (f"{f['slug']}-emblem.svg", f"{f['slug']}-logo-with-year.png", f"{f['slug']}-logo.png"):
             z.write(PROMO / name, name)
-    print("  web/static/files/promo/icas-logo-pack.zip")
+    print(f"  {pack.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
