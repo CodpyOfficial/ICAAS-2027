@@ -1,6 +1,6 @@
-# ICAS website
+# ICASW website
 
-The website of ICAS, the International Conference on Autonomous Systems. It is written in Go using only the standard library. The page structure follows the IEEE ISCAS 2026 and 2027 sites.
+The website of ICASW, the International Conference on Autonomous Systems and Workshop. It is written in Go using only the standard library. The page structure follows the IEEE ISCAS 2026 and 2027 sites.
 
 ## Run
 
@@ -40,7 +40,7 @@ The tests render every page, follow every internal link and asset, and exercise 
 | `content/site.json` | All conference facts shown on the site |
 | `web/templates` | HTML templates (layout, partials, one file per page) |
 | `web/static` | CSS, JavaScript, images and downloadable files |
-| `tools/make_assets.py` | Generator for the promotional kit, CFP flyer, slide template and social preview image |
+| `tools/make_assets.py` | Generator for the promotional kit, CFP flyer, slide template, social preview image and the flyer preview on the home page |
 
 ## Stored data
 
@@ -49,7 +49,7 @@ Everything visitors send is kept in the data directory (`-data`, default `data/`
 | Path | Contents |
 |---|---|
 | `submissions.jsonl` | One proposal per line: the proposal, the speaker details, the paper's original file name, size and SHA-256, and the sender's IP address and browser |
-| `papers/<ID>.pdf` | The paper of each proposal, named after its submission ID (e.g. `ICAS2027-W001.pdf`), so the file name reveals nothing about the authors |
+| `papers/<ID>.pdf` | The paper of each proposal, named after its submission ID (e.g. `ICASW2027-W001.pdf`), so the file name reveals nothing about the authors |
 | `contacts.jsonl` | Contact form messages |
 | `subscribers.jsonl` | Newsletter sign-ups |
 
@@ -61,7 +61,7 @@ All conference facts live in `content/site.json`. An empty string is shown on th
 
 ## Regenerating downloads
 
-After you change dates, venue or year, regenerate the promotional kit, the CFP flyer PDF, the slide template and the social preview image. This needs Python with Pillow and python-pptx, and Edge or Chrome:
+After you change the name, dates, venue or year, regenerate the promotional kit, the CFP flyer PDF and its home page preview, the slide template and the social preview image. File names follow the conference acronym (e.g. `ICASW-CFP-flyer.pdf`). This needs Python with Pillow and python-pptx, and Edge or Chrome:
 
 ```bash
 python tools/make_assets.py
