@@ -261,9 +261,10 @@ func (s *Server) handleSubmission(w http.ResponseWriter, r *http.Request) {
 		sub.IP = clientIP(r, s.cfg.TrustProxy)
 		sub.UserAgent = truncate(r.UserAgent(), 300)
 		prefix := strings.ToUpper(site.Conference.Acronym + site.Conference.Year)
-		letter := "P" // paper without workshop
+		// The letters predate the track names and stay, so IDs remain stable.
+		letter := "P" // regular paper
 		if sub.Track == content.TrackWithWorkshop {
-			letter = "W"
+			letter = "W" // tutorial: a paper with a workshop
 		}
 		var stored string
 		err = s.store.Add("submissions", func(existing []json.RawMessage) (any, error) {
@@ -303,7 +304,7 @@ func validateSubmission(f *formState, site *content.Site) Submission {
 	v := f.Values
 	track := v["track"]
 	if !oneOf(track, []string{content.TrackWithWorkshop, content.TrackWithoutWorkshop}) {
-		f.fail("track", "Please choose Paper with Workshop or Paper without Workshop.")
+		f.fail("track", "Please choose Tutorial or Regular Paper.")
 	}
 	f.required("title", "Title")
 	f.maxLen("title", "Title", maxShortField)

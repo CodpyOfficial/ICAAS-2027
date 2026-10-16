@@ -1,8 +1,8 @@
-{{define "content"}}
+{{define "content"}}{{$t := track "without-workshop"}}
 <div class="page-body">
   <div class="container page-grid">
     <article class="prose">
-      <p class="lead">Eight papers without workshop are presented in sessions that run concurrently with the afternoon workshops, with an estimated 15 minutes per paper.</p>
+      <p class="lead">The {{$t.Slots}} regular papers are presented in the late morning, after the tutorial presentations, with an estimated 15 minutes per paper.</p>
       <div class="table-wrap">
         <table class="table">
           <thead><tr><th scope="col">Code</th><th scope="col">Title</th><th scope="col">Author</th><th scope="col">Time</th><th scope="col">Room</th></tr></thead>

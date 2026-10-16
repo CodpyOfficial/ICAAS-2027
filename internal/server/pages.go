@@ -37,34 +37,34 @@ func sitePages() []*Page {
 		{Path: "/committee", Template: "committee", Title: "Organizing Committee", Lead: "The people organizing the conference.", Parent: "/about", Sidebar: "about"},
 		{Path: "/committee/technical-program", Template: "tpc", Title: "Technical Program Committee", Lead: "Track chairs and reviewers responsible for the double-blind review.", Parent: "/committee", Sidebar: "about"},
 		{Path: "/about/history", Template: "history", Title: "Conference History", Lead: "Past and upcoming editions of ICASW.", Parent: "/about", Sidebar: "about"},
-		{Path: "/faq", Template: "faq", Title: "Frequently Asked Questions", Lead: "Quick answers about submissions, workshops and registration.", Parent: "/about", Sidebar: "about"},
+		{Path: "/faq", Template: "faq", Title: "Frequently Asked Questions", Lead: "Quick answers about submissions, tutorials and registration.", Parent: "/about", Sidebar: "about"},
 		{Path: "/policies", Template: "policies", Title: "Conference Policies", Lead: "Code of conduct, privacy, non-discrimination, accessibility, ethics and terms of use.", Parent: "/about", Sidebar: "about"},
 
 		// Call for papers
-		{Path: "/call-for-papers", Template: "cfp", Title: "Call for Papers", Lead: "Papers with and without workshop on autonomous systems — 13 presentation slots.", Parent: "/", Sidebar: "cfp"},
-		{Path: "/call-for-papers/with-workshop", Template: "cfp-with-workshop", Title: "Papers with Workshop", Lead: "A 25-minute morning presentation and a 90-minute afternoon workshop for 25 or 50 participants.", Parent: "/call-for-papers", Sidebar: "cfp"},
-		{Path: "/call-for-papers/without-workshop", Template: "cfp-without-workshop", Title: "Papers without Workshop", Lead: "Presentations of about 15 minutes on academic work relevant to autonomous systems.", Parent: "/call-for-papers", Sidebar: "cfp"},
+		{Path: "/call-for-papers", Template: "cfp", Title: "Call for Papers", Lead: "Tutorials and regular papers on autonomous systems, with an emphasis on implementation.", Parent: "/", Sidebar: "cfp"},
+		{Path: "/call-for-papers/tutorials", Template: "cfp-tutorials", Title: "Tutorials", Lead: "A 25-minute morning presentation and a 90-minute afternoon workshop for 25 or 50 participants.", Parent: "/call-for-papers", Sidebar: "cfp"},
+		{Path: "/call-for-papers/regular-papers", Template: "cfp-regular-papers", Title: "Regular Papers", Lead: "Presentations of about 15 minutes on academic work relevant to autonomous systems, in the late morning.", Parent: "/call-for-papers", Sidebar: "cfp"},
 		{Path: "/call-for-papers/topics", Template: "cfp-topics", Title: "Conference Theme & Topics", Lead: "The topic areas of ICASW, led by the implementation topics at the heart of the conference.", Parent: "/call-for-papers", Sidebar: "cfp"},
 		{Path: "/call-for-papers/requirements", Template: "cfp-requirements", Title: "Proposal Submission Requirements", Lead: "What every proposal must contain, by track.", Parent: "/call-for-papers", Sidebar: "cfp"},
 		{Path: "/call-for-papers/review", Template: "cfp-review", Title: "Review Criteria", Lead: "How proposals are evaluated in double-blind peer review.", Parent: "/call-for-papers", Sidebar: "cfp"},
 
 		// Authors
-		{Path: "/submission", Template: "submission", Title: "Proposal Submission", Lead: "Submit a paper with workshop or a paper without workshop online.", Parent: "/", Sidebar: "authors"},
+		{Path: "/submission", Template: "submission", Title: "Proposal Submission", Lead: "Submit a tutorial or a regular paper online.", Parent: "/", Sidebar: "authors"},
 		{Path: "/submission/received", Template: "submission-received", Title: "Proposal Received", Lead: "Thank you for submitting to ICASW.", Parent: "/submission", NoIndex: true},
 		{Path: "/important-dates", Template: "dates", Title: "Important Dates", Lead: "Deadlines for proposals, notifications, registration and the conference itself.", Parent: "/", Sidebar: "authors"},
 		{Path: "/authors", Template: "authors", Title: "Author Information", Lead: "Everything authors need to know, from submission to presentation day.", Parent: "/", Sidebar: "authors"},
-		{Path: "/authors/presentation-guidelines", Template: "presentation", Title: "Presentation Guidelines", Lead: "Timing, equipment, preparation and the mandatory slide template for papers with and without workshop.", Parent: "/authors", Sidebar: "authors"},
+		{Path: "/authors/presentation-guidelines", Template: "presentation", Title: "Presentation Guidelines", Lead: "Timing, equipment, preparation and the mandatory slide template for tutorials and regular papers.", Parent: "/authors", Sidebar: "authors"},
 		{Path: "/authors/publication", Template: "publication", Title: "Publication Opportunities", Lead: "Proceedings and journal special issue for accepted work.", Parent: "/authors", Sidebar: "authors"},
 
 		// Program
-		{Path: "/program", Template: "program", Title: "Program at a Glance", Lead: "Morning presentations of papers with workshop; in the afternoon, workshops run in parallel with the paper sessions, and two keynotes close the day.", Parent: "/", Sidebar: "program"},
-		{Path: "/program/keynotes", Template: "keynotes", Title: "Keynote Speakers", Lead: "Two plenary talks by leaders in autonomous systems, at the end of the afternoon.", Parent: "/program", Sidebar: "program"},
-		{Path: "/program/workshops", Template: "workshops", Title: "Workshops", Lead: "Five 90-minute, laptop-based workshops for 25 or 50 participants, led by the authors of papers with workshop.", Parent: "/program", Sidebar: "program"},
-		{Path: "/program/sessions", Template: "sessions", Title: "Paper Sessions", Lead: "Eight papers without workshop, about 15 minutes each, presented in parallel with the afternoon workshops.", Parent: "/program", Sidebar: "program"},
+		{Path: "/program", Template: "program", Title: "Program at a Glance", Lead: "Tutorial presentations and regular papers in the morning; tutorial workshops in the afternoon, followed by two keynotes.", Parent: "/", Sidebar: "program"},
+		{Path: "/program/keynotes", Template: "keynotes", Title: "Keynote Speakers", Lead: "Two plenary talks by leaders in autonomous systems, at the end of the afternoon after the tutorial workshops.", Parent: "/program", Sidebar: "program"},
+		{Path: "/program/tutorials", Template: "tutorials", Title: "Tutorials", Lead: "A 25-minute presentation in the morning and a 90-minute, laptop-based workshop in the afternoon for 25 or 50 participants.", Parent: "/program", Sidebar: "program"},
+		{Path: "/program/sessions", Template: "sessions", Title: "Regular Paper Sessions", Lead: "Regular papers of about 15 minutes each, presented in the late morning after the tutorial presentations.", Parent: "/program", Sidebar: "program"},
 
 		// Registration
 		{Path: "/registration", Template: "registration", Title: "Registration Information", Lead: "Fees, what is included, and registration policies.", Parent: "/", Sidebar: "registration"},
-		{Path: "/registration/workshops", Template: "registration-workshops", Title: "Workshop Registration", Lead: "Each workshop has 25 or 50 seats, booked separately from the conference registration.", Parent: "/registration", Sidebar: "registration"},
+		{Path: "/registration/workshops", Template: "registration-workshops", Title: "Workshop Registration", Lead: "Each tutorial workshop has 25 or 50 seats, booked separately from the conference registration.", Parent: "/registration", Sidebar: "registration"},
 
 		// Sponsors & exhibitors
 		{Path: "/sponsors", Template: "sponsors", Title: "Become a Sponsor or Exhibitor", Lead: "Meet the researchers and engineers building autonomous systems.", Parent: "/", Sidebar: "sponsors"},
@@ -86,6 +86,10 @@ func sitePages() []*Page {
 var movedPages = map[string]string{
 	"/promotional-items": "/downloads#logo",
 	"/program/downloads": "/downloads#program",
+	// The tracks were renamed to tutorials and regular papers.
+	"/call-for-papers/with-workshop":    "/call-for-papers/tutorials",
+	"/call-for-papers/without-workshop": "/call-for-papers/regular-papers",
+	"/program/workshops":                "/program/tutorials",
 }
 
 // navItem is a node of the main menu. Children of children render as a
@@ -113,8 +117,8 @@ func siteNav() []navItem {
 		}},
 		{Label: "Call for Papers", Path: "/call-for-papers", Children: []navItem{
 			{Label: "Call for Papers", Path: "/call-for-papers"},
-			{Label: "Papers with Workshop", Path: "/call-for-papers/with-workshop"},
-			{Label: "Papers without Workshop", Path: "/call-for-papers/without-workshop"},
+			{Label: "Tutorials", Path: "/call-for-papers/tutorials"},
+			{Label: "Regular Papers", Path: "/call-for-papers/regular-papers"},
 			{Label: "Conference Theme & Topics", Path: "/call-for-papers/topics"},
 			{Label: "Submission Requirements", Path: "/call-for-papers/requirements"},
 			{Label: "Review Criteria", Path: "/call-for-papers/review"},
@@ -130,8 +134,8 @@ func siteNav() []navItem {
 		{Label: "Program", Path: "/program", Children: []navItem{
 			{Label: "Program at a Glance", Path: "/program"},
 			{Label: "Keynote Speakers", Path: "/program/keynotes"},
-			{Label: "Workshops", Path: "/program/workshops"},
-			{Label: "Paper Sessions", Path: "/program/sessions"},
+			{Label: "Tutorials", Path: "/program/tutorials"},
+			{Label: "Regular Paper Sessions", Path: "/program/sessions"},
 		}},
 		{Label: "Registration", Path: "/registration", Children: []navItem{
 			{Label: "Registration Information", Path: "/registration"},

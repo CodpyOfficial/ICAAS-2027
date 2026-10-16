@@ -24,7 +24,7 @@
         {{- end}}
       </ul>
 
-      <h2 id="submit">Submit a paper with workshop or a paper without workshop</h2>
+      <h2 id="submit">Submit a tutorial or a regular paper</h2>
       <div class="callout">
         {{icon "info"}}
         <div>
@@ -35,8 +35,8 @@
             <li>Upload your paper as <strong>one PDF file</strong> (max {{maxPaperMB}} MB) in the <a href="https://www.ieee.org/conferences/publishing/templates" target="_blank" rel="noopener">IEEE conference format</a>, without author names. There is no page limit.</li>
             <li>Abstract: max <strong>300 words</strong>. Author bio: max <strong>150 words</strong>.</li>
             <li>Accepted authors must present with the <strong>official ICASW slide template</strong>.</li>
-            <li>Papers with workshop also need the prerequisites &amp; toolchain, the <strong>workshop size</strong> (25 or 50 participants), the <strong>laptop hardware requirements</strong> for participants and at least one <strong>teaching assistant</strong>.</li>
-            <li class="li-highlight">{{icon "video"}} Papers with workshop must include a <strong>2–5 minute demo video</strong> (public or unlisted link).</li>
+            <li>Tutorials also need the prerequisites &amp; toolchain, the <strong>workshop size</strong> (25 or 50 participants), the <strong>laptop hardware requirements</strong> for participants and at least one <strong>teaching assistant</strong>.</li>
+            <li class="li-highlight">{{icon "video"}} Tutorials must include a <strong>2–5 minute demo video</strong> (public or unlisted link).</li>
           </ul>
           <p><a href="/call-for-papers/requirements">Full submission requirements</a></p>
         </div>
@@ -60,11 +60,11 @@
             <div class="choice-cards" role="radiogroup" aria-labelledby="track-label">
               <label class="choice-card">
                 <input type="radio" name="track" value="with-workshop" required{{if checked $f "track" "with-workshop"}} checked{{end}}>
-                <span class="choice-body"><strong>{{icon "laptop"}} Paper with Workshop</strong><small>25-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as author feedback</small></span>
+                <span class="choice-body"><strong>{{icon "laptop"}} Tutorial</strong><small>25-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as author feedback</small></span>
               </label>
               <label class="choice-card">
                 <input type="radio" name="track" value="without-workshop" required{{if checked $f "track" "without-workshop"}} checked{{end}}>
-                <span class="choice-body"><strong>{{icon "book"}} Paper without Workshop</strong><small>About 15-minute presentation · {{(track "without-workshop").Slots}} slots</small></span>
+                <span class="choice-body"><strong>{{icon "book"}} Regular Paper</strong><small>About 15-minute presentation in the late morning · {{(track "without-workshop").Slots}} slots</small></span>
               </label>
             </div>
             {{- with $err}}<span class="field-error">{{.}}</span>{{end}}
@@ -87,7 +87,7 @@
 
           <div class="field{{if fieldErr $f "other_topic"}} has-error{{end}}">
             <span class="label">Topic areas</span>
-            <span class="hint">Select all that apply. If your topic is not listed, tick <strong>Others</strong> and describe it. Papers without workshop are not strictly limited to the conference theme.</span>
+            <span class="hint">Select all that apply. If your topic is not listed, tick <strong>Others</strong> and describe it. Regular papers are not strictly limited to the conference theme.</span>
             <div class="checks">
               {{- range .Site.Topics}}
               <label class="check"><input type="checkbox" name="topics" value="{{.Title}}"{{if checked $f "topics" .Title}} checked{{end}}><span>{{.Title}}</span></label>
@@ -114,7 +114,7 @@
         </fieldset>
 
         <fieldset class="fieldset track-only" data-track="with-workshop">
-          <legend>3. Workshop set-up <span class="badge badge-accent">With workshop</span></legend>
+          <legend>3. Workshop set-up <span class="badge badge-accent">Tutorial</span></legend>
           {{$zerr := fieldErr $f "workshop_size"}}
           <div class="field{{if $zerr}} has-error{{end}}">
             <span class="label" id="size-label">Workshop size <span class="req" aria-hidden="true">*</span></span>
@@ -151,7 +151,7 @@
         </fieldset>
 
         <fieldset class="fieldset track-only" data-track="with-workshop">
-          <legend>4. Teaching assistants <span class="badge badge-accent">With workshop</span></legend>
+          <legend>4. Teaching assistants <span class="badge badge-accent">Tutorial</span></legend>
           <p class="fieldset-note">At least one teaching assistant (TA) is expected to help participants during the practical part of the workshop.</p>
           {{$terr := fieldErr $f "ta_count"}}
           <div class="field{{if $terr}} has-error{{end}}">
@@ -168,7 +168,7 @@
         </fieldset>
 
         <fieldset class="fieldset fieldset-highlight track-only" data-track="with-workshop">
-          <legend>5. Interactive demo video <span class="badge badge-accent">With workshop</span> <span class="badge badge-open">Required</span></legend>
+          <legend>5. Interactive demo video <span class="badge badge-accent">Tutorial</span> <span class="badge badge-open">Required</span></legend>
           <p class="fieldset-note">A short demonstration video (2–5 minutes) showcasing the functioning prototype, project workflow, or target outcomes participants will build during the workshop. It is crucial for the program committee to evaluate technical feasibility and participant engagement.</p>
           {{template "fld" (dict "F" $f "Name" "demo_video" "Label" "Video link" "Type" "url" "Req" true "TrackOnly" true "Max" 500 "Place" "https://" "Hint" "A publicly viewable or unlisted link (e.g. YouTube, Vimeo, Loom or Google Drive).")}}
         </fieldset>

@@ -167,9 +167,9 @@ func (s *Server) handleAdminExport(w http.ResponseWriter, r *http.Request) {
 func trackName(key string) string {
 	switch key {
 	case content.TrackWithWorkshop:
-		return "Paper with Workshop"
+		return "Tutorial"
 	case content.TrackWithoutWorkshop:
-		return "Paper without Workshop"
+		return "Regular Paper"
 	}
 	return key
 }

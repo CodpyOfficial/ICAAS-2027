@@ -6,7 +6,7 @@
       <div class="media-split">
         <div>
           <p class="lead">{{$c.FullTitle}}, the {{$c.Name}}, invites proposals from researchers and practitioners working on systems that perceive, decide and act on their own.</p>
-          <p>{{$c.FullTitle}} will be held {{if $c.Location}}in {{$c.Location}}{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, {{$c.Dates}}{{end}}. Its technical program features <strong>papers with workshop</strong>, <strong>papers without workshop</strong> and two keynotes, with a particular emphasis on implementation.</p>
+          <p>{{$c.FullTitle}} will be held {{if $c.Location}}in {{$c.Location}}{{else}}at a venue to be announced{{end}}{{if $c.Dates}}, {{$c.Dates}}{{end}}. Its technical program features <strong>tutorials</strong>, <strong>regular papers</strong> and two keynotes, with a particular emphasis on implementation.</p>
         </div>
         <img class="mascot" src="{{asset "img/mascot-paper.webp"}}" alt="The ICASW bear mascot holding a paper" width="260" height="260">
       </div>
@@ -14,8 +14,8 @@
 
       <h2 id="looking-for">What we are looking for</h2>
       <ul class="track-points">
-        <li>{{icon "laptop"}}<span><strong>Papers with Workshop ({{$ho.Slots}} presentation slots available):</strong> papers capable of engaging the audience interactively.</span></li>
-        <li>{{icon "book"}}<span><strong>Papers without Workshop ({{$th.Slots}} presentation slots available):</strong> academic papers relevant to the conference theme.</span></li>
+        <li>{{icon "laptop"}}<span><strong>Tutorials ({{$ho.Slots}} presentation slots available):</strong> papers capable of engaging the audience interactively.</span></li>
+        <li>{{icon "book"}}<span><strong>Regular Papers ({{$th.Slots}} presentation slots available):</strong> academic papers relevant to the conference theme.</span></li>
       </ul>
       {{template "tracks" .}}
 
@@ -48,7 +48,7 @@
       <p>Information about proceedings and journal opportunities for accepted contributions will be published on the <a href="/authors/publication">Publication Opportunities</a> page.</p>
 
       <h2 id="template">Presentation template</h2>
-      <p>Accepted authors, with or without workshop, must prepare their presentations with the <a href="/authors/presentation-guidelines#template">official ICASW slide template</a>.</p>
+      <p>Accepted authors of tutorials and regular papers must prepare their presentations with the <a href="/authors/presentation-guidelines#template">official ICASW slide template</a>.</p>
 
       {{template "cfp-cta" .}}
 

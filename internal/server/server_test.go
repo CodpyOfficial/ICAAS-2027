@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/fs"
 	"log"
@@ -352,8 +353,8 @@ func TestSubmissionFlow(t *testing.T) {
 		}
 	}
 
-	if n := strings.Count(page, `<h3><a href="/call-for-papers/with-workshop">`); n != 1 {
-		t.Errorf("submission page shows the paper with workshop call %d times, want once", n)
+	if n := strings.Count(page, `<h3><a href="/call-for-papers/tutorials">`); n != 1 {
+		t.Errorf("submission page shows the tutorial call %d times, want once", n)
 	}
 	for _, want := range []string{"(choose one)", `value="Other" id="f-topic-other"`, "<strong>Others</strong>"} {
 		if !strings.Contains(page, want) {
@@ -379,7 +380,7 @@ func TestSubmissionFlow(t *testing.T) {
 	theory.Set(csrfFieldName, token)
 	rec = postSubmission(t, s, theory, `C:\fakepath\Theory Paper.PDF`, samplePDF, cookie)
 	if loc := rec.Header().Get("Location"); loc != "/submission/received?id=ICASW2027-P001" {
-		t.Fatalf("paper without workshop: Location = %q (code %d)", loc, rec.Code)
+		t.Fatalf("regular paper: Location = %q (code %d)", loc, rec.Code)
 	}
 
 	raw, _ := s.store.List("submissions")
@@ -394,7 +395,7 @@ func TestSubmissionFlow(t *testing.T) {
 		t.Errorf("workshop fields not stored: %+v", subs[0])
 	}
 	if subs[1].DemoVideo != "" || subs[1].WorkshopPlan != "" || subs[1].TANames != "" {
-		t.Errorf("paper without workshop kept workshop fields: %+v", subs[1])
+		t.Errorf("regular paper kept workshop fields: %+v", subs[1])
 	}
 
 	sum := sha256.Sum256(samplePDF)
@@ -759,7 +760,7 @@ func TestAdmin(t *testing.T) {
 	if !strings.Contains(rec.Body.String(), "ICASW2027-W001.pdf") {
 		t.Error("reviewer export does not name the paper file")
 	}
-	if !strings.Contains(rec.Body.String(), "Paper with Workshop") {
+	if !strings.Contains(rec.Body.String(), ",Tutorial,") {
 		t.Error("reviewer export does not use the track name")
 	}
 	if rec := auth("/admin/export?kind=nope"); rec.Code != http.StatusBadRequest {
@@ -818,9 +819,9 @@ func TestRemovedAndMovedPages(t *testing.T) {
 	s := newTestServer(t, nil)
 	for _, p := range []string{
 		"/venue", "/travel/city", "/travel/hotels", "/travel/getting-there", "/travel/visa", "/authors/travel-grants",
-		"/call-for-papers/special-sessions", "/call-for-papers/cross-community", "/call-for-papers/tutorials",
+		"/call-for-papers/special-sessions", "/call-for-papers/cross-community",
 		"/call-for-papers/demonstrations", "/call-for-papers/challenge",
-		"/program/tutorials", "/program/special-events", "/program/events/industry-forum", "/program/social-events",
+		"/program/special-events", "/program/events/industry-forum", "/program/social-events",
 	} {
 		if rec := get(t, s, p); rec.Code != http.StatusNotFound {
 			t.Errorf("GET %s = %d, want 404", p, rec.Code)
@@ -841,10 +842,62 @@ func TestRemovedAndMovedPages(t *testing.T) {
 	}
 }
 
+// TestTutorialsAndRegularPapers checks the track names and the daily format
+// on every page: tutorials (a paper with a workshop) and regular papers.
+func TestTutorialsAndRegularPapers(t *testing.T) {
+	s := newTestServer(t, nil)
+	stale := regexp.MustCompile(`(?i)with(out)? workshop|run concurrently|in parallel with the (workshops|paper sessions)|(W1–W5|P1–P8)`)
+	for _, p := range s.pages {
+		if p.Path == "/admin" {
+			continue
+		}
+		if m := stale.FindString(get(t, s, p.Path).Body.String()); m != "" {
+			t.Errorf("%s still says %q", p.Path, m)
+		}
+	}
+
+	tutorials, _ := s.site().Track(content.TrackWithWorkshop)
+	regular, _ := s.site().Track(content.TrackWithoutWorkshop)
+	home := get(t, s, "/").Body.String()
+	for _, want := range []string{
+		fmt.Sprintf("<strong>%d</strong><span>tutorials</span>", tutorials.Slots),
+		fmt.Sprintf("<strong>%d</strong><span>regular papers</span>", regular.Slots),
+		fmt.Sprintf("<strong>%d</strong><span>presentation slots</span>", tutorials.Slots+regular.Slots),
+	} {
+		if !strings.Contains(home, want) {
+			t.Errorf("home page lacks %s", want)
+		}
+	}
+
+	// Morning: the tutorial presentations, then the regular papers.
+	// Afternoon: the tutorial workshops, then the two keynotes.
+	program := get(t, s, "/program").Body.String()
+	program = program[strings.Index(program, `class="slots"`):]
+	last := -1
+	for _, title := range []string{"Registration &amp; opening", "Tutorial presentations", "Regular paper presentations",
+		"Lunch &amp; networking", "Tutorial workshops", "Keynote 1", "Keynote 2", "Closing"} {
+		i := strings.Index(program, title)
+		if i < 0 || i < last {
+			t.Errorf("program: %q is missing or out of order", title)
+		}
+		last = i
+	}
+	links := get(t, s, "/program").Body.String()
+	for _, want := range []string{fmt.Sprintf("T1–T%d", tutorials.Slots), fmt.Sprintf("R1–R%d", regular.Slots)} {
+		if !strings.Contains(links, want) {
+			t.Errorf("program page lacks %s", want)
+		}
+	}
+	if page := get(t, s, "/program/tutorials").Body.String(); !strings.Contains(page, "Presentation: Morning · 25 minutes") ||
+		!strings.Contains(page, "Workshop: Afternoon · 90 minutes") {
+		t.Error("the tutorial cards do not show the morning presentation and the afternoon workshop")
+	}
+}
+
 func TestAuthorKitAndDownloads(t *testing.T) {
 	s := newTestServer(t, nil)
 	const flyer, template, ieee = "/static/files/ICASW-CFP-flyer.pdf", "/static/files/ICASW-slide-template.pptx", "https://www.ieee.org/conferences/publishing/templates"
-	for _, p := range []string{"/", "/call-for-papers", "/call-for-papers/with-workshop", "/call-for-papers/without-workshop", "/submission", "/authors"} {
+	for _, p := range []string{"/", "/call-for-papers", "/call-for-papers/tutorials", "/call-for-papers/regular-papers", "/submission", "/authors"} {
 		body := get(t, s, p).Body.String()
 		first := strings.Index(body, `class="kit-item"`)
 		if first < 0 || !strings.HasPrefix(body[first:], `class="kit-item" href="`+flyer+`"`) {
@@ -927,7 +980,7 @@ func TestConferenceFacts(t *testing.T) {
 		}
 	}
 	if cfp := get(t, s, "/call-for-papers").Body.String(); !strings.Contains(cfp, `class="track-highlight"`) {
-		t.Error("the paper with workshop card does not highlight the demo video")
+		t.Error("the tutorial card does not highlight the demo video")
 	}
 	form := get(t, s, "/submission").Body.String()
 	for _, want := range []string{"fieldset-highlight", `class="li-highlight"`, "Author information", "Author name", "Co-authors (optional)", "Author bio"} {

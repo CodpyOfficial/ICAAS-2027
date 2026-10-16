@@ -15,8 +15,8 @@
       </div>
       <ul class="hero-facts">
         <li><strong>{{.Site.TotalSlots}}</strong><span>presentation slots</span></li>
-        <li><strong>{{$ho.Slots}}</strong><span>papers with workshop</span></li>
-        <li><strong>{{$th.Slots}}</strong><span>papers without workshop</span></li>
+        <li><strong>{{$ho.Slots}}</strong><span>tutorials</span></li>
+        <li><strong>{{$th.Slots}}</strong><span>regular papers</span></li>
         <li><strong>40%</strong><span>of workshop fees as author feedback</span></li>
       </ul>
     </div>
@@ -30,7 +30,7 @@
 <div class="ribbon">
   <div class="container">
     {{- if $c.SubmissionOpen}}
-    <p>{{icon "bell"}} The Call for Papers is open — submit a paper with workshop or a paper without workshop.</p>
+    <p>{{icon "bell"}} The Call for Papers is open — submit a tutorial or a regular paper.</p>
     <a class="btn btn-sm" href="/submission">Submit now</a>
     {{- else}}
     <p>{{icon "bell"}} Call for Papers announced — the proposal submission system opens soon.</p>
@@ -81,11 +81,11 @@
         <article class="carousel-slide is-active spotlight" aria-roledescription="slide" aria-label="1 of 3">
           <div>
             <span class="eyebrow">{{$ho.Slots}} presentation slots</span>
-            <h3>Papers with Workshop</h3>
+            <h3>Tutorials</h3>
             <p>Engage the audience interactively: deliver a 25-minute presentation in the morning, then lead a 90-minute workshop for 25 or 50 participants in the afternoon, where participants build along on their own laptops with the help of your teaching assistants.</p>
             <p><strong>Authors receive 40% of the workshop registration fees as feedback</strong> — choose an engaging topic and draw in as many participants as possible!</p>
             <div class="btn-row">
-              <a class="btn btn-accent" href="/call-for-papers/with-workshop">Papers with workshop</a>
+              <a class="btn btn-accent" href="/call-for-papers/tutorials">Tutorials</a>
               <a class="btn btn-outline" href="/submission?track=with-workshop">Submit</a>
             </div>
           </div>
@@ -94,11 +94,11 @@
         <article class="carousel-slide spotlight" aria-roledescription="slide" aria-label="2 of 3">
           <div>
             <span class="eyebrow">{{$th.Slots}} presentation slots</span>
-            <h3>Papers without Workshop</h3>
-            <p>Present academic work relevant to the conference theme in a focused 15-minute talk. Sessions run concurrently with the afternoon workshops.</p>
+            <h3>Regular Papers</h3>
+            <p>Present academic work relevant to the conference theme in a focused 15-minute talk, in the late morning after the tutorial presentations.</p>
             <p>Topics are not strictly limited to the theme — any compelling, relevant research is welcome.</p>
             <div class="btn-row">
-              <a class="btn btn-accent" href="/call-for-papers/without-workshop">Papers without workshop</a>
+              <a class="btn btn-accent" href="/call-for-papers/regular-papers">Regular papers</a>
               <a class="btn btn-outline" href="/submission?track=without-workshop">Submit</a>
             </div>
           </div>
@@ -157,10 +157,10 @@
     <div class="grid-2">
       <div>
         <p class="lead">The {{$c.Name}} ({{$c.Acronym}}) is a forum for researchers, engineers and practitioners working on the theory, design and deployment of systems that perceive, decide and act on their own — from robots and vehicles to self-adaptive software.</p>
-        <p>{{$c.FullTitle}} combines two complementary formats: <strong>papers with workshop</strong>, where authors present in the morning and run a 90-minute interactive workshop in the afternoon, and <strong>papers without workshop</strong>, presented as focused 15-minute talks.</p>
+        <p>{{$c.FullTitle}} combines two complementary formats: <strong>tutorials</strong>, where authors present in the morning and run a 90-minute interactive workshop in the afternoon, and <strong>regular papers</strong>, presented as focused 15-minute talks.</p>
         <ul class="track-points">
-          <li>{{icon "check"}}<span>Presentations and laptop-based workshops (papers with workshop)</span></li>
-          <li>{{icon "check"}}<span>Paper sessions (papers without workshop)</span></li>
+          <li>{{icon "check"}}<span>Tutorials: morning presentations and laptop-based afternoon workshops</span></li>
+          <li>{{icon "check"}}<span>Regular paper sessions in the late morning</span></li>
           <li>{{icon "check"}}<span>Two keynote talks at the end of the afternoon</span></li>
           <li>{{icon "check"}}<span>Industry exhibition</span></li>
         </ul>
@@ -227,28 +227,28 @@
     <div class="section-head">
       <span class="eyebrow">Format</span>
       <h2 id="format-title">A day at {{$c.Acronym}}</h2>
-      <p>Presentations in the morning; workshops and paper sessions in parallel in the afternoon; two keynotes to close the day.</p>
+      <p>Tutorial presentations and regular papers in the morning; tutorial workshops in the afternoon; two keynotes to close the day.</p>
     </div>
     <div class="grid-4">
       <div class="card">
         <span class="track-icon">{{icon "mic"}}</span>
-        <h3 class="mt-sm">Morning</h3>
-        <p>Presentations of papers with workshop — 25 minutes per paper, introducing what participants will build in the afternoon.</p>
-      </div>
-      <div class="card">
-        <span class="track-icon">{{icon "laptop"}}</span>
-        <h3 class="mt-sm">Afternoon workshops</h3>
-        <p>90-minute, milestone-driven workshops for 25 or 50 participants, each assisted by at least one TA. Attendees bring their own laptops.</p>
+        <h3 class="mt-sm">Morning: tutorials</h3>
+        <p>{{$ho.Slots}} tutorial presentations of 25 minutes, each introducing what participants will build in the afternoon.</p>
       </div>
       <div class="card">
         <span class="track-icon">{{icon "book"}}</span>
-        <h3 class="mt-sm">Afternoon sessions</h3>
-        <p>Papers without workshop are presented concurrently with the workshops — about 15 minutes per paper.</p>
+        <h3 class="mt-sm">Late morning: regular papers</h3>
+        <p>{{$th.Slots}} regular papers of about 15 minutes each, after the tutorial presentations.</p>
+      </div>
+      <div class="card">
+        <span class="track-icon">{{icon "laptop"}}</span>
+        <h3 class="mt-sm">Afternoon: workshops</h3>
+        <p>90-minute, milestone-driven tutorial workshops for 25 or 50 participants, each assisted by at least one TA. Attendees bring their own laptops.</p>
       </div>
       <div class="card">
         <span class="track-icon">{{icon "star"}}</span>
         <h3 class="mt-sm">Keynotes</h3>
-        <p>Two plenary keynotes by leaders in autonomous systems at the end of the afternoon.</p>
+        <p>Two plenary keynotes by leaders in autonomous systems after the workshops, to close the day.</p>
       </div>
     </div>
     <p class="center mt-lg"><a class="btn btn-primary" href="/program">Program at a glance</a></p>

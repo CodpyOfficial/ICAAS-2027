@@ -28,6 +28,23 @@ func TestImportantDatesInOrder(t *testing.T) {
 	}
 }
 
+// The program lists one placeholder per presentation slot until the
+// accepted papers are published.
+func TestProgramMatchesTrackSlots(t *testing.T) {
+	site, err := LoadFile(filepath.Join("..", "..", "content", "site.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	tutorials, _ := site.Track(TrackWithWorkshop)
+	regular, _ := site.Track(TrackWithoutWorkshop)
+	if len(site.Workshops) != tutorials.Slots {
+		t.Errorf("%d tutorials in the program for %d tutorial slots", len(site.Workshops), tutorials.Slots)
+	}
+	if len(site.Talks) != regular.Slots {
+		t.Errorf("%d regular papers in the program for %d regular paper slots", len(site.Talks), regular.Slots)
+	}
+}
+
 func TestValidateRejectsDuplicates(t *testing.T) {
 	site := `{
 		"conference": {"acronym": "ICASW", "name": "Test"},

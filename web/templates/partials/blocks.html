@@ -227,7 +227,8 @@
     {{- if .Status}}<span class="badge badge-closed">{{.Status}}</span>{{end}}
   </div>
   <ul class="meta-list">
-    <li>{{icon "clock"}} {{with .Date}}{{.}} · {{end}}{{tba .Time}}</li>
+    <li>{{icon "mic"}} Presentation: {{with .Date}}{{.}} · {{end}}{{tba .TalkTime}}</li>
+    <li>{{icon "clock"}} Workshop: {{with .Date}}{{.}} · {{end}}{{tba .Time}}</li>
     <li>{{icon "map-pin"}} {{tba .Room}}</li>
     {{- with .Capacity}}<li>{{icon "users"}} {{.}} participants</li>{{end}}
     {{- with .Level}}<li>{{icon "trending-up"}} Level: {{.}}</li>{{end}}

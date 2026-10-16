@@ -140,7 +140,9 @@ type Call struct {
 	Deadline    string `json:"deadline"`
 }
 
-// Keys of the two proposal tracks.
+// Keys of the two proposal tracks: tutorials (a paper with a workshop) and
+// regular papers. The keys are stored with every submission, so they keep
+// their original names.
 const (
 	TrackWithWorkshop    = "with-workshop"
 	TrackWithoutWorkshop = "without-workshop"
@@ -175,7 +177,7 @@ type Topic struct {
 type Requirement struct {
 	Title   string   `json:"title"`
 	Text    string   `json:"text"`
-	Applies string   `json:"applies"` // "all", "with-workshop" or "without-workshop"
+	Applies string   `json:"applies"` // "all", "with-workshop" (tutorials) or "without-workshop" (regular papers)
 	Items   []string `json:"items"`
 	Icon    string   `json:"icon"`
 	// Highlight marks a requirement that is easy to miss (the demo video):
@@ -252,13 +254,15 @@ type Cell struct {
 	Link   string `json:"link"`
 }
 
-// Session is the workshop of a paper with workshop.
+// Session is one tutorial: a presentation in the morning and a workshop in
+// the afternoon.
 type Session struct {
 	Code          string      `json:"code"`
 	Title         string      `json:"title"`
 	Status        string      `json:"status"` // "", cancelled, rescheduled
 	Date          string      `json:"date"`
-	Time          string      `json:"time"`
+	TalkTime      string      `json:"talkTime"` // the morning presentation
+	Time          string      `json:"time"`     // the afternoon workshop
 	Room          string      `json:"room"`
 	Level         string      `json:"level"`
 	Capacity      string      `json:"capacity"` // 25 or 50 participants, chosen by the authors
@@ -270,7 +274,7 @@ type Session struct {
 	TAs           []string    `json:"tas"` // teaching assistants
 }
 
-// Talk is one presentation of a paper without workshop.
+// Talk is the presentation of one regular paper.
 type Talk struct {
 	Code        string `json:"code"`
 	Title       string `json:"title"`

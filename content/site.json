@@ -4,7 +4,7 @@
     "name": "International Conference on Autonomous Systems and Workshop",
     "year": "2027",
     "tagline": "From theory to practice: researchers present new ideas, and practitioners teach the tools that make autonomous systems work.",
-    "description": "ICASW 2027, the International Conference on Autonomous Systems and Workshop, on April 17, 2027. Call for papers with workshop and papers without workshop on autonomous robotics, vehicles, drones, embedded autonomy, perception, simulation, planning, control, learning and safety.",
+    "description": "ICASW 2027, the International Conference on Autonomous Systems and Workshop, on April 17, 2027. Call for tutorials and regular papers on autonomous robotics, vehicles, drones, embedded autonomy, perception, simulation, planning, control, learning and safety.",
     "dates": "April 17, 2027",
     "startDate": "2027-04-17",
     "city": "",
@@ -76,7 +76,7 @@
       "highlight": false
     },
     {
-      "label": "Proposal submission deadline (papers with and without workshop)",
+      "label": "Proposal submission deadline (tutorials and regular papers)",
       "date": "January 31, 2027",
       "original": "",
       "iso": "2027-01-31",
@@ -127,15 +127,15 @@
   "news": [
     {
       "date": "Oct 13, 2026",
-      "text": "The Call for Papers is out: 5 presentation slots for papers with workshop and 8 for papers without workshop.",
+      "text": "The Call for Papers is out: 6 presentation slots for tutorials and 10 for regular papers.",
       "link": "/call-for-papers",
       "linkText": "Read the call"
     },
     {
       "date": "Oct 13, 2026",
-      "text": "Authors of papers with workshop receive 40% of their workshop's registration fees as feedback.",
-      "link": "/call-for-papers/with-workshop",
-      "linkText": "Papers with workshop"
+      "text": "Tutorial authors receive 40% of their workshop's registration fees as feedback.",
+      "link": "/call-for-papers/tutorials",
+      "linkText": "Tutorials"
     },
     {
       "date": "Oct 13, 2026",
@@ -159,9 +159,9 @@
   "calls": [
     {
       "key": "with-workshop",
-      "title": "Papers with Workshop",
+      "title": "Tutorials",
       "icon": "laptop",
-      "path": "/call-for-papers/with-workshop",
+      "path": "/call-for-papers/tutorials",
       "submitURL": "/submission?track=with-workshop",
       "status": "open",
       "deadline": "January 31, 2027",
@@ -169,20 +169,20 @@
     },
     {
       "key": "without-workshop",
-      "title": "Papers without Workshop",
+      "title": "Regular Papers",
       "icon": "book",
-      "path": "/call-for-papers/without-workshop",
+      "path": "/call-for-papers/regular-papers",
       "submitURL": "/submission?track=without-workshop",
       "status": "open",
       "deadline": "January 31, 2027",
-      "description": "Presentations of about 15 minutes on academic work relevant to the conference theme, running alongside the afternoon workshops."
+      "description": "Presentations of about 15 minutes on academic work relevant to the conference theme, in the late morning after the tutorial presentations."
     }
   ],
   "tracks": [
     {
       "key": "with-workshop",
-      "name": "Papers with Workshop",
-      "slots": 5,
+      "name": "Tutorials",
+      "slots": 6,
       "icon": "laptop",
       "summary": "Papers capable of engaging the audience interactively.",
       "format": "A 25-minute presentation in the morning, followed by a 90-minute (1.5-hour) workshop in the afternoon.",
@@ -195,24 +195,24 @@
         "At least one teaching assistant (TA) assists in each workshop",
         "40% of the workshop registration fees are given to the authors as feedback"
       ],
-      "path": "/call-for-papers/with-workshop",
+      "path": "/call-for-papers/tutorials",
       "highlight": "A 2–5 minute demo video must be submitted with the proposal."
     },
     {
       "key": "without-workshop",
-      "name": "Papers without Workshop",
-      "slots": 8,
+      "name": "Regular Papers",
+      "slots": 10,
       "icon": "book",
       "summary": "Academic papers relevant to the conference theme.",
-      "format": "About 15 minutes per paper, in sessions that run concurrently with the afternoon workshops.",
+      "format": "About 15 minutes per paper, presented in the late morning after the tutorial presentations.",
       "duration": "15 min",
       "points": [
         "An estimated 15 minutes allocated per paper",
-        "Sessions run concurrently with the afternoon workshops",
+        "Presented in the late morning, after the tutorial presentations",
         "Submissions aligned with the conference theme are warmly welcomed",
         "Not strictly limited to the theme: any compelling, relevant research is welcome"
       ],
-      "path": "/call-for-papers/without-workshop",
+      "path": "/call-for-papers/regular-papers",
       "highlight": ""
     }
   ],
@@ -339,7 +339,7 @@
       "title": "Session Track",
       "icon": "flag",
       "applies": "all",
-      "text": "Clear indication of Paper with Workshop or Paper without Workshop.",
+      "text": "Clear indication of Tutorial or Regular Paper.",
       "items": []
     },
     {
@@ -348,40 +348,40 @@
       "applies": "all",
       "text": "A breakdown of how the allotted time will be used.",
       "items": [
-        "Papers with workshop: detailed breakdown of the 25-minute morning session and milestone-based progression for the 90-minute workshop.",
-        "Papers without workshop: clear breakdown of the 15-minute presentation structure."
+        "Tutorials: detailed breakdown of the 25-minute morning presentation and milestone-based progression for the 90-minute workshop.",
+        "Regular papers: clear breakdown of the 15-minute presentation structure."
       ]
     },
     {
-      "title": "Prerequisites & Toolchain (Papers with Workshop)",
+      "title": "Prerequisites & Toolchain (Tutorials)",
       "icon": "tool",
       "applies": "with-workshop",
       "text": "List of required software, target OS compatibility, hardware dependencies, and recommended skill level.",
       "items": []
     },
     {
-      "title": "Workshop Size (Papers with Workshop)",
+      "title": "Workshop Size (Tutorials)",
       "icon": "users",
       "applies": "with-workshop",
       "text": "Choose a workshop for 25 or 50 participants. If the workshop needs equipment, prepare 10 sets for 25 participants or 20 sets for 50 participants.",
       "items": []
     },
     {
-      "title": "Participant Hardware Requirements (Papers with Workshop)",
+      "title": "Participant Hardware Requirements (Tutorials)",
       "icon": "laptop",
       "applies": "with-workshop",
       "text": "The minimum hardware participants' laptops must meet, such as CPU, memory (RAM), GPU, free disk space and operating system. These requirements are published to attendees.",
       "items": []
     },
     {
-      "title": "Teaching Assistant (Papers with Workshop)",
+      "title": "Teaching Assistant (Tutorials)",
       "icon": "user-check",
       "applies": "with-workshop",
       "text": "At least one teaching assistant (TA) to help participants during the practical part of the workshop.",
       "items": []
     },
     {
-      "title": "Interactive Demo Video (Papers with Workshop only)",
+      "title": "Interactive Demo Video (Tutorials only)",
       "icon": "video",
       "applies": "with-workshop",
       "text": "A short demonstration video (2–5 minutes) showcasing the functioning prototype, project workflow, or target outcomes participants will build during the workshop.",
@@ -477,11 +477,11 @@
   ],
   "programCommittee": [
     {
-      "title": "Track Chairs — Papers with Workshop",
+      "title": "Track Chairs — Tutorials",
       "people": []
     },
     {
-      "title": "Track Chairs — Papers without Workshop",
+      "title": "Track Chairs — Regular Papers",
       "people": []
     },
     {
@@ -532,11 +532,20 @@
         },
         {
           "time": "Morning",
-          "title": "Presentations of papers with workshop",
-          "detail": "Five 25-minute presentations; each introduces the workshop its authors will run in the afternoon.",
+          "title": "Tutorial presentations",
+          "detail": "Six 25-minute presentations; each introduces the workshop its authors will run in the afternoon.",
           "kind": "session",
           "room": "",
-          "link": "/program/workshops",
+          "link": "/program/tutorials",
+          "parallel": []
+        },
+        {
+          "time": "Late morning",
+          "title": "Regular paper presentations",
+          "detail": "Ten regular papers, about 15 minutes each.",
+          "kind": "session",
+          "room": "",
+          "link": "/program/sessions",
           "parallel": []
         },
         {
@@ -550,23 +559,12 @@
         },
         {
           "time": "Afternoon",
-          "title": "Parallel sessions",
-          "detail": "The workshops run concurrently with the sessions for papers without workshop.",
+          "title": "Tutorial workshops",
+          "detail": "Six 90-minute (1.5-hour) workshops in parallel, for 25 or 50 participants each, assisted by at least one teaching assistant.",
           "kind": "session",
           "room": "",
-          "link": "",
-          "parallel": [
-            {
-              "title": "Workshops W1–W5",
-              "detail": "90-minute workshops for 25 or 50 participants, each assisted by at least one TA.",
-              "link": "/program/workshops"
-            },
-            {
-              "title": "Paper Sessions P1–P8",
-              "detail": "Papers without workshop, about 15 minutes each.",
-              "link": "/program/sessions"
-            }
-          ]
+          "link": "/program/tutorials",
+          "parallel": []
         },
         {
           "time": "Late afternoon",
@@ -600,10 +598,11 @@
   ],
   "workshops": [
     {
-      "code": "W1",
+      "code": "T1",
       "title": "",
       "status": "",
       "date": "",
+      "talkTime": "Morning · 25 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -616,10 +615,11 @@
       "tas": []
     },
     {
-      "code": "W2",
+      "code": "T2",
       "title": "",
       "status": "",
       "date": "",
+      "talkTime": "Morning · 25 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -632,10 +632,11 @@
       "tas": []
     },
     {
-      "code": "W3",
+      "code": "T3",
       "title": "",
       "status": "",
       "date": "",
+      "talkTime": "Morning · 25 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -648,10 +649,11 @@
       "tas": []
     },
     {
-      "code": "W4",
+      "code": "T4",
       "title": "",
       "status": "",
       "date": "",
+      "talkTime": "Morning · 25 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -664,10 +666,28 @@
       "tas": []
     },
     {
-      "code": "W5",
+      "code": "T5",
       "title": "",
       "status": "",
       "date": "",
+      "talkTime": "Morning · 25 minutes",
+      "time": "Afternoon · 90 minutes",
+      "room": "",
+      "level": "",
+      "capacity": "",
+      "prerequisites": "",
+      "laptop": "",
+      "abstract": "",
+      "schedule": [],
+      "instructors": [],
+      "tas": []
+    },
+    {
+      "code": "T6",
+      "title": "",
+      "status": "",
+      "date": "",
+      "talkTime": "Morning · 25 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -682,67 +702,83 @@
   ],
   "talks": [
     {
-      "code": "P1",
+      "code": "R1",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P2",
+      "code": "R2",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P3",
+      "code": "R3",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P4",
+      "code": "R4",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P5",
+      "code": "R5",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P6",
+      "code": "R6",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P7",
+      "code": "R7",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
       "room": ""
     },
     {
-      "code": "P8",
+      "code": "R8",
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "",
+      "time": "Late morning",
+      "room": ""
+    },
+    {
+      "code": "R9",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "Late morning",
+      "room": ""
+    },
+    {
+      "code": "R10",
+      "title": "",
+      "speaker": "",
+      "affiliation": "",
+      "time": "Late morning",
       "room": ""
     }
   ],
@@ -787,7 +823,7 @@
       "Each workshop has 25 or 50 seats, as chosen by its authors; seats are allocated in order of registration."
     ],
     "includes": [
-      "Admission to the keynotes and to all paper presentations, with and without workshop",
+      "Admission to the keynotes and to all tutorial and regular paper presentations",
       "Workshop seats are registered separately (see Workshop Registration)"
     ],
     "policies": [
@@ -1022,15 +1058,15 @@
       "items": [
         {
           "q": "What can I submit to ICASW?",
-          "a": "Two kinds of proposals: Papers with Workshop (5 presentation slots), which engage the audience interactively through a presentation and a workshop, and Papers without Workshop (8 presentation slots), which present academic work relevant to the conference theme."
+          "a": "Two kinds of proposals: Tutorials (6 presentation slots), which engage the audience interactively through a presentation and a workshop, and Regular Papers (10 presentation slots), which present academic work relevant to the conference theme."
         },
         {
           "q": "What is the difference between the two tracks?",
-          "a": "Authors of papers with workshop give a 25-minute presentation in the morning and run a 90-minute workshop in the afternoon. Authors of papers without workshop give a talk of about 15 minutes in sessions that run concurrently with the afternoon workshops."
+          "a": "Tutorial authors give a 25-minute presentation in the morning and run a 90-minute workshop in the afternoon. Regular paper authors give a talk of about 15 minutes in the late morning, after the tutorial presentations."
         },
         {
           "q": "What must a proposal contain?",
-          "a": "The paper as one PDF file (max 10 MB) in the IEEE conference format, a title and an abstract of at most 300 words, the session track, an outline and schedule, and an author bio of at most 150 words with previous presentation experience and relevant project links. Papers with workshop also need the prerequisites and toolchain, the workshop size, the laptop hardware requirements for participants, the teaching assistant(s) and a 2–5 minute demo video."
+          "a": "The paper as one PDF file (max 10 MB) in the IEEE conference format, a title and an abstract of at most 300 words, the session track, an outline and schedule, and an author bio of at most 150 words with previous presentation experience and relevant project links. Tutorials also need the prerequisites and toolchain, the workshop size, the laptop hardware requirements for participants, the teaching assistant(s) and a 2–5 minute demo video."
         },
         {
           "q": "Which paper format should I use?",
@@ -1042,16 +1078,16 @@
         },
         {
           "q": "Do I have to use the ICASW slide template?",
-          "a": "Yes. All authors of accepted papers, with or without workshop, must prepare their slides with the official ICASW slide template, available on the Downloads page."
+          "a": "Yes. All authors of accepted tutorials and regular papers must prepare their slides with the official ICASW slide template, available on the Downloads page."
         }
       ]
     },
     {
-      "title": "Papers with workshop",
+      "title": "Tutorials",
       "items": [
         {
           "q": "How does the 40% author feedback work?",
-          "a": "Authors of papers with workshop receive feedback based on attendance: 40% of the registration fees of their workshop. An engaging topic that draws more participants results in more feedback."
+          "a": "Tutorial authors receive feedback based on attendance: 40% of the registration fees of their workshop. An engaging topic that draws more participants results in more feedback."
         },
         {
           "q": "How large is a workshop, and who provides the equipment?",
