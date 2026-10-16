@@ -165,7 +165,7 @@
       "submitURL": "/submission?track=with-workshop",
       "status": "open",
       "deadline": "January 31, 2027",
-      "description": "A 25-minute morning presentation followed by a 90-minute afternoon workshop for 25 or 50 participants. Authors receive 40% of the workshop registration fees as feedback."
+      "description": "A 5-minute morning presentation followed by a 90-minute afternoon workshop for 25 or 50 participants. Authors receive 40% of the workshop registration fees as feedback."
     },
     {
       "key": "without-workshop",
@@ -175,7 +175,7 @@
       "submitURL": "/submission?track=without-workshop",
       "status": "open",
       "deadline": "January 31, 2027",
-      "description": "Presentations of about 15 minutes on academic work relevant to the conference theme, in the late morning after the tutorial presentations."
+      "description": "A 10-minute presentation in the late morning and a poster in the afternoon, shown during the coffee break, on academic work relevant to the conference theme."
     }
   ],
   "tracks": [
@@ -185,10 +185,10 @@
       "slots": 6,
       "icon": "laptop",
       "summary": "Papers capable of engaging the audience interactively.",
-      "format": "A 25-minute presentation in the morning, followed by a 90-minute (1.5-hour) workshop in the afternoon.",
-      "duration": "25 min + 90 min",
+      "format": "A 5-minute presentation in the morning, followed by a 90-minute (1.5-hour) workshop in the afternoon.",
+      "duration": "5 min + 90 min",
       "points": [
-        "A 25-minute presentation in the morning, then a 90-minute (1.5-hour) workshop in the afternoon",
+        "A 5-minute presentation in the morning, then a 90-minute (1.5-hour) workshop in the afternoon",
         "A workshop for 25 or 50 participants, with 10 or 20 sets of equipment respectively (if needed)",
         "Authors prepare the equipment and environment set-ups; attendees bring their own laptops",
         "Authors provide participants with the laptop hardware requirements",
@@ -204,11 +204,11 @@
       "slots": 10,
       "icon": "book",
       "summary": "Academic papers relevant to the conference theme.",
-      "format": "About 15 minutes per paper, presented in the late morning after the tutorial presentations.",
-      "duration": "15 min",
+      "format": "A 10-minute presentation in the late morning, then a poster in the afternoon, presented during the coffee break while the workshops take place.",
+      "duration": "10 min + poster",
       "points": [
-        "An estimated 15 minutes allocated per paper",
-        "Presented in the late morning, after the tutorial presentations",
+        "A 10-minute presentation in the late morning, after the tutorial presentations",
+        "A poster in the afternoon, presented during the coffee break while the tutorial workshops take place",
         "Submissions aligned with the conference theme are warmly welcomed",
         "Not strictly limited to the theme: any compelling, relevant research is welcome"
       ],
@@ -348,8 +348,8 @@
       "applies": "all",
       "text": "A breakdown of how the allotted time will be used.",
       "items": [
-        "Tutorials: detailed breakdown of the 25-minute morning presentation and milestone-based progression for the 90-minute workshop.",
-        "Regular papers: clear breakdown of the 15-minute presentation structure."
+        "Tutorials: detailed breakdown of the 5-minute morning presentation and milestone-based progression for the 90-minute workshop.",
+        "Regular papers: clear breakdown of the 10-minute presentation structure."
       ]
     },
     {
@@ -533,7 +533,7 @@
         {
           "time": "Morning",
           "title": "Tutorial presentations",
-          "detail": "Six 25-minute presentations; each introduces the workshop its authors will run in the afternoon.",
+          "detail": "Six 5-minute presentations; each introduces the workshop its authors will run in the afternoon.",
           "kind": "session",
           "room": "",
           "link": "/program/tutorials",
@@ -542,7 +542,7 @@
         {
           "time": "Late morning",
           "title": "Regular paper presentations",
-          "detail": "Ten regular papers, about 15 minutes each.",
+          "detail": "Ten regular papers, 10 minutes each.",
           "kind": "session",
           "room": "",
           "link": "/program/sessions",
@@ -559,12 +559,23 @@
         },
         {
           "time": "Afternoon",
-          "title": "Tutorial workshops",
-          "detail": "Six 90-minute (1.5-hour) workshops in parallel, for 25 or 50 participants each, assisted by at least one teaching assistant.",
+          "title": "Tutorial workshops, posters & coffee break",
+          "detail": "The workshops run in parallel with the poster session of the regular papers, which is held together with the coffee break.",
           "kind": "session",
           "room": "",
-          "link": "/program/tutorials",
-          "parallel": []
+          "link": "",
+          "parallel": [
+            {
+              "title": "Tutorial workshops",
+              "detail": "Six 90-minute (1.5-hour) workshops for 25 or 50 participants each, assisted by at least one teaching assistant.",
+              "link": "/program/tutorials"
+            },
+            {
+              "title": "Regular paper posters & coffee break",
+              "detail": "The ten regular papers presented as posters, during the coffee break.",
+              "link": "/program/sessions"
+            }
+          ]
         },
         {
           "time": "Late afternoon",
@@ -602,7 +613,7 @@
       "title": "",
       "status": "",
       "date": "",
-      "talkTime": "Morning · 25 minutes",
+      "talkTime": "Morning · 5 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -619,7 +630,7 @@
       "title": "",
       "status": "",
       "date": "",
-      "talkTime": "Morning · 25 minutes",
+      "talkTime": "Morning · 5 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -636,7 +647,7 @@
       "title": "",
       "status": "",
       "date": "",
-      "talkTime": "Morning · 25 minutes",
+      "talkTime": "Morning · 5 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -653,7 +664,7 @@
       "title": "",
       "status": "",
       "date": "",
-      "talkTime": "Morning · 25 minutes",
+      "talkTime": "Morning · 5 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -670,7 +681,7 @@
       "title": "",
       "status": "",
       "date": "",
-      "talkTime": "Morning · 25 minutes",
+      "talkTime": "Morning · 5 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -687,7 +698,7 @@
       "title": "",
       "status": "",
       "date": "",
-      "talkTime": "Morning · 25 minutes",
+      "talkTime": "Morning · 5 minutes",
       "time": "Afternoon · 90 minutes",
       "room": "",
       "level": "",
@@ -706,7 +717,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -714,7 +725,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -722,7 +733,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -730,7 +741,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -738,7 +749,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -746,7 +757,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -754,7 +765,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -762,7 +773,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -770,7 +781,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     },
     {
@@ -778,7 +789,7 @@
       "title": "",
       "speaker": "",
       "affiliation": "",
-      "time": "Late morning",
+      "time": "Late morning · 10 minutes",
       "room": ""
     }
   ],
@@ -823,7 +834,7 @@
       "Each workshop has 25 or 50 seats, as chosen by its authors; seats are allocated in order of registration."
     ],
     "includes": [
-      "Admission to the keynotes and to all tutorial and regular paper presentations",
+      "Admission to the keynotes, to all tutorial and regular paper presentations and to the poster session",
       "Workshop seats are registered separately (see Workshop Registration)"
     ],
     "policies": [
@@ -1062,7 +1073,7 @@
         },
         {
           "q": "What is the difference between the two tracks?",
-          "a": "Tutorial authors give a 25-minute presentation in the morning and run a 90-minute workshop in the afternoon. Regular paper authors give a talk of about 15 minutes in the late morning, after the tutorial presentations."
+          "a": "Tutorial authors give a 5-minute presentation in the morning and run a 90-minute workshop in the afternoon. Regular paper authors give a 10-minute talk in the late morning, after the tutorial presentations, and present a poster in the afternoon, during the coffee break while the workshops take place."
         },
         {
           "q": "What must a proposal contain?",

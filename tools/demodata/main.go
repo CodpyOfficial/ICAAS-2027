@@ -182,11 +182,10 @@ func (p proposal) submission(i int) server.Submission {
 		s.Links = "https://git.example.org/" + handle + "\nhttps://scholar.example.org/" + handle
 	}
 	if p.track != content.TrackWithWorkshop {
-		s.TalkOutline = "0-3 min: problem and motivation. 3-10 min: method. 10-14 min: results. 14-15 min: limitations and future work."
+		s.TalkOutline = "0-1 min: problem and motivation. 1-5 min: method. 5-8 min: results. 8-10 min: limitations and future work."
 		return s
 	}
-	s.TalkOutline = "0-5 min: motivation and a live demo of what participants will build. 5-15 min: architecture and key methods. " +
-		"15-22 min: results and lessons learned. 22-25 min: preview of the afternoon workshop."
+	s.TalkOutline = "0-1 min: motivation. 1-4 min: a short demo of what participants will build. 4-5 min: the workshop milestones and prerequisites."
 	s.WorkshopPlan = fmt.Sprintf("M1 (0-15 min): %s.\nM2 (15-40 min): %s.\nM3 (40-70 min): %s.\nM4 (70-90 min): %s.",
 		capitalize(p.plan[0]), capitalize(p.plan[1]), capitalize(p.plan[2]), capitalize(p.plan[3]))
 	s.Software, s.TargetOS, s.Hardware, s.SkillLevel = p.software, p.targetOS, p.hardware, p.skill

@@ -318,7 +318,7 @@ func validWithWorkshop() url.Values {
 		"title":               {"Teaching drones to land with model predictive control"},
 		"abstract":            {strings.Repeat("word ", 120)},
 		"topics":              {"Control of Autonomous Systems", "Autonomous Vehicles and Mobility", "Not a real topic"},
-		"talk_outline":        {"0-5 min motivation; 5-20 min method; 20-25 min preview"},
+		"talk_outline":        {"0-1 min motivation; 1-4 min demo; 4-5 min milestones"},
 		"workshop_plan":       {"M1 environment; M2 baseline; M3 MPC; M4 evaluation"},
 		"software":            {"Python 3.11, ROS 2, Gazebo"},
 		"target_os":           {"Ubuntu 22.04"},
@@ -846,8 +846,8 @@ func TestRemovedAndMovedPages(t *testing.T) {
 // on every page: tutorials (a paper with a workshop) and regular papers.
 func TestTutorialsAndRegularPapers(t *testing.T) {
 	s := newTestServer(t, nil)
-	stale := regexp.MustCompile(`(?i)with(out)? workshop\b|run concurrently|in parallel with the (workshops|paper sessions)|\b(W1–W5|P1–P8)\b`)
-	for _, old := range []string{"Papers with workshop", "W1–W5"} {
+	stale := regexp.MustCompile(`(?i)with(out)? workshop\b|run concurrently|in parallel with the paper sessions|\b(W1–W5|P1–P8)\b|\b25-min(ute)?\b|\b25 minutes\b|\b15-min(ute)?\b|about 15 min|~15 min|15 minutes (per|each|allocated)`)
+	for _, old := range []string{"Papers with workshop", "a 25-minute presentation", "Morning · 25 minutes", "about 15 minutes per paper", "W1–W5"} {
 		if !stale.MatchString(old) {
 			t.Fatalf("the stale-name pattern misses %q", old)
 		}
@@ -875,12 +875,13 @@ func TestTutorialsAndRegularPapers(t *testing.T) {
 	}
 
 	// Morning: the tutorial presentations, then the regular papers.
-	// Afternoon: the tutorial workshops, then the two keynotes.
+	// Afternoon: the tutorial workshops in parallel with the regular paper
+	// posters and the coffee break, then the two keynotes.
 	program := get(t, s, "/program").Body.String()
 	program = program[strings.Index(program, `class="slots"`):]
 	last := -1
 	for _, title := range []string{"Registration &amp; opening", "Tutorial presentations", "Regular paper presentations",
-		"Lunch &amp; networking", "Tutorial workshops", "Keynote 1", "Keynote 2", "Closing"} {
+		"Lunch &amp; networking", "Tutorial workshops", "Regular paper posters &amp; coffee break", "Keynote 1", "Keynote 2", "Closing"} {
 		i := strings.Index(program, title)
 		if i < 0 || i < last {
 			t.Errorf("program: %q is missing or out of order", title)
@@ -893,7 +894,7 @@ func TestTutorialsAndRegularPapers(t *testing.T) {
 			t.Errorf("program page lacks %s", want)
 		}
 	}
-	if page := get(t, s, "/program/tutorials").Body.String(); !strings.Contains(page, "Presentation: Morning · 25 minutes") ||
+	if page := get(t, s, "/program/tutorials").Body.String(); !strings.Contains(page, "Presentation: Morning · 5 minutes") ||
 		!strings.Contains(page, "Workshop: Afternoon · 90 minutes") {
 		t.Error("the tutorial cards do not show the morning presentation and the afternoon workshop")
 	}

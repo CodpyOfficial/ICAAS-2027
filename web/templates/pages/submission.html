@@ -60,11 +60,11 @@
             <div class="choice-cards" role="radiogroup" aria-labelledby="track-label">
               <label class="choice-card">
                 <input type="radio" name="track" value="with-workshop" required{{if checked $f "track" "with-workshop"}} checked{{end}}>
-                <span class="choice-body"><strong>{{icon "laptop"}} Tutorial</strong><small>25-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as author feedback</small></span>
+                <span class="choice-body"><strong>{{icon "laptop"}} Tutorial</strong><small>5-minute presentation + 90-minute workshop · {{(track "with-workshop").Slots}} slots · 40% of workshop fees as author feedback</small></span>
               </label>
               <label class="choice-card">
                 <input type="radio" name="track" value="without-workshop" required{{if checked $f "track" "without-workshop"}} checked{{end}}>
-                <span class="choice-body"><strong>{{icon "book"}} Regular Paper</strong><small>About 15-minute presentation in the late morning · {{(track "without-workshop").Slots}} slots</small></span>
+                <span class="choice-body"><strong>{{icon "book"}} Regular Paper</strong><small>10-minute presentation in the late morning + afternoon poster · {{(track "without-workshop").Slots}} slots</small></span>
               </label>
             </div>
             {{- with $err}}<span class="field-error">{{.}}</span>{{end}}
@@ -102,7 +102,7 @@
           </div>
 
           <div class="field{{if fieldErr $f "talk_outline"}} has-error{{end}}">
-            <label for="f-talk_outline"><span data-track-text data-with-workshop="Breakdown of the 25-minute morning session" data-without-workshop="Breakdown of the 15-minute presentation structure" data-none="Presentation outline">Presentation outline</span> <span class="req" aria-hidden="true">*</span></label>
+            <label for="f-talk_outline"><span data-track-text data-with-workshop="Breakdown of the 5-minute morning presentation" data-without-workshop="Breakdown of the 10-minute presentation structure" data-none="Presentation outline">Presentation outline</span> <span class="req" aria-hidden="true">*</span></label>
             <span class="hint" id="f-talk_outline-hint">How you will use the time, section by section (e.g. “0–5 min: motivation …”).</span>
             <textarea class="textarea" id="f-talk_outline" name="talk_outline" required maxlength="6000" rows="7" aria-describedby="f-talk_outline-hint{{if fieldErr $f "talk_outline"}} f-talk_outline-err{{end}}">{{field $f "talk_outline"}}</textarea>
             {{- with fieldErr $f "talk_outline"}}<span class="field-error" id="f-talk_outline-err">{{.}}</span>{{end}}
