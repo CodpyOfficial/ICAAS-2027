@@ -1,4 +1,6 @@
 data/
+# Made-up records from tools/demodata
+demo-data/
 *.exe
 
 # Local Claude Code / preview configuration

@@ -41,6 +41,7 @@ The tests render every page, follow every internal link and asset, and exercise 
 | `web/templates` | HTML templates (layout, partials, one file per page) |
 | `web/static` | CSS, JavaScript, images and downloadable files |
 | `tools/make_assets.py` | Generator for the promotional kit, CFP flyer, slide template, social preview image and the flyer preview on the home page |
+| `tools/demodata` | Generator for made-up records to try the admin pages (see [Demo data](#demo-data)) |
 
 ## Stored data
 
@@ -54,6 +55,17 @@ Everything visitors send is kept in the data directory (`-data`, default `data/`
 | `subscribers.jsonl` | Newsletter sign-ups |
 
 Papers must be PDF files of at most 10 MB (`maxPaperBytes` in `internal/server/papers.go`). Back up the whole directory regularly; on a container platform, put it on a persistent volume.
+
+## Demo data
+
+To try the admin pages without real submissions, fill a separate directory with made-up proposals (each with a PDF paper), contact messages and subscribers, then start the server on it with the admin pages turned on:
+
+```bash
+go run ./tools/demodata -data demo-data
+ICAS_ADMIN_PASSWORD=choose-a-password go run . -data demo-data -addr :8091
+```
+
+Everyone in the demo data is fictional. The generator refuses to write into a directory that already holds records, so it never mixes with real data. `demo-data/` is ignored by git; delete it to generate the data again.
 
 ## Editing content
 
