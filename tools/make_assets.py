@@ -190,8 +190,8 @@ def logos(r, f, emblem_uri):
 
 def social_card(f, emblem_uri, mascot_uri, w, h, layout):
     """Return (body, css) for a dark call-for-papers card."""
-    tracks = (f"<div class='tracks'><div class='pill t'><b>{f['ho']}</b><span>Tutorials</span><small>25-min talk + 90-min workshop</small></div>"
-              f"<div class='pill t'><b>{f['th']}</b><span>Regular papers</span><small>talks of about 15 minutes</small></div></div>")
+    tracks = (f"<div class='tracks'><div class='pill t'><b>{f['ho']}</b><span>Tutorials</span><small>5-min talk + 90-min workshop</small></div>"
+              f"<div class='pill t'><b>{f['th']}</b><span>Regular papers</span><small>10-min talk + poster</small></div></div>")
     brand = (f"<div class='brand'><img src='{emblem_uri}' alt=''><div><div class='acr'>{esc(f['acr'])} <span>{esc(f['year'])}</span></div>"
              f"<div class='name'>{esc(f['name'])}</div></div></div>")
     share = "<div class='share'>Tutorial authors receive <b class='coral'>40%</b> of the workshop registration fees as feedback</div>"
@@ -336,12 +336,12 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
       <div class="boxes">
         <div class="box ho"><h3>Tutorials</h3><div class="slots">{ho['slots']} presentation slots</div>
           <ul><li>Papers capable of engaging the audience interactively.</li>
-          <li>A <b>25-minute presentation</b> in the morning, then a <b>90-minute workshop</b> in the afternoon.</li>
+          <li>A <b>5-minute presentation</b> in the morning, then a <b>90-minute workshop</b> in the afternoon.</li>
           <li>A workshop for <b>25 or 50 participants</b>, with 10 or 20 equipment sets (if needed) and at least one <b>teaching assistant</b>.</li>
           <li>Authors prepare the equipment and provide the <b>laptop hardware requirements</b>; attendees bring their own laptops.</li></ul></div>
         <div class="box th"><h3>Regular Papers</h3><div class="slots">{th['slots']} presentation slots</div>
           <ul><li>Academic papers relevant to the conference theme.</li>
-          <li>About <b>15 minutes</b> per paper, in the late morning after the tutorial presentations.</li>
+          <li>A <b>10-minute presentation</b> in the late morning, then a <b>poster</b> in the afternoon, during the coffee break.</li>
           <li>Not strictly limited to the theme: any compelling, relevant research is welcome.</li></ul></div>
       </div>
       <div class="incentive">Author feedback: 40% of the workshop registration fees are given to the authors of each workshop, based on attendance. Choose an engaging topic and draw in as many participants as possible!</div>
