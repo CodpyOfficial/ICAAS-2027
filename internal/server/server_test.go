@@ -846,7 +846,12 @@ func TestRemovedAndMovedPages(t *testing.T) {
 // on every page: tutorials (a paper with a workshop) and regular papers.
 func TestTutorialsAndRegularPapers(t *testing.T) {
 	s := newTestServer(t, nil)
-	stale := regexp.MustCompile(`(?i)with(out)? workshop|run concurrently|in parallel with the (workshops|paper sessions)|(W1–W5|P1–P8)`)
+	stale := regexp.MustCompile(`(?i)with(out)? workshop\b|run concurrently|in parallel with the (workshops|paper sessions)|\b(W1–W5|P1–P8)\b`)
+	for _, old := range []string{"Papers with workshop", "W1–W5"} {
+		if !stale.MatchString(old) {
+			t.Fatalf("the stale-name pattern misses %q", old)
+		}
+	}
 	for _, p := range s.pages {
 		if p.Path == "/admin" {
 			continue
