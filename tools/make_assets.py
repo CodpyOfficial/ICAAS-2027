@@ -190,11 +190,11 @@ def logos(r, f, emblem_uri):
 
 def social_card(f, emblem_uri, mascot_uri, w, h, layout):
     """Return (body, css) for a dark call-for-papers card."""
-    tracks = (f"<div class='tracks'><div class='pill t'><b>{f['ho']}</b><span>Papers with workshop</span><small>25-min talk + 90-min workshop</small></div>"
-              f"<div class='pill t'><b>{f['th']}</b><span>Papers without workshop</span><small>talks of about 15 minutes</small></div></div>")
+    tracks = (f"<div class='tracks'><div class='pill t'><b>{f['ho']}</b><span>Tutorials</span><small>25-min talk + 90-min workshop</small></div>"
+              f"<div class='pill t'><b>{f['th']}</b><span>Regular papers</span><small>talks of about 15 minutes</small></div></div>")
     brand = (f"<div class='brand'><img src='{emblem_uri}' alt=''><div><div class='acr'>{esc(f['acr'])} <span>{esc(f['year'])}</span></div>"
              f"<div class='name'>{esc(f['name'])}</div></div></div>")
-    share = "<div class='share'>Workshop authors receive <b class='coral'>40%</b> of the workshop registration fees as feedback</div>"
+    share = "<div class='share'>Tutorial authors receive <b class='coral'>40%</b> of the workshop registration fees as feedback</div>"
     meta = f"<div class='meta'>{esc(f['where_when'])}{(' · ' + esc(f['url'])) if f['url'] else ''}</div>"
     s = w / 1200  # scale factor relative to a 1200px-wide design
     if layout == "square":
@@ -221,11 +221,11 @@ def social_card(f, emblem_uri, mascot_uri, w, h, layout):
         .brand {{ display:flex; align-items:center; gap:16px; }}
         .brand img {{ width:128px; height:128px; }}
         .acr {{ font-size:46px; }} .name {{ font-size:15px; font-weight:600; color:#cfd9ea; margin-top:6px; }}
-        .cfp {{ margin-left:auto; text-align:right; font-size:30px; font-weight:800; color:var(--coral); line-height:1.1; }}
+        .cfp {{ flex:none; margin-left:auto; text-align:right; font-size:30px; font-weight:800; color:var(--coral); line-height:1.1; white-space:nowrap; }}
         .cfp small {{ display:block; font-size:14px; color:#fff; font-weight:600; margin-top:6px; }}
         """
-        body = (f"<div class='card dark'>{brand}<div class='cfp'>Call for Papers<small>{f['ho']} papers with workshop · "
-                f"{f['th']} papers without workshop</small></div></div>")
+        body = (f"<div class='card dark'>{brand}<div class='cfp'>Call for Papers<small>{f['ho']} tutorials · "
+                f"{f['th']} regular papers</small></div></div>")
         return body, css
     # wide layouts (X header, X/LinkedIn posts)
     header = layout == "header"
@@ -272,7 +272,7 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     topics = "".join(f"<li{' class=practice' if t.get('practice') else ''}><b>{esc(t['title'])}</b></li>" for t in site["topics"])
 
     def req_item(q):
-        # Workshop-only items carry a star instead of the long title suffix;
+        # Tutorial-only items carry a star instead of the long title suffix;
         # their sub-bullets are left to the website to keep the flyer to one page.
         title = q["title"].split(" (")[0]
         star = "*" if q.get("applies") == "with-workshop" else ""
@@ -334,14 +334,14 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
     <div class="looking">
       <h2>What we are looking for</h2>
       <div class="boxes">
-        <div class="box ho"><h3>Papers with Workshop</h3><div class="slots">{ho['slots']} presentation slots</div>
+        <div class="box ho"><h3>Tutorials</h3><div class="slots">{ho['slots']} presentation slots</div>
           <ul><li>Papers capable of engaging the audience interactively.</li>
           <li>A <b>25-minute presentation</b> in the morning, then a <b>90-minute workshop</b> in the afternoon.</li>
           <li>A workshop for <b>25 or 50 participants</b>, with 10 or 20 equipment sets (if needed) and at least one <b>teaching assistant</b>.</li>
           <li>Authors prepare the equipment and provide the <b>laptop hardware requirements</b>; attendees bring their own laptops.</li></ul></div>
-        <div class="box th"><h3>Papers without Workshop</h3><div class="slots">{th['slots']} presentation slots</div>
+        <div class="box th"><h3>Regular Papers</h3><div class="slots">{th['slots']} presentation slots</div>
           <ul><li>Academic papers relevant to the conference theme.</li>
-          <li>About <b>15 minutes</b> per paper, in sessions running concurrently with the afternoon workshops.</li>
+          <li>About <b>15 minutes</b> per paper, in the late morning after the tutorial presentations.</li>
           <li>Not strictly limited to the theme: any compelling, relevant research is welcome.</li></ul></div>
       </div>
       <div class="incentive">Author feedback: 40% of the workshop registration fees are given to the authors of each workshop, based on attendance. Choose an engaging topic and draw in as many participants as possible!</div>
@@ -351,7 +351,7 @@ def flyer(r, site, f, emblem_uri, mascot_uri):
         <h2>Proposal submission requirements</h2>
         <p>All submissions must be in English and include:</p>
         <ul>{reqs}</ul>
-        <p class="note">* Papers with workshop only.</p>
+        <p class="note">* Tutorials only.</p>
         <h2>Review criteria</h2>
         <p>Double-blind peer review against:</p>
         <ul>{crit}</ul>
@@ -432,7 +432,7 @@ def slide_template(f, emblem_png):
     s.shapes.add_picture(str(emblem_png), Inches(0.9), Inches(1.6), Inches(4.2), Inches(4.2))
     text(s, 5.6, 1.9, 7.2, 1.8, "Presentation title", 40, white, bold=True, name="Title")
     text(s, 5.6, 3.8, 7.2, 0.6, "Author name · Affiliation", 20, RGBColor(0xCF, 0xD9, 0xEA), name="Author")
-    text(s, 5.6, 4.5, 7.2, 0.6, "Paper with workshop · Paper without workshop", 16, coral, bold=True, name="Track")
+    text(s, 5.6, 4.5, 7.2, 0.6, "Tutorial · Regular paper", 16, coral, bold=True, name="Track")
     text(s, 5.6, 6.6, 7.2, 0.5, footer, 12, RGBColor(0xB9, 0xC6, 0xDC))
     s.notes_slide.notes_text_frame.text = (f"Official {f['acr']} template: its use is mandatory for all presentations. "
                                           "Replace the title, author and track; keep the layout, colours, emblem and footer.")
