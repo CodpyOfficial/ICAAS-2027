@@ -1,5 +1,5 @@
-// Command icas serves the ICASW (International Conference on Autonomous
-// Systems and Workshop) website.
+// Command icas serves the ICAAS (International Conference on Autonomous
+// AI Systems) website.
 //
 // Templates, static assets and content/site.json are embedded in the
 // binary, so a single executable is all that has to be deployed. During
@@ -34,7 +34,7 @@ func main() {
 	var (
 		addr       = flag.String("addr", defaultAddr, "listen address (env ICAS_ADDR or PORT)")
 		dataDir    = flag.String("data", env("ICAS_DATA_DIR", "data"), "directory for submissions, uploaded papers, contact messages and subscribers (env ICAS_DATA_DIR)")
-		baseURL    = flag.String("base-url", env("ICAS_BASE_URL", ""), "public origin used in canonical links and the sitemap, e.g. https://icas.example.org (env ICAS_BASE_URL)")
+		baseURL    = flag.String("base-url", env("ICAS_BASE_URL", ""), "public origin used in canonical links and the sitemap, e.g. https://icaas.example.org (env ICAS_BASE_URL)")
 		dev        = flag.Bool("dev", os.Getenv("ICAS_DEV") == "1", "read templates, static files and content/site.json from disk on every request (env ICAS_DEV=1)")
 		trustProxy = flag.Bool("trust-proxy", os.Getenv("ICAS_TRUST_PROXY") == "1", "trust X-Forwarded-For/-Proto from a reverse proxy (env ICAS_TRUST_PROXY=1)")
 	)

@@ -139,7 +139,7 @@ func cleanFileName(name string) string {
 }
 
 // nextID returns the next free submission ID of a track, e.g.
-// ICASW2027-W004 for base "ICASW2027-W". Numbers whose PDF is still on disk
+// ICAAS2027-W004 for base "ICAAS2027-W". Numbers whose PDF is still on disk
 // are skipped, so a record removed by hand never loses its file to a new
 // submission.
 func (s *Server) nextID(subs []Submission, track, base string) string {

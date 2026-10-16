@@ -1,7 +1,7 @@
 """Generate the downloadable promotional files of the conference website.
 
 Outputs (all under web/static/files/; <acr> is the conference acronym from
-content/site.json, e.g. ICASW, and <slug> the same in lower case):
+content/site.json, e.g. ICAAS, and <slug> the same in lower case):
   promo/<slug>-emblem.svg                  vector emblem (copy)
   promo/<slug>-logo-with-year.png          emblem + wordmark with the edition year, 1600x560, transparent
   promo/<slug>-logo.png                    emblem + wordmark without year, 1600x560, transparent
@@ -44,7 +44,7 @@ ROOT = Path(__file__).resolve().parent.parent
 STATIC = ROOT / "web" / "static"
 FILES = STATIC / "files"
 PROMO = FILES / "promo"
-EMBLEM = STATIC / "img" / "icas-emblem.svg"
+EMBLEM = STATIC / "img" / "icaas-emblem.svg"
 MASCOT = STATIC / "img" / "mascot-paper.png"
 
 BROWSER_CANDIDATES = [
@@ -220,7 +220,7 @@ def social_card(f, emblem_uri, mascot_uri, w, h, layout):
         .card {{ width:{w}px; height:{h}px; display:flex; align-items:center; gap:22px; padding:0 34px 0 300px; position:relative; }}
         .brand {{ display:flex; align-items:center; gap:16px; }}
         .brand img {{ width:128px; height:128px; }}
-        .acr {{ font-size:46px; }} .name {{ font-size:15px; font-weight:600; color:#cfd9ea; margin-top:6px; }}
+        .acr {{ font-size:46px; }} .name {{ font-size:15px; font-weight:600; color:#cfd9ea; margin-top:6px; text-wrap:balance; }}
         .cfp {{ flex:none; margin-left:auto; text-align:right; font-size:30px; font-weight:800; color:var(--coral); line-height:1.1; white-space:nowrap; }}
         .cfp small {{ display:block; font-size:14px; color:#fff; font-weight:600; margin-top:6px; }}
         """

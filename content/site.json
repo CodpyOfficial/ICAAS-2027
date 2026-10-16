@@ -1,10 +1,10 @@
 {
   "conference": {
-    "acronym": "ICASW",
-    "name": "International Conference on Autonomous Systems and Workshop",
+    "acronym": "ICAAS",
+    "name": "International Conference on Autonomous AI Systems",
     "year": "2027",
     "tagline": "From theory to practice: researchers present new ideas, and practitioners teach the tools that make autonomous systems work.",
-    "description": "ICASW 2027, the International Conference on Autonomous Systems and Workshop, on April 17, 2027. Call for tutorials and regular papers on autonomous robotics, vehicles, drones, embedded autonomy, perception, simulation, planning, control, learning and safety.",
+    "description": "ICAAS 2027, the International Conference on Autonomous AI Systems, on April 17, 2027. Call for tutorials and regular papers on autonomous robotics, vehicles, drones, embedded autonomy, perception, simulation, planning, control, learning and safety.",
     "dates": "April 17, 2027",
     "startDate": "2027-04-17",
     "city": "",
@@ -17,7 +17,7 @@
     "submissionOpen": true,
     "registrationOpen": false,
     "registrationURL": "",
-    "copyright": "ICASW – International Conference on Autonomous Systems and Workshop"
+    "copyright": "ICAAS – International Conference on Autonomous AI Systems"
   },
   "contacts": [
     {
@@ -151,7 +151,7 @@
     },
     {
       "date": "Oct 13, 2026",
-      "text": "The ICASW 2027 website is open.",
+      "text": "The ICAAS 2027 website is open.",
       "link": "",
       "linkText": ""
     }
@@ -877,7 +877,7 @@
     ]
   },
   "sponsorship": {
-    "intro": "ICASW brings together researchers, engineers, students and industry practitioners who build autonomous systems. Because the workshops put tools and platforms directly into participants' hands, ICASW is an ideal setting to showcase technology, recruit talent and connect with the people shaping autonomy.",
+    "intro": "ICAAS brings together researchers, engineers, students and industry practitioners who build autonomous systems. Because the workshops put tools and platforms directly into participants' hands, ICAAS is an ideal setting to showcase technology, recruit talent and connect with the people shaping autonomy.",
     "audience": [
       {
         "value": "Academia",
@@ -1068,7 +1068,7 @@
       "title": "Submissions",
       "items": [
         {
-          "q": "What can I submit to ICASW?",
+          "q": "What can I submit to ICAAS?",
           "a": "Two kinds of proposals: Tutorials (6 presentation slots), which engage the audience interactively through a presentation and a workshop, and Regular Papers (10 presentation slots), which present academic work relevant to the conference theme."
         },
         {
@@ -1088,8 +1088,8 @@
           "a": "Yes. Proposals undergo double-blind peer review on technical depth and originality, clarity and feasibility, the engagement plan, and alignment with current industry and academic trends. Keep names and affiliations out of the paper, title, abstract and outline."
         },
         {
-          "q": "Do I have to use the ICASW slide template?",
-          "a": "Yes. All authors of accepted tutorials and regular papers must prepare their slides with the official ICASW slide template, available on the Downloads page."
+          "q": "Do I have to use the ICAAS slide template?",
+          "a": "Yes. All authors of accepted tutorials and regular papers must prepare their slides with the official ICAAS slide template, available on the Downloads page."
         }
       ]
     },
@@ -1142,14 +1142,14 @@
         {
           "title": "Call for Papers flyer",
           "description": "One-page A4 summary for printing and sharing",
-          "url": "/static/files/ICASW-CFP-flyer.pdf",
+          "url": "/static/files/ICAAS-CFP-flyer.pdf",
           "format": "PDF",
           "icon": "printer"
         },
         {
           "title": "Official slide template",
           "description": "Mandatory 16:9 template for all presentations",
-          "url": "/static/files/ICASW-slide-template.pptx",
+          "url": "/static/files/ICAAS-slide-template.pptx",
           "format": "PPTX",
           "icon": "monitor"
         },
@@ -1195,33 +1195,33 @@
       "key": "logo",
       "title": "Logo",
       "icon": "image",
-      "description": "The ICASW emblem and logo, with and without the edition year. Formats: SVG and PNG.",
+      "description": "The ICAAS emblem and logo, with and without the edition year. Formats: SVG and PNG.",
       "items": [
         {
           "title": "Emblem",
           "description": "Vector emblem for print and web",
-          "url": "/static/files/promo/icasw-emblem.svg",
+          "url": "/static/files/promo/icaas-emblem.svg",
           "format": "SVG",
           "icon": "image"
         },
         {
           "title": "Logo with year",
           "description": "Emblem and wordmark, 1600 × 560 px",
-          "url": "/static/files/promo/icasw-logo-with-year.png",
+          "url": "/static/files/promo/icaas-logo-with-year.png",
           "format": "PNG",
           "icon": "image"
         },
         {
           "title": "Logo without year",
           "description": "Emblem and wordmark, 1600 × 560 px",
-          "url": "/static/files/promo/icasw-logo.png",
+          "url": "/static/files/promo/icaas-logo.png",
           "format": "PNG",
           "icon": "image"
         },
         {
           "title": "Logo pack",
           "description": "All logo files in one archive",
-          "url": "/static/files/promo/icasw-logo-pack.zip",
+          "url": "/static/files/promo/icaas-logo-pack.zip",
           "format": "ZIP",
           "icon": "download"
         }
@@ -1236,21 +1236,21 @@
         {
           "title": "X header",
           "description": "1500 × 500 px",
-          "url": "/static/files/promo/icasw-x-header-1500x500.png",
+          "url": "/static/files/promo/icaas-x-header-1500x500.png",
           "format": "PNG",
           "icon": "image"
         },
         {
           "title": "X post (large)",
           "description": "1600 × 900 px",
-          "url": "/static/files/promo/icasw-x-post-1600x900.png",
+          "url": "/static/files/promo/icaas-x-post-1600x900.png",
           "format": "PNG",
           "icon": "image"
         },
         {
           "title": "X post",
           "description": "1200 × 675 px",
-          "url": "/static/files/promo/icasw-x-post-1200x675.png",
+          "url": "/static/files/promo/icaas-x-post-1200x675.png",
           "format": "PNG",
           "icon": "image"
         }
@@ -1265,21 +1265,21 @@
         {
           "title": "LinkedIn cover",
           "description": "1128 × 191 px",
-          "url": "/static/files/promo/icasw-linkedin-cover-1128x191.png",
+          "url": "/static/files/promo/icaas-linkedin-cover-1128x191.png",
           "format": "PNG",
           "icon": "image"
         },
         {
           "title": "LinkedIn post",
           "description": "1200 × 627 px",
-          "url": "/static/files/promo/icasw-linkedin-post-1200x627.png",
+          "url": "/static/files/promo/icaas-linkedin-post-1200x627.png",
           "format": "PNG",
           "icon": "image"
         },
         {
           "title": "Square post",
           "description": "1080 × 1080 px",
-          "url": "/static/files/promo/icasw-square-post-1080x1080.png",
+          "url": "/static/files/promo/icaas-square-post-1080x1080.png",
           "format": "PNG",
           "icon": "image"
         }
@@ -1289,7 +1289,7 @@
       "key": "mascot",
       "title": "Mascot",
       "icon": "heart",
-      "description": "The ICASW bear mascot from the call for papers, on a transparent background.",
+      "description": "The ICAAS bear mascot from the call for papers, on a transparent background.",
       "items": [
         {
           "title": "Bear with paper",
@@ -1311,7 +1311,7 @@
   "history": [
     {
       "year": "2027",
-      "name": "ICASW 2027",
+      "name": "ICAAS 2027",
       "city": "",
       "dates": "April 17, 2027",
       "url": "/",

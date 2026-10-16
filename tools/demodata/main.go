@@ -219,8 +219,8 @@ func paperPDF(conference string, s server.Submission) []byte {
 		pg.section("Software", s.Software)
 	}
 	pg.off += 14
-	pg.text(false, 8, "Generated demo content for testing the ICAS website.")
-	return pg.pdf(s.Title)
+	pg.text(false, 8, "Generated demo content for testing the "+conference+" website.")
+	return pg.pdf(s.Title, conference+" demo data")
 }
 
 // pdfPage lays out lines of text from the top of one A4 page.
@@ -260,7 +260,7 @@ func (pg *pdfPage) section(heading, body string) {
 
 // pdf assembles a PDF 1.4 file around the page using the standard
 // Helvetica fonts, which need no embedding.
-func (pg *pdfPage) pdf(title string) []byte {
+func (pg *pdfPage) pdf(title, producer string) []byte {
 	stream := pg.content.String()
 	objects := []string{
 		"<< /Type /Catalog /Pages 2 0 R >>",
@@ -269,7 +269,7 @@ func (pg *pdfPage) pdf(title string) []byte {
 		"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>",
 		"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
 		fmt.Sprintf("<< /Length %d >>\nstream\n%s\nendstream", len(stream), stream),
-		fmt.Sprintf("<< /Title (%s) /Producer (ICAS demo data) >>", pdfEscape(title)),
+		fmt.Sprintf("<< /Title (%s) /Producer (%s) >>", pdfEscape(title), pdfEscape(producer)),
 	}
 	var b bytes.Buffer
 	b.WriteString("%PDF-1.4\n")
@@ -408,7 +408,7 @@ var proposals = []proposal{
 			"and a PID steering controller. On a 1:10 scale car the pipeline runs at 45 frames per second and completes a 30 m track with no manual corrections. " +
 			"Workshop participants collect their own data, train on their laptops and deploy to the car.",
 		topics:   []string{"Edge and Embedded Computing for Autonomy", "Perception and Situational Awareness", "Autonomous Vehicles and Mobility"},
-		fileName: "Becker_lane_following_ICAS.pdf",
+		fileName: "Becker_lane_following_ICAAS.pdf",
 		speaker:  "Lukas Becker", email: "lukas.becker@rheinfeld.example.org", affiliation: "Rheinfeld Institute of Applied Robotics", country: "Germany",
 		plan:     [4]string{"collect driving data with the joystick", "train the network on the laptop", "optimise the network and deploy it to the car", "tune the steering controller and race the track"},
 		software: "Python 3.10, PyTorch 2, OpenCV 4", targetOS: "Windows 11, macOS 14 or Ubuntu 22.04",
@@ -544,7 +544,7 @@ var proposals = []proposal{
 			"in fifteen minutes. On our test track the controller beats a tuned pure-pursuit baseline by 18 percent in lap time. In the workshop, teams " +
 			"identify their car, tune the controller and compete in a time trial.",
 		topics:   []string{"Control of Autonomous Systems", "Autonomous Vehicles and Mobility"},
-		fileName: "MPC racing - ICAS.pdf",
+		fileName: "MPC racing - ICAAS.pdf",
 		speaker:  "Camila Duarte", email: "camila.duarte@litoralsur.example.org", affiliation: "Universidad del Litoral Sur", country: "Chile",
 		coSpeakers: "Matías Herrera, Universidad del Litoral Sur, matias.herrera@litoralsur.example.org",
 		plan:       [4]string{"identify the vehicle model from logged runs", "formulate and solve the MPC problem", "tune the horizon and the weights on the track", "run the time trial and debrief"},

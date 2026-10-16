@@ -66,7 +66,7 @@ type Conference struct {
 	Copyright        string `json:"copyright"`
 }
 
-// FullTitle is e.g. "ICASW 2027".
+// FullTitle is e.g. "ICAAS 2027".
 func (c Conference) FullTitle() string {
 	return strings.TrimSpace(c.Acronym + " " + c.Year)
 }

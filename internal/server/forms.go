@@ -382,7 +382,7 @@ func validateSubmission(f *formState, site *content.Site) Submission {
 		f.fail("confirm_english", "Please confirm that your proposal is written in English.")
 	}
 	if v["confirm_template"] == "" {
-		f.fail("confirm_template", "Please confirm that you will use the official ICASW slide template.")
+		f.fail("confirm_template", "Please confirm that you will use the official ICAAS slide template.")
 	}
 	if v["confirm_privacy"] == "" {
 		f.fail("confirm_privacy", "Please agree to the processing of your data for the review.")

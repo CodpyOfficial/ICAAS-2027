@@ -1,4 +1,4 @@
-// Package server implements the ICASW conference website: page rendering,
+// Package server implements the ICAAS conference website: page rendering,
 // static assets, the proposal submission / contact / newsletter forms and a
 // small password-protected admin view of what was submitted.
 package server
@@ -22,7 +22,7 @@ import (
 // Config controls a Server.
 type Config struct {
 	DataDir       string // where form submissions are stored
-	BaseURL       string // canonical origin, e.g. https://icas.example.org; derived from the request when empty
+	BaseURL       string // canonical origin, e.g. https://icaas.example.org; derived from the request when empty
 	Dev           bool   // re-read templates and content on every request
 	TrustProxy    bool   // honour X-Forwarded-For / X-Forwarded-Proto
 	AdminUser     string // admin pages are disabled unless AdminPassword is set

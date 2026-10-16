@@ -47,7 +47,7 @@ func TestProgramMatchesTrackSlots(t *testing.T) {
 
 func TestValidateRejectsDuplicates(t *testing.T) {
 	site := `{
-		"conference": {"acronym": "ICASW", "name": "Test"},
+		"conference": {"acronym": "ICAAS", "name": "Test"},
 		"tracks": [{"key": "with-workshop"}, {"key": "without-workshop"}],
 		"calls": [{"key": "with-workshop", "status": "open"}, {"key": "with-workshop", "status": "open"}],
 		"topics": [{"title": "Drones"}, {"title": "Drones"}],

@@ -1,4 +1,4 @@
-// ICASW site behaviour: navigation, carousel, tabs, countdown and form helpers.
+// ICAAS site behaviour: navigation, carousel, tabs, countdown and form helpers.
 // Everything here is progressive enhancement; pages work without JavaScript.
 (function () {
   "use strict";
