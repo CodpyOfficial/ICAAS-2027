@@ -14,8 +14,8 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"icas/internal/content"
-	"icas/internal/store"
+	"icaas/internal/content"
+	"icaas/internal/store"
 )
 
 // Word limits from the call for papers.

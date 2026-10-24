@@ -15,8 +15,8 @@ import (
 	"sync"
 	"time"
 
-	"icas/internal/content"
-	"icas/internal/store"
+	"icaas/internal/content"
+	"icaas/internal/store"
 )
 
 // Config controls a Server.
@@ -56,7 +56,7 @@ type Server struct {
 // dev mode).
 func New(cfg Config, webFS fs.FS, loadSite func() (*content.Site, error)) (*Server, error) {
 	if cfg.Logger == nil {
-		cfg.Logger = log.New(os.Stderr, "icas ", log.LstdFlags)
+		cfg.Logger = log.New(os.Stderr, "icaas ", log.LstdFlags)
 	}
 	if cfg.Now == nil {
 		cfg.Now = time.Now

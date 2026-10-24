@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"icas/internal/content"
-	"icas/internal/store"
+	"icaas/internal/content"
+	"icaas/internal/store"
 )
 
 // adminFailures throttles password guessing on the admin pages.

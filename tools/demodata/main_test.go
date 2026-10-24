@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"icas/internal/server"
-	"icas/internal/store"
+	"icaas/internal/server"
+	"icaas/internal/store"
 )
 
 func TestRun(t *testing.T) {

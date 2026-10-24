@@ -1,4 +1,4 @@
-// Command icas serves the ICAAS (International Conference on Autonomous
+// Command icaas serves the ICAAS (International Conference on Autonomous
 // AI Systems) website.
 //
 // Templates, static assets and content/site.json are embedded in the
@@ -19,28 +19,28 @@ import (
 	"syscall"
 	"time"
 
-	"icas/internal/content"
-	"icas/internal/server"
+	"icaas/internal/content"
+	"icaas/internal/server"
 )
 
 //go:embed web/templates web/static content/site.json
 var embedded embed.FS
 
 func main() {
-	defaultAddr := env("ICAS_ADDR", ":8090")
-	if p := os.Getenv("PORT"); p != "" && os.Getenv("ICAS_ADDR") == "" {
+	defaultAddr := env("ICAAS_ADDR", ":8090")
+	if p := os.Getenv("PORT"); p != "" && os.Getenv("ICAAS_ADDR") == "" {
 		defaultAddr = ":" + p
 	}
 	var (
-		addr       = flag.String("addr", defaultAddr, "listen address (env ICAS_ADDR or PORT)")
-		dataDir    = flag.String("data", env("ICAS_DATA_DIR", "data"), "directory for submissions, uploaded papers, contact messages and subscribers (env ICAS_DATA_DIR)")
-		baseURL    = flag.String("base-url", env("ICAS_BASE_URL", ""), "public origin used in canonical links and the sitemap, e.g. https://icaas.example.org (env ICAS_BASE_URL)")
-		dev        = flag.Bool("dev", os.Getenv("ICAS_DEV") == "1", "read templates, static files and content/site.json from disk on every request (env ICAS_DEV=1)")
-		trustProxy = flag.Bool("trust-proxy", os.Getenv("ICAS_TRUST_PROXY") == "1", "trust X-Forwarded-For/-Proto from a reverse proxy (env ICAS_TRUST_PROXY=1)")
+		addr       = flag.String("addr", defaultAddr, "listen address (env ICAAS_ADDR or PORT)")
+		dataDir    = flag.String("data", env("ICAAS_DATA_DIR", "data"), "directory for submissions, uploaded papers, contact messages and subscribers (env ICAAS_DATA_DIR)")
+		baseURL    = flag.String("base-url", env("ICAAS_BASE_URL", ""), "public origin used in canonical links and the sitemap, e.g. https://icaas.example.org (env ICAAS_BASE_URL)")
+		dev        = flag.Bool("dev", os.Getenv("ICAAS_DEV") == "1", "read templates, static files and content/site.json from disk on every request (env ICAAS_DEV=1)")
+		trustProxy = flag.Bool("trust-proxy", os.Getenv("ICAAS_TRUST_PROXY") == "1", "trust X-Forwarded-For/-Proto from a reverse proxy (env ICAAS_TRUST_PROXY=1)")
 	)
 	flag.Parse()
 
-	logger := log.New(os.Stderr, "icas ", log.LstdFlags)
+	logger := log.New(os.Stderr, "icaas ", log.LstdFlags)
 
 	var webFS fs.FS
 	var loadSite func() (*content.Site, error)
@@ -62,8 +62,8 @@ func main() {
 		BaseURL:       *baseURL,
 		Dev:           *dev,
 		TrustProxy:    *trustProxy,
-		AdminUser:     os.Getenv("ICAS_ADMIN_USER"),
-		AdminPassword: os.Getenv("ICAS_ADMIN_PASSWORD"),
+		AdminUser:     os.Getenv("ICAAS_ADMIN_USER"),
+		AdminPassword: os.Getenv("ICAAS_ADMIN_PASSWORD"),
 		Logger:        logger,
 	}, webFS, loadSite)
 	if err != nil {
@@ -85,8 +85,8 @@ func main() {
 
 	go func() {
 		logger.Printf("listening on %s (data directory: %s)", *addr, *dataDir)
-		if os.Getenv("ICAS_ADMIN_PASSWORD") == "" {
-			logger.Print("admin pages disabled: set ICAS_ADMIN_PASSWORD to enable /admin")
+		if os.Getenv("ICAAS_ADMIN_PASSWORD") == "" {
+			logger.Print("admin pages disabled: set ICAAS_ADMIN_PASSWORD to enable /admin")
 		}
 		if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			logger.Fatal(err)

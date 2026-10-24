@@ -3,7 +3,7 @@
 // admin pages and exports can be tried without real submissions:
 //
 //	go run ./tools/demodata -data demo-data
-//	ICAS_ADMIN_PASSWORD=choose-one go run . -data demo-data -addr :8091
+//	ICAAS_ADMIN_PASSWORD=choose-one go run . -data demo-data -addr :8091
 //
 // Everyone in it is fictional: addresses and links use example.* domains and
 // IP addresses come from the documentation ranges. The command refuses to
@@ -24,9 +24,9 @@ import (
 	"strings"
 	"time"
 
-	"icas/internal/content"
-	"icas/internal/server"
-	"icas/internal/store"
+	"icaas/internal/content"
+	"icaas/internal/server"
+	"icaas/internal/store"
 )
 
 func main() {
@@ -433,7 +433,7 @@ var proposals = []proposal{
 			"a safety layer that keeps the drones inside a virtual cage, and lessons from eight teaching sessions. Participants program formations in Python, " +
 			"test them in simulation and then fly them with up to twenty drones at once.",
 		topics:   []string{"Multi-Agent and Swarm Autonomy", "Autonomous Robotics", "Control of Autonomous Systems"},
-		fileName: "swarm-formation-icas2027.pdf",
+		fileName: "swarm-formation-icaas2027.pdf",
 		speaker:  "Aisha Rahman", email: "aisha.rahman@northgate.example.edu", affiliation: "Northgate Polytechnic", country: "Malaysia",
 		coSpeakers: "Farid Hassan, Northgate Polytechnic, farid.hassan@northgate.example.edu",
 		plan:       [4]string{"fly a single drone with the Python API", "implement the formation controller in simulation", "fly the formation with the real swarm inside the safety cage", "add a leader change and present the result"},

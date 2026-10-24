@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"icas/internal/content"
+	"icaas/internal/content"
 )
 
 // viewData is what every template receives.

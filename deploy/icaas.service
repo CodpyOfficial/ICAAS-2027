@@ -8,18 +8,18 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=icas
-Group=icas
+User=icaas
+Group=icaas
 # The data directory is fixed here because the sandbox below allows writes
-# to /var/lib/icas only; ICAS_DATA_DIR in the environment file is ignored.
-ExecStart=/usr/local/bin/icas -data /var/lib/icas
+# to /var/lib/icaas only; ICAAS_DATA_DIR in the environment file is ignored.
+ExecStart=/usr/local/bin/icaas -data /var/lib/icaas
 # Listen address, public URL, proxy and admin settings. The leading "-"
 # lets the service start with the defaults when the file is missing.
-EnvironmentFile=-/etc/icas/icas.env
-# Creates /var/lib/icas owned by the icas user and readable by it alone.
-StateDirectory=icas
+EnvironmentFile=-/etc/icaas/icaas.env
+# Creates /var/lib/icaas owned by the icaas user and readable by it alone.
+StateDirectory=icaas
 StateDirectoryMode=0700
-WorkingDirectory=/var/lib/icas
+WorkingDirectory=/var/lib/icaas
 UMask=0077
 Restart=on-failure
 RestartSec=5s

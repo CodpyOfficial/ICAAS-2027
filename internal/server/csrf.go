@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	csrfCookieName = "icas_csrf"
+	csrfCookieName = "icaas_csrf"
 	csrfFieldName  = "csrf_token"
 	csrfTokenBytes = 32
 )

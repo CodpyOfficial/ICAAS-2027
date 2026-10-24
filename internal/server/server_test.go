@@ -22,8 +22,8 @@ import (
 	"testing"
 	"time"
 
-	"icas/internal/content"
-	"icas/internal/store"
+	"icaas/internal/content"
+	"icaas/internal/store"
 )
 
 var fixedNow = time.Date(2026, 10, 2, 12, 0, 0, 0, time.UTC)
@@ -960,7 +960,7 @@ func TestAuthorKitAndDownloads(t *testing.T) {
 			t.Errorf("%s still links the Call for Papers slides", p)
 		}
 	}
-	if rec := get(t, s, "/static/files/ICAS-Call-for-Papers.pptx"); rec.Code != http.StatusNotFound {
+	if rec := get(t, s, "/static/files/ICAAS-Call-for-Papers.pptx"); rec.Code != http.StatusNotFound {
 		t.Errorf("Call for Papers slides = %d, want 404", rec.Code)
 	}
 	home := get(t, s, "/").Body.String()

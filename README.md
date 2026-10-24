@@ -8,16 +8,16 @@ Requires Go 1.21 or later.
 
 ```bash
 go run . -dev                # http://localhost:8090; templates and content reload on every request
-go build -o icas . && ./icas # single binary: templates, assets and content are embedded
+go build -o icaas . && ./icaas # single binary: templates, assets and content are embedded
 ```
 
 | Flag / env | Purpose |
 |---|---|
-| `-addr` / `ICAS_ADDR` or `PORT` | Listen address (default `:8090`) |
-| `-data` / `ICAS_DATA_DIR` | Where submissions, uploaded papers, messages and subscribers are stored (default `data/`, see [Stored data](#stored-data)) |
-| `-base-url` / `ICAS_BASE_URL` | Public origin for canonical links and `sitemap.xml` |
-| `-trust-proxy` / `ICAS_TRUST_PROXY=1` | Honour `X-Forwarded-*` headers when running behind a reverse proxy |
-| `ICAS_ADMIN_USER`, `ICAS_ADMIN_PASSWORD` | Turn on `/admin`, which lists records and offers CSV exports (including an anonymized export for double-blind review), each paper as a PDF and all papers as one ZIP |
+| `-addr` / `ICAAS_ADDR` or `PORT` | Listen address (default `:8090`) |
+| `-data` / `ICAAS_DATA_DIR` | Where submissions, uploaded papers, messages and subscribers are stored (default `data/`, see [Stored data](#stored-data)) |
+| `-base-url` / `ICAAS_BASE_URL` | Public origin for canonical links and `sitemap.xml` |
+| `-trust-proxy` / `ICAAS_TRUST_PROXY=1` | Honour `X-Forwarded-*` headers when running behind a reverse proxy |
+| `ICAAS_ADMIN_USER`, `ICAAS_ADMIN_PASSWORD` | Turn on `/admin`, which lists records and offers CSV exports (including an anonymized export for double-blind review), each paper as a PDF and all papers as one ZIP |
 
 ## Test
 
@@ -59,39 +59,39 @@ Papers must be PDF files of at most 10 MB (`maxPaperBytes` in `internal/server/p
 
 ## Deploy on Linux
 
-`deploy/icas.service` runs the site as a systemd service that starts at boot and restarts after a crash. It runs as the unprivileged `icas` user, stores its data in `/var/lib/icas` and reads its settings from `/etc/icas/icas.env`. Only the binary and the two files in `deploy/` have to be copied to the server.
+`deploy/icaas.service` runs the site as a systemd service that starts at boot and restarts after a crash. It runs as the unprivileged `icaas` user, stores its data in `/var/lib/icaas` and reads its settings from `/etc/icaas/icaas.env`. Only the binary and the two files in `deploy/` have to be copied to the server.
 
 Build a Linux binary (use `GOARCH=arm64` for ARM servers; in PowerShell, set `$env:GOOS` and `$env:GOARCH` first):
 
 ```bash
-GOOS=linux GOARCH=amd64 go build -o icas .
+GOOS=linux GOARCH=amd64 go build -o icaas .
 ```
 
 On the server, from a directory holding the binary and `deploy/`, create the user and install the files:
 
 ```bash
-sudo useradd --system --no-create-home --shell /usr/sbin/nologin icas
-sudo install -m 755 icas /usr/local/bin/icas
-sudo install -m 644 deploy/icas.service /etc/systemd/system/icas.service
-sudo install -D -m 600 deploy/icas.env.example /etc/icas/icas.env
+sudo useradd --system --no-create-home --shell /usr/sbin/nologin icaas
+sudo install -m 755 icaas /usr/local/bin/icaas
+sudo install -m 644 deploy/icaas.service /etc/systemd/system/icaas.service
+sudo install -D -m 600 deploy/icaas.env.example /etc/icaas/icaas.env
 ```
 
-Set the public URL and the admin password in `/etc/icas/icas.env`, then start the service and enable it at boot:
+Set the public URL and the admin password in `/etc/icaas/icaas.env`, then start the service and enable it at boot:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now icas
+sudo systemctl enable --now icaas
 ```
 
-The example settings listen on `127.0.0.1:8090` and trust `X-Forwarded-*` headers, for a reverse proxy (nginx, Caddy) that serves HTTPS on ports 80 and 443. The sandbox in the unit lets the server write only to `/var/lib/icas` and a private `/tmp`, and it cannot bind ports below 1024 itself.
+The example settings listen on `127.0.0.1:8090` and trust `X-Forwarded-*` headers, for a reverse proxy (nginx, Caddy) that serves HTTPS on ports 80 and 443. The sandbox in the unit lets the server write only to `/var/lib/icaas` and a private `/tmp`, and it cannot bind ports below 1024 itself.
 
 | Task | Command |
 |---|---|
-| Status | `systemctl status icas` |
-| Logs | `journalctl -u icas -f` |
-| Apply changed settings | `sudo systemctl restart icas` |
-| Update | `sudo install -m 755 icas /usr/local/bin/icas && sudo systemctl restart icas` |
-| Stop starting at boot | `sudo systemctl disable --now icas` |
+| Status | `systemctl status icaas` |
+| Logs | `journalctl -u icaas -f` |
+| Apply changed settings | `sudo systemctl restart icaas` |
+| Update | `sudo install -m 755 icaas /usr/local/bin/icaas && sudo systemctl restart icaas` |
+| Stop starting at boot | `sudo systemctl disable --now icaas` |
 
 ## Demo data
 
@@ -99,7 +99,7 @@ To try the admin pages without real submissions, fill a separate directory with 
 
 ```bash
 go run ./tools/demodata -data demo-data
-ICAS_ADMIN_PASSWORD=choose-a-password go run . -data demo-data -addr :8091
+ICAAS_ADMIN_PASSWORD=choose-a-password go run . -data demo-data -addr :8091
 ```
 
 Everyone in the demo data is fictional. The generator refuses to write into a directory that already holds records, so it never mixes with real data. `demo-data/` is ignored by git; delete it to generate the data again.
