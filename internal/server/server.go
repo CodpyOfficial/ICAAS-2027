@@ -170,10 +170,8 @@ func (s *Server) routes() http.Handler {
 	mux.HandleFunc("/sitemap.xml", s.handleSitemap)
 	mux.HandleFunc("/llms.txt", s.handleLLMs)
 	mux.HandleFunc("/manifest.webmanifest", s.handleManifest)
-	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		w.Write([]byte("ok\n"))
-	})
+	mux.HandleFunc("/healthcheck", s.handleHealth)
+	mux.HandleFunc("/healthz", s.handleHealth)
 	mux.HandleFunc("/submission", s.handleSubmission)
 	mux.HandleFunc("/submission/received", s.handleSubmissionReceived)
 	mux.HandleFunc("/contact", s.handleContact)
@@ -207,6 +205,22 @@ func (s *Server) devReload(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+// handleHealth answers uptime monitors and load balancers: "ok" while the
+// server can serve pages and store what visitors send, 503 when the data
+// directory has gone missing.
+func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
+	h := w.Header()
+	h.Set("Content-Type", "text/plain; charset=utf-8")
+	h.Set("Cache-Control", "no-store")
+	if fi, err := os.Stat(s.store.Dir()); err != nil || !fi.IsDir() {
+		s.logger.Printf("healthcheck: data directory %s is unavailable: %v", s.store.Dir(), err)
+		w.WriteHeader(http.StatusServiceUnavailable)
+		w.Write([]byte("unavailable\n"))
+		return
+	}
+	w.Write([]byte("ok\n"))
 }
 
 // handlePage serves every registered content page and the 404 page.

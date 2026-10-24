@@ -1067,6 +1067,36 @@ func TestSitemapRobotsManifest(t *testing.T) {
 	}
 }
 
+func TestHealthcheck(t *testing.T) {
+	var logs bytes.Buffer
+	s := newTestServer(t, func(c *Config) { c.Logger = log.New(&logs, "", 0) })
+	for _, path := range []string{"/healthcheck", "/healthz"} {
+		rec := get(t, s, path)
+		if rec.Code != http.StatusOK || rec.Body.String() != "ok\n" || rec.Header().Get("Cache-Control") != "no-store" {
+			t.Errorf("GET %s = %d %q (Cache-Control %q)", path, rec.Code, rec.Body.String(), rec.Header().Get("Cache-Control"))
+		}
+	}
+	if logs.Len() > 0 {
+		t.Errorf("successful health checks were logged:\n%s", logs.String())
+	}
+	get(t, s, "/about")
+	if !strings.Contains(logs.String(), "GET /about 200") {
+		t.Errorf("page request was not logged:\n%s", logs.String())
+	}
+
+	if err := os.RemoveAll(s.store.Dir()); err != nil {
+		t.Fatal(err)
+	}
+	if rec := get(t, s, "/healthcheck"); rec.Code != http.StatusServiceUnavailable {
+		t.Errorf("GET /healthcheck without a data directory = %d, want 503", rec.Code)
+	}
+	for _, want := range []string{"healthcheck: data directory", "GET /healthcheck 503"} {
+		if !strings.Contains(logs.String(), want) {
+			t.Errorf("failed health check log lacks %q:\n%s", want, logs.String())
+		}
+	}
+}
+
 func TestLLMsTxt(t *testing.T) {
 	s := newTestServer(t, nil)
 	rec := get(t, s, "/llms.txt")

@@ -60,6 +60,10 @@ func (s *statusRecorder) Write(b []byte) (int, error) {
 // allowSlowTransfer needs to extend the deadlines of an upload.
 func (s *statusRecorder) Unwrap() http.ResponseWriter { return s.ResponseWriter }
 
+// healthPaths are polled by uptime monitors every few seconds; their
+// successful answers stay out of the access log so it remains readable.
+var healthPaths = map[string]bool{"/healthcheck": true, "/healthz": true}
+
 func logRequests(logger *log.Logger, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
@@ -67,6 +71,9 @@ func logRequests(logger *log.Logger, next http.Handler) http.Handler {
 		next.ServeHTTP(rec, r)
 		if rec.status == 0 {
 			rec.status = http.StatusOK
+		}
+		if rec.status == http.StatusOK && healthPaths[r.URL.Path] {
+			return
 		}
 		logger.Printf("%s %s %d %dB %s", r.Method, r.URL.RequestURI(), rec.status, rec.bytes, time.Since(start).Round(time.Microsecond))
 	})

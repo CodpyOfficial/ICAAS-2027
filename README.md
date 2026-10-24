@@ -88,6 +88,7 @@ The example settings listen on `127.0.0.1:8090` and trust `X-Forwarded-*` header
 | Task | Command |
 |---|---|
 | Status | `systemctl status icaas` |
+| Health check (for uptime monitors and load balancers; `/healthz` also works) | `curl http://127.0.0.1:8090/healthcheck` returns `ok`, or status 503 if the data directory is missing. Only failed checks are written to the log |
 | Logs | `journalctl -u icaas -f` |
 | Apply changed settings | `sudo systemctl restart icaas` |
 | Update | `sudo install -m 755 icaas /usr/local/bin/icaas && sudo systemctl restart icaas` |
