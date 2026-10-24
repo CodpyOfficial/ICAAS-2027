@@ -15,7 +15,7 @@ go build -o icaas . && ./icaas # single binary: templates, assets and content ar
 |---|---|
 | `-addr` / `ICAAS_ADDR` or `PORT` | Listen address (default `:8090`) |
 | `-data` / `ICAAS_DATA_DIR` | Where submissions, uploaded papers, messages and subscribers are stored (default `data/`, see [Stored data](#stored-data)) |
-| `-base-url` / `ICAAS_BASE_URL` | Public origin for canonical links and `sitemap.xml` |
+| `-base-url` / `ICAAS_BASE_URL` | Public origin for canonical links, `sitemap.xml`, `robots.txt` and `llms.txt` |
 | `-trust-proxy` / `ICAAS_TRUST_PROXY=1` | Honour `X-Forwarded-*` headers when running behind a reverse proxy |
 | `ICAAS_ADMIN_USER`, `ICAAS_ADMIN_PASSWORD` | Turn on `/admin`, which lists records and offers CSV exports (including an anonymized export for double-blind review), each paper as a PDF and all papers as one ZIP |
 
@@ -107,6 +107,18 @@ Everyone in the demo data is fictional. The generator refuses to write into a di
 ## Editing content
 
 All conference facts live in `content/site.json`. An empty string is shown on the site as **TBA**. This covers dates, venue, committee, keynotes, fees, sponsors, downloads, news and calls. Set `conference.submissionOpen` to `false` to close the submission form.
+
+## Search engines and language models
+
+Three files tell crawlers about the site. None of them exists on disk: the server builds each one on request from the page list in `internal/server/pages.go` and from `content/site.json`, so they follow every change to pages or content without editing by hand.
+
+| URL | Contents |
+|---|---|
+| `/sitemap.xml` | Every page except those marked `NoIndex` (the admin pages and the submission confirmation) |
+| `/robots.txt` | Allows every crawler, including AI crawlers, to read the whole site, and points to the sitemap and `llms.txt`. `NoIndex` pages are kept out of search results by their `robots` meta tag and `X-Robots-Tag` header instead |
+| `/llms.txt` | A Markdown summary for language models ([llmstxt.org](https://llmstxt.org)): the conference description, date, venue, submission and registration status, important dates, and every page of the sitemap with its description, grouped by menu section |
+
+A page added to `sitePages()` appears in all three automatically; the tests fail if any of them misses a page.
 
 ## Regenerating downloads
 

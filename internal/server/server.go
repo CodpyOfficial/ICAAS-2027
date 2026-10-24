@@ -168,6 +168,7 @@ func (s *Server) routes() http.Handler {
 	})
 	mux.HandleFunc("/robots.txt", s.handleRobots)
 	mux.HandleFunc("/sitemap.xml", s.handleSitemap)
+	mux.HandleFunc("/llms.txt", s.handleLLMs)
 	mux.HandleFunc("/manifest.webmanifest", s.handleManifest)
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
@@ -265,11 +266,18 @@ func (s *Server) staticHandler(static fs.FS) http.Handler {
 	})
 }
 
+// handleRobots lets every crawler, search engines and AI crawlers alike,
+// read the whole site. Pages marked NoIndex stay out of search results
+// through their robots meta tag and X-Robots-Tag header, which crawlers
+// can only see because they are allowed to fetch them.
 func (s *Server) handleRobots(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	fmt.Fprintf(w, "User-agent: *\nDisallow: /admin\nDisallow: /submission/received\n\nSitemap: %s/sitemap.xml\n", s.baseURL(r))
+	base := s.baseURL(r)
+	fmt.Fprintf(w, "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n\n# Summary for language models: %s/llms.txt\n", base, base)
 }
 
+// handleSitemap lists every page of the registry that is not NoIndex, so a
+// page added to sitePages appears here without further work.
 func (s *Server) handleSitemap(w http.ResponseWriter, r *http.Request) {
 	type url struct {
 		Loc      string `xml:"loc"`
@@ -302,6 +310,105 @@ func (s *Server) handleSitemap(w http.ResponseWriter, r *http.Request) {
 	if err := enc.Encode(set); err != nil {
 		s.logger.Printf("sitemap: %v", err)
 	}
+}
+
+// handleLLMs serves /llms.txt (https://llmstxt.org): the headline facts from
+// site.json and every page the sitemap lists, grouped by menu section, so a
+// language model can read the site at a glance. Like the sitemap it is built
+// from the page registry and the content, so it never needs editing by hand.
+func (s *Server) handleLLMs(w http.ResponseWriter, r *http.Request) {
+	site, base := s.site(), s.baseURL(r)
+	c := site.Conference
+	orTBA := func(v string) string {
+		if strings.TrimSpace(v) == "" {
+			return "TBA"
+		}
+		return v
+	}
+
+	var b strings.Builder
+	fmt.Fprintf(&b, "# %s – %s\n\n", c.FullTitle(), c.Name)
+	if c.Description != "" {
+		fmt.Fprintf(&b, "> %s\n\n", c.Description)
+	}
+	if c.Tagline != "" {
+		fmt.Fprintf(&b, "%s\n\n", c.Tagline)
+	}
+
+	venue := c.Location()
+	if c.VenueName != "" {
+		venue = strings.TrimSuffix(c.VenueName+", "+venue, ", ")
+	}
+	submission, registration := "closed", "closed"
+	if c.SubmissionOpen {
+		submission = "open at " + base + "/submission"
+	}
+	if c.RegistrationOpen && c.RegistrationURL != "" {
+		registration = "open at " + c.RegistrationURL
+	}
+	fmt.Fprintf(&b, "- Website: %s/\n", base)
+	fmt.Fprintf(&b, "- Date: %s\n", orTBA(c.Dates))
+	fmt.Fprintf(&b, "- Venue: %s\n", orTBA(venue))
+	if c.Format != "" {
+		fmt.Fprintf(&b, "- Format: %s\n", c.Format)
+	}
+	if c.Language != "" {
+		fmt.Fprintf(&b, "- Language: %s\n", c.Language)
+	}
+	fmt.Fprintf(&b, "- Proposal submission: %s\n", submission)
+	fmt.Fprintf(&b, "- Registration: %s\n", registration)
+	for _, ct := range site.Contacts {
+		if ct.Email != "" {
+			fmt.Fprintf(&b, "- %s: %s\n", ct.Label, ct.Email)
+		}
+	}
+
+	if len(site.ImportantDates) > 0 {
+		b.WriteString("\nImportant dates:\n\n")
+		for _, d := range site.ImportantDates {
+			fmt.Fprintf(&b, "- %s: %s", d.Label, orTBA(d.Date))
+			if d.Original != "" {
+				fmt.Fprintf(&b, " (extended from %s)", d.Original)
+			}
+			if d.Note != "" {
+				fmt.Fprintf(&b, " – %s", d.Note)
+			}
+			b.WriteString("\n")
+		}
+	}
+
+	// Pages are grouped under the menu section their sidebar shows; pages
+	// without a section menu go to "More".
+	groups := map[string][]*Page{}
+	for _, p := range s.pages {
+		if p.NoIndex || p.Home {
+			continue
+		}
+		section := sidebarSections[p.Sidebar]
+		groups[section] = append(groups[section], p)
+	}
+	writeGroup := func(heading string, pages []*Page) {
+		if len(pages) == 0 {
+			return
+		}
+		fmt.Fprintf(&b, "\n## %s\n\n", heading)
+		for _, p := range pages {
+			fmt.Fprintf(&b, "- [%s](%s%s)", p.Title, base, p.Path)
+			if d := p.MetaDescription(); d != "" {
+				fmt.Fprintf(&b, ": %s", d)
+			}
+			b.WriteString("\n")
+		}
+	}
+	for _, item := range s.nav {
+		if item.Path != "" {
+			writeGroup(item.Label, groups[item.Path])
+		}
+	}
+	writeGroup("More", groups[""])
+
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Write([]byte(b.String()))
 }
 
 func (s *Server) handleManifest(w http.ResponseWriter, r *http.Request) {

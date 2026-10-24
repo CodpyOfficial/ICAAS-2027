@@ -34,7 +34,7 @@ func main() {
 	var (
 		addr       = flag.String("addr", defaultAddr, "listen address (env ICAAS_ADDR or PORT)")
 		dataDir    = flag.String("data", env("ICAAS_DATA_DIR", "data"), "directory for submissions, uploaded papers, contact messages and subscribers (env ICAAS_DATA_DIR)")
-		baseURL    = flag.String("base-url", env("ICAAS_BASE_URL", ""), "public origin used in canonical links and the sitemap, e.g. https://icaas.example.org (env ICAAS_BASE_URL)")
+		baseURL    = flag.String("base-url", env("ICAAS_BASE_URL", ""), "public origin used in canonical links, sitemap.xml, robots.txt and llms.txt, e.g. https://icaas.example.org (env ICAAS_BASE_URL)")
 		dev        = flag.Bool("dev", os.Getenv("ICAAS_DEV") == "1", "read templates, static files and content/site.json from disk on every request (env ICAAS_DEV=1)")
 		trustProxy = flag.Bool("trust-proxy", os.Getenv("ICAAS_TRUST_PROXY") == "1", "trust X-Forwarded-For/-Proto from a reverse proxy (env ICAAS_TRUST_PROXY=1)")
 	)

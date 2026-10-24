@@ -257,7 +257,7 @@ func TestEveryInternalLinkResolves(t *testing.T) {
 		}
 		for _, m := range linkRe.FindAllStringSubmatch(get(t, s, p.Path).Body.String(), -1) {
 			target := m[1]
-			if strings.HasPrefix(target, "/static/") || target == "/manifest.webmanifest" || target == "/favicon.ico" || target == "/sitemap.xml" {
+			if strings.HasPrefix(target, "/static/") || target == "/manifest.webmanifest" || target == "/favicon.ico" || target == "/sitemap.xml" || target == "/llms.txt" {
 				continue
 			}
 			if _, ok := s.byPath[target]; !ok {
@@ -1052,12 +1052,49 @@ func TestSitemapRobotsManifest(t *testing.T) {
 			t.Errorf("sitemap entry for %s: present=%v NoIndex=%v", p.Path, has, p.NoIndex)
 		}
 	}
-	if !strings.Contains(get(t, s, "/robots.txt").Body.String(), "Sitemap: http://example.com/sitemap.xml") {
-		t.Error("robots.txt has no sitemap line")
+	robots := get(t, s, "/robots.txt").Body.String()
+	if !strings.Contains(robots, "User-agent: *\nAllow: /\n") || strings.Contains(robots, "Disallow") {
+		t.Errorf("robots.txt does not allow every crawler everywhere:\n%s", robots)
+	}
+	for _, want := range []string{"Sitemap: http://example.com/sitemap.xml", "http://example.com/llms.txt"} {
+		if !strings.Contains(robots, want) {
+			t.Errorf("robots.txt lacks %s", want)
+		}
 	}
 	var manifest map[string]any
 	if err := json.Unmarshal(get(t, s, "/manifest.webmanifest").Body.Bytes(), &manifest); err != nil {
 		t.Errorf("manifest is not valid JSON: %v", err)
+	}
+}
+
+func TestLLMsTxt(t *testing.T) {
+	s := newTestServer(t, nil)
+	rec := get(t, s, "/llms.txt")
+	if rec.Code != http.StatusOK || !strings.HasPrefix(rec.Header().Get("Content-Type"), "text/plain") {
+		t.Fatalf("GET /llms.txt = %d %s", rec.Code, rec.Header().Get("Content-Type"))
+	}
+	body := rec.Body.String()
+	c := s.site().Conference
+	if want := "# " + c.FullTitle() + " – " + c.Name + "\n\n> " + c.Description + "\n"; !strings.HasPrefix(body, want) {
+		t.Errorf("llms.txt does not start with the title and summary:\n%s", body)
+	}
+	for _, d := range s.site().ImportantDates {
+		if !strings.Contains(body, "- "+d.Label+": ") {
+			t.Errorf("llms.txt lacks the date %q", d.Label)
+		}
+	}
+	// Every page the sitemap lists is linked; NoIndex pages are not, and the
+	// home page is given as the website instead.
+	for _, p := range s.pages {
+		link := "](http://example.com" + p.Path + ")"
+		if has := strings.Contains(body, link); has == (p.NoIndex || p.Home) {
+			t.Errorf("llms.txt link to %s: present=%v NoIndex=%v", p.Path, has, p.NoIndex)
+		}
+	}
+	for _, h := range []string{"## About\n", "## Call for Papers\n", "## Authors\n", "## Program\n", "## More\n"} {
+		if !strings.Contains(body, "\n"+h) {
+			t.Errorf("llms.txt lacks the section %q", strings.TrimSpace(h))
+		}
 	}
 }
 
