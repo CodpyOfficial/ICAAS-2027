@@ -42,6 +42,7 @@ The tests render every page, follow every internal link and asset, and exercise 
 | `web/static` | CSS, JavaScript, images and downloadable files |
 | `tools/make_assets.py` | Generator for the promotional kit, CFP flyer, slide template, social preview image and the flyer preview on the home page |
 | `tools/demodata` | Generator for made-up records to try the admin pages (see [Demo data](#demo-data)) |
+| `deploy/` | systemd unit and example settings for Linux servers (see [Deploy on Linux](#deploy-on-linux)) |
 
 ## Stored data
 
@@ -55,6 +56,42 @@ Everything visitors send is kept in the data directory (`-data`, default `data/`
 | `subscribers.jsonl` | Newsletter sign-ups |
 
 Papers must be PDF files of at most 10 MB (`maxPaperBytes` in `internal/server/papers.go`). Back up the whole directory regularly; on a container platform, put it on a persistent volume.
+
+## Deploy on Linux
+
+`deploy/icas.service` runs the site as a systemd service that starts at boot and restarts after a crash. It runs as the unprivileged `icas` user, stores its data in `/var/lib/icas` and reads its settings from `/etc/icas/icas.env`. Only the binary and the two files in `deploy/` have to be copied to the server.
+
+Build a Linux binary (use `GOARCH=arm64` for ARM servers; in PowerShell, set `$env:GOOS` and `$env:GOARCH` first):
+
+```bash
+GOOS=linux GOARCH=amd64 go build -o icas .
+```
+
+On the server, from a directory holding the binary and `deploy/`, create the user and install the files:
+
+```bash
+sudo useradd --system --no-create-home --shell /usr/sbin/nologin icas
+sudo install -m 755 icas /usr/local/bin/icas
+sudo install -m 644 deploy/icas.service /etc/systemd/system/icas.service
+sudo install -D -m 600 deploy/icas.env.example /etc/icas/icas.env
+```
+
+Set the public URL and the admin password in `/etc/icas/icas.env`, then start the service and enable it at boot:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now icas
+```
+
+The example settings listen on `127.0.0.1:8090` and trust `X-Forwarded-*` headers, for a reverse proxy (nginx, Caddy) that serves HTTPS on ports 80 and 443. The sandbox in the unit lets the server write only to `/var/lib/icas` and a private `/tmp`, and it cannot bind ports below 1024 itself.
+
+| Task | Command |
+|---|---|
+| Status | `systemctl status icas` |
+| Logs | `journalctl -u icas -f` |
+| Apply changed settings | `sudo systemctl restart icas` |
+| Update | `sudo install -m 755 icas /usr/local/bin/icas && sudo systemctl restart icas` |
+| Stop starting at boot | `sudo systemctl disable --now icas` |
 
 ## Demo data
 
