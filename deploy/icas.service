@@ -1,0 +1,54 @@
+# systemd unit that runs the ICAAS website and starts it at boot.
+# Installation steps are in the README under "Deploy on Linux".
+[Unit]
+Description=ICAAS conference website
+Documentation=https://github.com/CodpyOfficial/ICAS-2027
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=icas
+Group=icas
+# The data directory is fixed here because the sandbox below allows writes
+# to /var/lib/icas only; ICAS_DATA_DIR in the environment file is ignored.
+ExecStart=/usr/local/bin/icas -data /var/lib/icas
+# Listen address, public URL, proxy and admin settings. The leading "-"
+# lets the service start with the defaults when the file is missing.
+EnvironmentFile=-/etc/icas/icas.env
+# Creates /var/lib/icas owned by the icas user and readable by it alone.
+StateDirectory=icas
+StateDirectoryMode=0700
+WorkingDirectory=/var/lib/icas
+UMask=0077
+Restart=on-failure
+RestartSec=5s
+
+# Sandbox: the server only needs to listen on the network and write to its
+# data directory and to /tmp, where large form uploads are buffered.
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectProc=invisible
+ProtectClock=yes
+ProtectHostname=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
+SystemCallErrorNumber=EPERM
+
+[Install]
+WantedBy=multi-user.target
