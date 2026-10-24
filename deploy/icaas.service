@@ -2,7 +2,7 @@
 # Installation steps are in the README under "Deploy on Linux".
 [Unit]
 Description=ICAAS conference website
-Documentation=https://github.com/CodpyOfficial/ICAS-2027
+Documentation=https://github.com/CodpyOfficial/ICAAS-2027
 After=network-online.target
 Wants=network-online.target
 
